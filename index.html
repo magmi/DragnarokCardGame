@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dragon Gods — Chronicle of Ash</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+
+<body>
+
+  <!-- Phase transition banner (shown between turns) -->
+  <div id="phase-banner">
+    <span class="banner-text" id="banner-text"></span>
+  </div>
+
+  <!-- Game over / victory overlay -->
+  <div id="gameover">
+    <h2 id="go-title"></h2>
+    <p id="go-sub"></p>
+    <button id="restart-btn" onclick="initGame()">⚔ Play Again</button>
+  </div>
+
+  <!-- How to play overlay -->
+  <div id="howto-overlay" aria-hidden="true">
+    <div class="howto-card">
+      <div class="howto-header">
+        <h2>How to Play</h2>
+        <button class="close-btn" onclick="hideHowTo()">×</button>
+      </div>
+      <p>Use your energy to play cards. Attack the Drake, gain Block, and survive its next move.</p>
+      <ul>
+        <li>Click a card to play it if you have enough energy.</li>
+        <li>End your turn to let the enemy execute its intent.</li>
+        <li>Block resets after your turn ends.</li>
+        <li>Defeat the enemy before your HP reaches 0.</li>
+      </ul>
+      <button class="action-btn" onclick="hideHowTo()">Got it</button>
+    </div>
+  </div>
+
+  <!-- Unlocked Deck overlay -->
+  <div id="deck-overlay" aria-hidden="true">
+    <div class="deck-card">
+      <div class="deck-header">
+        <h2>Unlocked Cards</h2>
+        <button class="close-btn" onclick="hideUnlockedDeck()">×</button>
+      </div>
+      <div id="deck-cards-display" class="deck-cards-grid"></div>
+      <button class="action-btn" onclick="hideUnlockedDeck()">Close</button>
+    </div>
+  </div>
+
+  <!-- ── Main game layout ── -->
+  <div id="game">
+
+    <div id="header">
+      <div class="header-top">
+        <div>
+          <h1>⚔ Dragonarok ⚔</h1>
+          <p>Dragon Gods · Card Game</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button id="deck-btn" class="icon-button" onclick="showUnlockedDeck()">
+            <span class="material-symbols-outlined">inventory_2</span>
+            Unlocked Deck</button>
+          <button id="howto-btn" class="icon-button" onclick="showHowTo()">
+            <span class="material-symbols-outlined">help</span>
+            How to Play</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Battlefield: Enemy (left) vs Player (right) ── -->
+    <div id="battlefield">
+
+      <!-- Enemy pane -->
+      <div class="combatant-pane" id="enemy-pane">
+        <div class="enemy-info">
+          <span class="combatant-name">Kera The Fire Dragoness</span>
+          <div class="card-divider"></div>
+          <div class="intent-row">
+            <span class="intent-label">Next move: </span>
+            <div class="intent-box">
+              <span class="intent-icon" id="intent-icon">
+
+              </span>
+              <span id="intent-text">Attack for 6</span>
+            </div>
+          </div>
+        </div>
+        <div class="enemy-sprite-area" id="enemy-sprite">
+          <!-- Injected by sprites.js -->
+        </div>
+
+        <div class="block-badge" id="enemy-block-badge">
+          <span class="block-icon">🛡</span>
+          <span id="enemy-block-val">0</span> Block
+        </div>
+
+        <div class="hp-section">
+          <div class="hp-label">
+            <span>VITALITY</span>
+            <span class="hp-value"><span id="enemy-hp">50</span> / 50</span>
+          </div>
+          <div class="hp-track">
+            <div class="hp-fill enemy" id="enemy-hp-bar" style="width:100%"></div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Player pane -->
+      <div class="combatant-pane" id="player-pane">
+        <span class="combatant-name">Krystel</span>
+        <div class="card-divider"></div>
+        <div class="player-sprite-and-hp">
+          <div class="sprite-area" id="player-sprite">
+            <!-- Injected by sprites.js -->
+          </div>
+          <div class="hp-section">
+            <div class="hp-label">
+              <span>VITALITY</span>
+              <span class="hp-value"><span id="player-hp">30</span> / 30</span>
+            </div>
+            <div class="hp-track">
+              <div class="hp-fill player" id="player-hp-bar" style="width:100%"></div>
+            </div>
+            <div class="player-block-and-energy">
+              <div class="block-badge" id="player-block-badge">
+                <span class="block-icon">🛡</span>
+                <span id="player-block-val">0</span> Block
+              </div>
+              <div id="energy-row">
+                <span id="energy-label">ENERGY</span>
+                <div id="orbs"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /battlefield -->
+
+
+
+    <!-- Hand-->
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
+      <div id="hand-area"></div>
+    </div>
+
+    <!-- Pile counters + combat log + End Turn -->
+    <div id="end-turn-row" style="display:flex; align-items:center; justify-content: space-evenly;; flex-shrink:0;">
+      <div id="pile-row">
+        <button id="end-turn-btn" onclick="endTurn()">End Turn ⟶</button>
+      </div>
+    </div>
+
+
+
+  </div><!-- /game -->
+
+  <script src="sprites.js"></script>
+  <script src="game.js"></script>
+</body>
+
+</html>
