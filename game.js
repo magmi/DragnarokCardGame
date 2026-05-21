@@ -417,12 +417,29 @@ function renderHand() {
     card.className = `card card-deal ${cardId}${affordable ? '' : ' unaffordable'}`;
     card.style.animationDelay = `${idx * 0.07}s`;
 
+    var description = '';
+    switch (def.type) {
+      case 'attack':
+        const attackValue = def.value * gs.player.nextAttackMultiplier;
+        const attackValueText = gs.player.nextAttackMultiplier > 1
+          ? `<span style="color: #66bb6a;">${attackValue}</span>`
+          : attackValue;
+        description = `Deal ${attackValueText} damage.`;
+        break;
+      case 'skill':
+        description = def.desc;
+        break;
+      case 'power':
+        description = def.desc;
+        break;
+    }
+
     card.innerHTML = `
       <div class="card-cost">${def.cost}</div>
       <div class="card-art">${artHtml}</div>
       <div class="card-name">${def.name}</div>
       <div class="card-divider"></div>
-      <div class="card-desc">${def.desc}</div>
+      <div class="card-desc">${description}</div>
     `;
 
     // Capture idx in closure so click still works after splice
