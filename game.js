@@ -59,7 +59,41 @@ const CARD_DEFS = {
     unlocked: true,
   }
 };
-
+const ENEMIES = [
+  {
+    id: 'kera',
+    name: 'Kera The Fire Dragoness',
+    maxHp: 10,
+    sprite: 'resources/enemy1.png',
+    thumb: 'resources/enemy1checkpoint.png',
+    attacks: [
+      { id: 'flameBreath', name: 'Flame Breath', type: 'attack', value: 6 },
+      { id: 'emberShield', name: 'Ember Shield', type: 'defend', value: 6 },
+    ],
+  },
+  {
+    id: 'ashling',
+    name: 'Ashling Warden',
+    maxHp: 44,
+    sprite: 'resources/enemy2.png',
+    thumb: 'resources/enemy2checkpoint.png',
+    attacks: [
+      { id: 'emberClaw', name: 'Ember Claw', type: 'attack', value: 5 },
+      { id: 'heatBarrier', name: 'Heat Barrier', type: 'defend', value: 8 },
+    ],
+  },
+  {
+    id: 'benzo',
+    name: 'Benzo The Ice Dragon',
+    maxHp: 50,
+    sprite: 'resources/enemy3.png',
+    thumb: 'resources/enemy3checkpoint.png',
+    attacks: [
+      { id: 'emberClaw', name: 'Ember Claw', type: 'attack', value: 5 },
+      { id: 'heatBarrier', name: 'Heat Barrier', type: 'defend', value: 8 },
+    ],
+  },
+];
 /** The player's starting deck (card IDs). */
 const STARTING_DECK = [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_POWER_UP, CARD_POWER_UP];
 
@@ -82,14 +116,17 @@ const STARTING_DECK = [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_
  * }}
  */
 let gs;
+let campaignProgress = [];
+let selectedEnemyIndex = 0;
 
 /** @global — exposed on window so HTML onclick handlers can call it. */
-function initGame() {
+function initGame(enemyIndex = 0) {
   document.getElementById('gameover').classList.remove('show');
 
   gs = {
     player: { hp: PLAYER_MAX_HP, maxHp: PLAYER_MAX_HP, block: 0, nextAttackMultiplier: 1 },
-    enemy: { hp: ENEMY_MAX_HP, maxHp: ENEMY_MAX_HP, block: 0, intent: pickIntent() },
+    currentEnemyIndex: enemyIndex,
+    enemy: spawnEnemy(ENEMIES[enemyIndex]),
     energy: MAX_ENERGY,
     draw: shuffle([...STARTING_DECK]),
     discard: [],
@@ -126,6 +163,29 @@ function drawCard() {
     gs.discard = [];
   }
   return gs.draw.pop();
+}
+
+function spawnEnemy(template) {
+  return {
+    ...template,
+    hp: template.maxHp,
+    block: 0,
+    intent: pickIntent(template),
+  };
+}
+
+function pickIntent(enemy) {
+  const move = enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
+  const icon = move.type === 'attack'
+    ? '<span style="color:#e05020" class="material-symbols-outlined">swords</span>'
+    : '<span style="color:#5ba3f5" class="material-symbols-outlined">shield</span>';
+
+  return {
+    type: move.type,
+    value: move.value,
+    icon,
+    text: `${move.name} for ${move.value}`,
+  };
 }
 
 /** Fill the player's hand up to HAND_SIZE. */
@@ -173,7 +233,7 @@ function playCard(idx) {
   }
 
   renderAll();
-  if (gs.enemy.hp <= 0) { endGame(true); return; }
+  if (gs.enemy.hp <= 0) { handleEnemyDefeated(); return; }
 }
 
 /**
@@ -202,18 +262,6 @@ function applyAttack(target, paneId, damage, hitMsg, blockMsg) {
    5. TURN FLOW
    ═══════════════════════════════════════════════════════════ */
 
-/**
- * Returns a random enemy intent object.
- * 60% chance to attack, 40% chance to defend.
- *
- * @typedef {{ type: string, value: number, icon: string, text: string }} Intent
- * @returns {Intent}
- */
-function pickIntent() {
-  return Math.random() < 0.6
-    ? { type: 'attack', value: 6, icon: '<span style="color:#e05020" class="material-symbols-outlined">swords</span>', text: 'Attack for 6' }
-    : { type: 'defend', value: 6, icon: '<span style="color:#5ba3f5" class="material-symbols-outlined">shield</span>', text: 'Defend for 6' };
-}
 
 /** Called by the End Turn button. Discards hand, clears enemy block, and starts the enemy phase. */
 function endTurn() {
@@ -240,8 +288,8 @@ function enemyTurn() {
   if (intent.type === 'attack') {
     applyAttack(
       gs.player, '#player-pane', intent.value,
-      'The Ashen Drake breathes fire — you take',
-      "The Drake's assault is blocked by your ward!"
+      `${gs.enemy.name} strikes you — you take`,
+      `${gs.enemy.name}'s assault is blocked by your ward!`
     );
   } else {
     gs.enemy.block += intent.value;
@@ -260,7 +308,7 @@ function beginPlayerTurn() {
   // Player block expires at the start of the next turn
   gs.player.block = 0;
 
-  gs.enemy.intent = pickIntent();
+  gs.enemy.intent = pickIntent(gs.enemy);
   gs.energy = MAX_ENERGY;
   gs.phase = 'player';
 
@@ -303,11 +351,21 @@ function endGame(won) {
 
 /** Full re-render of all UI elements from current game state. */
 function renderAll() {
+  renderEnemyInfo();
   renderHP();
   renderBlockBadges();
   renderEnergyOrbs();
   renderIntent();
   renderHand();
+}
+
+function renderEnemyInfo() {
+  const nameEl = document.querySelector('#enemy-pane .combatant-name');
+  if (nameEl) nameEl.textContent = gs.enemy.name;
+  const spriteArea = document.getElementById('enemy-sprite');
+  if (spriteArea) {
+    spriteArea.innerHTML = `<img src="${gs.enemy.sprite}" alt="${gs.enemy.name}" />`;
+  }
 }
 
 function renderHP() {
@@ -424,6 +482,20 @@ function showBanner(text, cb) {
     if (cb) setTimeout(cb, 200);
   }, 900);
 }
+
+function showStartScreen() {
+  renderMap();
+  document.getElementById('map-overlay').classList.add('show');
+}
+
+function hideStartScreen() {
+  document.getElementById('map-overlay').classList.remove('show');
+}
+
+function startGame() {
+  startSelectedEnemy();
+}
+
 function showHowTo() {
   document.getElementById('howto-overlay').classList.add('show');
 }
@@ -461,8 +533,91 @@ function showUnlockedDeck() {
 function hideUnlockedDeck() {
   document.getElementById('deck-overlay').classList.remove('show');
 }
+
+function resetCampaign() {
+  campaignProgress = ENEMIES.map((enemy, index) => ({
+    id: enemy.id,
+    unlocked: index === 0,
+    beaten: false,
+  }));
+  selectedEnemyIndex = 0;
+  renderMap();
+}
+
+function renderMap() {
+  const mapList = document.getElementById('map-list');
+  if (!mapList) return;
+
+  mapList.innerHTML = '';
+
+  ENEMIES.forEach((enemy, index) => {
+    const progress = campaignProgress[index];
+    const node = document.createElement('button');
+    node.type = 'button';
+    node.className = `map-node ${progress.unlocked ? 'unlocked' : 'locked'}${index === selectedEnemyIndex ? ' selected' : ''}`;
+    node.disabled = !progress.unlocked;
+    node.addEventListener('click', () => selectMapNode(index));
+
+    const statusText = progress.beaten ? 'Cleared' : progress.unlocked ? 'Available' : 'Locked';
+
+    node.innerHTML = `
+    <img src="${enemy.thumb}" alt="${enemy.name}" class="node-sprite">
+      <span class="node-label">Checkpoint ${index + 1}</span>
+      <span class="node-name">${enemy.name}</span>
+      <span class="node-status">${statusText}</span>
+    `;
+
+    mapList.appendChild(node);
+
+    if (index < ENEMIES.length - 1) {
+      const arrow = document.createElement('span');
+      arrow.className = 'material-symbols-outlined';
+      arrow.innerHTML = 'arrow_downward';
+      mapList.appendChild(arrow);
+    }
+  });
+
+  const startBtn = document.getElementById('map-start-btn');
+  if (startBtn) startBtn.disabled = !campaignProgress[selectedEnemyIndex]?.unlocked;
+}
+
+function selectMapNode(index) {
+  if (!campaignProgress[index]?.unlocked) return;
+  selectedEnemyIndex = index;
+  renderMap();
+}
+
+function startSelectedEnemy() {
+  if (!campaignProgress[selectedEnemyIndex]?.unlocked) return;
+  hideStartScreen();
+  initGame(selectedEnemyIndex);
+}
+
+function handleEnemyDefeated() {
+  const finishedIndex = gs.currentEnemyIndex;
+  campaignProgress[finishedIndex].beaten = true;
+
+  const nextIndex = finishedIndex + 1;
+  const hasNext = nextIndex < ENEMIES.length;
+  if (hasNext) {
+    campaignProgress[nextIndex].unlocked = true;
+    selectedEnemyIndex = nextIndex;
+    renderMap();
+    showBanner('Checkpoint Cleared', () => showStartScreen());
+  } else {
+    endGame(true);
+  }
+}
+
+function restartCampaign() {
+  document.getElementById('gameover').classList.remove('show');
+  resetCampaign();
+  showStartScreen();
+}
+
 /* ═══════════════════════════════════════════════════════════
    9. BOOT
-   ═══════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════ */
 
-initGame();
+resetCampaign();
+showStartScreen();

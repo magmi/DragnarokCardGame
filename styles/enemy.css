@@ -1,0 +1,71 @@
+#enemy-pane {
+  border-color: rgba(224, 80, 32, 0.25);
+  flex: 1;
+  min-height: 0;
+  justify-content: space-between;
+}
+
+#enemy-sprite img {
+  height: 100%;
+}
+
+.enemy-sprite-area {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 0;
+}
+
+#enemy-pane::after {
+  background: linear-gradient(90deg, transparent, rgba(224, 80, 32, 0.5), transparent);
+}
+
+.enemy-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.dragon-svg {
+  width: 110px;
+  height: 110px;
+  filter: drop-shadow(0 0 18px rgba(224, 80, 32, 0.45));
+}
+
+.hp-fill.enemy {
+  background: linear-gradient(90deg, #b71c1c, #ef5350);
+}
+
+.intent-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.intent-label {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  color: var(--text-main);
+}
+
+.intent-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 1rem;
+  color: var(--text-main);
+}
+
+#intent-text {
+  font-family: 'Crimson Pro', serif;
+}

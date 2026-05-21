@@ -1,0 +1,70 @@
+#player-pane {
+  align-self: stretch;
+  flex: 0;
+}
+
+#player-pane::after {
+  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.4), transparent);
+}
+
+.player-sprite-and-hp {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.player-block-and-energy {
+  margin-top: 15px;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.player-svg {
+  width: 90px;
+  height: 90px;
+  filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.3));
+}
+
+.hp-fill.player {
+  background: linear-gradient(90deg, #2e7d32, #66bb6a);
+}
+
+#energy-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  justify-content: end;
+}
+
+#energy-label {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}
+
+#orbs {
+  display: flex;
+  gap: 5px;
+}
+
+.orb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--gold-light), var(--gold-dark));
+  transition: all 0.3s;
+}
+
+.orb.spent {
+  background: radial-gradient(circle at 35% 35%, #2a1a0a, #100800);
+  border-color: #3a2a0a;
+  box-shadow: none;
+}

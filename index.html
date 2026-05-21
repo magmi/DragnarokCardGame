@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dragon Gods — Chronicle of Ash</title>
+  <title>Dragon Gods - Card Game</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 
@@ -23,7 +23,20 @@
   <div id="gameover">
     <h2 id="go-title"></h2>
     <p id="go-sub"></p>
-    <button id="restart-btn" onclick="initGame()">⚔ Play Again</button>
+    <button id="restart-btn" onclick="restartCampaign()">⚔ Play Again</button>
+  </div>
+
+  <!-- Start game map overlay -->
+  <div id="map-overlay" class="show">
+    <div class="map-card">
+      <h2>Path of Flame</h2>
+      <p>Choose your next checkpoint. Only unlocked enemies can be challenged — defeat one to unlock the next.</p>
+      <div id="map-list"></div>
+      <div class="map-actions">
+        <button class="action-btn" id="map-start-btn" onclick="startSelectedEnemy()">Begin Battle</button>
+        <button class="action-btn secondary" onclick="showHowTo()">How to Play</button>
+      </div>
+    </div>
   </div>
 
   <!-- How to play overlay -->
