@@ -45,19 +45,29 @@ const CARD_DEFS = {
     art: '⚔️', img: 'resources/cardStrike.png', desc: 'Deal 6 damage',
     type: 'attack', value: 6,
     unlocked: true,
+    defaultUnlocked: true,
   },
   defend: {
     id: 'defend', name: 'Defend', cost: 1,
     art: '🛡️', img: 'resources/cardDefend.png', desc: 'Gain 5 Block',
     type: 'defend', value: 5,
     unlocked: true,
+    defaultUnlocked: true,
   },
   powerUp: {
     id: 'powerUp', name: 'Power Up', cost: 2,
     art: '⚡', img: 'resources/cardPowerUp.png', desc: 'Double next attack',
     type: 'power', multiplier: 2,
     unlocked: true,
-  }
+    defaultUnlocked: true,
+  },
+  powerStrike: {
+    id: 'powerStrike', name: 'Power Strike', cost: 1,
+    art: '⚔️', img: 'resources/cardStrike.png', desc: 'Deal 8 damage',
+    type: 'attack', value: 8,
+    unlocked: false,
+    defaultUnlocked: false,
+  },
 };
 const ENEMIES = [
   {
@@ -70,32 +80,37 @@ const ENEMIES = [
       { id: 'flameBreath', name: 'Flame Breath', type: 'attack', value: 6 },
       { id: 'emberShield', name: 'Ember Shield', type: 'defend', value: 6 },
     ],
+    unlocks: ['powerStrike'],
   },
   {
     id: 'ashling',
     name: 'Ashling Warden',
-    maxHp: 44,
+    maxHp: 6,
     sprite: 'resources/enemy2.png',
     thumb: 'resources/enemy2checkpoint.png',
     attacks: [
       { id: 'emberClaw', name: 'Ember Claw', type: 'attack', value: 5 },
       { id: 'heatBarrier', name: 'Heat Barrier', type: 'defend', value: 8 },
     ],
+    unlocks: [],
   },
   {
     id: 'benzo',
     name: 'Benzo The Ice Dragon',
-    maxHp: 50,
+    maxHp: 6,
     sprite: 'resources/enemy3.png',
     thumb: 'resources/enemy3checkpoint.png',
     attacks: [
       { id: 'emberClaw', name: 'Ember Claw', type: 'attack', value: 5 },
       { id: 'heatBarrier', name: 'Heat Barrier', type: 'defend', value: 8 },
     ],
+    unlocks: [],
   },
 ];
 /** The player's starting deck (card IDs). */
 const STARTING_DECK = [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_POWER_UP, CARD_POWER_UP];
+let playerDeck = [...STARTING_DECK];
+let rewardOverlayNextAction = null;
 
 /* ═══════════════════════════════════════════════════════════
    2. GAME STATE
@@ -122,6 +137,7 @@ let selectedEnemyIndex = 0;
 /** @global — exposed on window so HTML onclick handlers can call it. */
 function initGame(enemyIndex = 0) {
   document.getElementById('gameover').classList.remove('show');
+  hideUnlockOverlay();
 
   const preservedHp = gs?.player?.hp > 0 ? Math.min(gs.player.hp, PLAYER_MAX_HP) : PLAYER_MAX_HP;
 
@@ -130,7 +146,7 @@ function initGame(enemyIndex = 0) {
     currentEnemyIndex: enemyIndex,
     enemy: spawnEnemy(ENEMIES[enemyIndex]),
     energy: MAX_ENERGY,
-    draw: shuffle([...STARTING_DECK]),
+    draw: shuffle(getDeckForBattle()),
     discard: [],
     hand: [],
     phase: 'player',
@@ -167,6 +183,10 @@ function drawCard() {
   return gs.draw.pop();
 }
 
+function getDeckForBattle() {
+  return [...playerDeck];
+}
+
 function spawnEnemy(template) {
   return {
     ...template,
@@ -174,6 +194,80 @@ function spawnEnemy(template) {
     block: 0,
     intent: pickIntent(template),
   };
+}
+
+function awardEnemyUnlocks(enemy) {
+  const unlockedIds = (enemy.unlocks || []).filter(cardId => {
+    const def = CARD_DEFS[cardId];
+    return def && !def.unlocked;
+  });
+
+  unlockedIds.forEach(cardId => {
+    CARD_DEFS[cardId].unlocked = true;
+    if (!playerDeck.includes(cardId)) playerDeck.push(cardId);
+  });
+
+  return unlockedIds;
+}
+
+function showUnlockRewardOverlay(unlockedIds, buttonText, onCloseAction) {
+  const copy = document.getElementById('unlock-overlay-copy');
+  const cta = document.getElementById('unlock-overlay-cta');
+  const container = document.getElementById('unlock-cards-display');
+  container.innerHTML = '';
+
+  if (unlockedIds.length === 0) {
+    copy.textContent = 'No new cards were unlocked.';
+    const message = document.createElement('div');
+    message.className = 'unlock-empty';
+    message.textContent = 'You can return to the map to continue your journey.';
+    container.appendChild(message);
+  } else {
+    copy.textContent = 'You have unlocked new cards for your deck!';
+    unlockedIds.forEach(cardId => {
+      const def = CARD_DEFS[cardId];
+      if (!def) return;
+
+      const artHtml = def.img ? `<img src="${def.img}" alt="${def.name}" class="card-art-img">` : def.art;
+      const card = document.createElement('div');
+      card.className = `card ${def.id}`;
+      card.innerHTML = `
+        <div class="card-cost">${def.cost}</div>
+        <div class="card-art">${artHtml}</div>
+        <div class="card-name">${def.name}</div>
+        <div class="card-divider"></div>
+        <div class="card-desc">${def.desc}</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  if (cta) cta.textContent = buttonText || 'Continue';
+  rewardOverlayNextAction = typeof onCloseAction === 'function' ? onCloseAction : null;
+  document.getElementById('unlock-overlay').classList.add('show');
+}
+
+function closeUnlockRewardOverlay() {
+  document.getElementById('unlock-overlay').classList.remove('show');
+  if (rewardOverlayNextAction) {
+    const callback = rewardOverlayNextAction;
+    rewardOverlayNextAction = null;
+    callback();
+  }
+}
+
+function hideUnlockOverlay() {
+  document.getElementById('unlock-overlay').classList.remove('show');
+  rewardOverlayNextAction = null;
+}
+
+function returnToMapAfterVictory() {
+  closeUnlockRewardOverlay();
+}
+
+function returnToEndgameAfterVictory() {
+  closeUnlockRewardOverlay();
+  endGame(true);
 }
 
 function pickIntent(enemy) {
@@ -562,6 +656,11 @@ function resetCampaign() {
     beaten: false,
   }));
   selectedEnemyIndex = 0;
+  playerDeck = [...STARTING_DECK];
+  Object.values(CARD_DEFS).forEach(def => {
+    def.unlocked = !!def.defaultUnlocked;
+  });
+  hideUnlockOverlay();
   renderMap();
 }
 
@@ -622,15 +721,25 @@ function handleEnemyDefeated() {
   const finishedIndex = gs.currentEnemyIndex;
   campaignProgress[finishedIndex].beaten = true;
 
+  const unlockedCards = awardEnemyUnlocks(ENEMIES[finishedIndex]);
   const nextIndex = finishedIndex + 1;
   const hasNext = nextIndex < ENEMIES.length;
+
   if (hasNext) {
     campaignProgress[nextIndex].unlocked = true;
     selectedEnemyIndex = nextIndex;
     renderMap();
-    showBanner('Level Cleared', () => showStartScreen());
+    showBanner('Level Cleared', () => {
+      showUnlockRewardOverlay(unlockedCards, 'Return to Map', () => {
+        showStartScreen();
+      });
+    });
   } else {
-    endGame(true);
+    showBanner('Level Cleared', () => {
+      showUnlockRewardOverlay(unlockedCards, 'Continue', () => {
+        endGame(true);
+      });
+    });
   }
 }
 
