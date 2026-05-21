@@ -123,8 +123,10 @@ let selectedEnemyIndex = 0;
 function initGame(enemyIndex = 0) {
   document.getElementById('gameover').classList.remove('show');
 
+  const preservedHp = gs?.player?.hp > 0 ? Math.min(gs.player.hp, PLAYER_MAX_HP) : PLAYER_MAX_HP;
+
   gs = {
-    player: { hp: PLAYER_MAX_HP, maxHp: PLAYER_MAX_HP, block: 0, nextAttackMultiplier: 1 },
+    player: { hp: preservedHp, maxHp: PLAYER_MAX_HP, block: 0, nextAttackMultiplier: 1 },
     currentEnemyIndex: enemyIndex,
     enemy: spawnEnemy(ENEMIES[enemyIndex]),
     energy: MAX_ENERGY,
@@ -426,7 +428,7 @@ function renderHand() {
           : attackValue;
         description = `Deal ${attackValueText} damage.`;
         break;
-      case 'skill':
+      case 'defend':
         description = def.desc;
         break;
       case 'power':
@@ -434,12 +436,14 @@ function renderHand() {
         break;
     }
 
+    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' ? 'shield' : 'airwave';
+
     card.innerHTML = `
       <div class="card-cost">${def.cost}</div>
-      <div class="card-art">${artHtml}</div>
       <div class="card-name">${def.name}</div>
-      <div class="card-divider"></div>
+      <div class="card-art">${artHtml}</div>
       <div class="card-desc">${description}</div>
+      <div class="card-type"><span class="material-symbols-outlined">${type}</span></div>
     `;
 
     // Capture idx in closure so click still works after splice
@@ -569,6 +573,15 @@ function renderMap() {
 
   ENEMIES.forEach((enemy, index) => {
     const progress = campaignProgress[index];
+
+    if (index > 0) {
+      const arrow = document.createElement('span');
+      arrow.className = 'map-arrow material-symbols-outlined';
+      arrow.style.opacity = progress.unlocked ? '1' : '0.3';
+      arrow.innerHTML = 'arrow_downward';
+      mapList.appendChild(arrow);
+    }
+
     const node = document.createElement('button');
     node.type = 'button';
     node.className = `map-node ${progress.unlocked ? 'unlocked' : 'locked'}${index === selectedEnemyIndex ? ' selected' : ''}`;
@@ -579,19 +592,14 @@ function renderMap() {
 
     node.innerHTML = `
     <img src="${enemy.thumb}" alt="${enemy.name}" class="node-sprite">
-      <span class="node-label">Checkpoint ${index + 1}</span>
+      <span class="node-label">Level ${index + 1}</span>
       <span class="node-name">${enemy.name}</span>
       <span class="node-status">${statusText}</span>
     `;
 
     mapList.appendChild(node);
 
-    if (index < ENEMIES.length - 1) {
-      const arrow = document.createElement('span');
-      arrow.className = 'material-symbols-outlined';
-      arrow.innerHTML = 'arrow_downward';
-      mapList.appendChild(arrow);
-    }
+
   });
 
   const startBtn = document.getElementById('map-start-btn');
@@ -620,7 +628,7 @@ function handleEnemyDefeated() {
     campaignProgress[nextIndex].unlocked = true;
     selectedEnemyIndex = nextIndex;
     renderMap();
-    showBanner('Checkpoint Cleared', () => showStartScreen());
+    showBanner('Level Cleared', () => showStartScreen());
   } else {
     endGame(true);
   }

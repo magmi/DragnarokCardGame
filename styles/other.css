@@ -13,6 +13,8 @@
   --blue-glow: #5ba3f5;
   --text-main: #e8dcc8;
   --text-dim: #c9b8a4;
+  --text-white: #fff;
+  --card-border: #b49d65;
 }
 
 *,
@@ -110,6 +112,10 @@ body::after {
   background: rgba(255, 255, 255, 0.08);
   color: var(--text-main);
   transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+.max-width-btn {
+  max-width: 200px;
 }
 
 .icon-button {

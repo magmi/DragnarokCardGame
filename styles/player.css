@@ -1,4 +1,5 @@
 #player-pane {
+  background-color: rgba(134, 42, 42, 0.4);
   align-self: stretch;
   flex: 0;
 }

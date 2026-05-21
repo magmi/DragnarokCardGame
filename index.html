@@ -30,11 +30,11 @@
   <div id="map-overlay" class="show">
     <div class="map-card">
       <h2>Path of Flame</h2>
-      <p>Choose your next checkpoint. Only unlocked enemies can be challenged — defeat one to unlock the next.</p>
+      <p>Choose your next level. Only unlocked enemies can be challenged — defeat one to unlock the next.</p>
       <div id="map-list"></div>
       <div class="map-actions">
-        <button class="action-btn" id="map-start-btn" onclick="startSelectedEnemy()">Begin Battle</button>
-        <button class="action-btn secondary" onclick="showHowTo()">How to Play</button>
+        <button class="action-btn max-width-btn" id="map-start-btn" onclick="startSelectedEnemy()">Begin Battle</button>
+        <button class="action-btn max-width-btn secondary" onclick="showHowTo()">How to Play</button>
       </div>
     </div>
   </div>
@@ -118,7 +118,7 @@
 
         <div class="hp-section">
           <div class="hp-label">
-            <span>VITALITY</span>
+            <span>HP</span>
             <span class="hp-value"><span id="enemy-hp">50</span> / 50</span>
           </div>
           <div class="hp-track">
@@ -139,7 +139,7 @@
           </div>
           <div class="hp-section">
             <div class="hp-label">
-              <span>VITALITY</span>
+              <span>HP</span>
               <span class="hp-value"><span id="player-hp">30</span> / 30</span>
             </div>
             <div class="hp-track">
