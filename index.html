@@ -29,8 +29,11 @@
   <!-- Start game map overlay -->
   <div id="map-overlay" class="show">
     <div class="map-card">
-      <h2>Path of Flame</h2>
-      <p>Choose your next level. Only unlocked enemies can be challenged — defeat one to unlock the next.</p>
+      <div class="header">
+        <h1>⚔ Dragonarok ⚔</h1>
+        <p>Dragon Gods · Card Game</p>
+      </div>
+      <p>Choose your next level. Only unlocked enemies can be challenged. Defeat one to unlock the next.</p>
       <div id="map-list"></div>
       <div class="map-actions">
         <button class="action-btn max-width-btn" id="map-start-btn" onclick="startSelectedEnemy()">Begin Battle</button>
@@ -84,22 +87,16 @@
   <!-- ── Main game layout ── -->
   <div id="game">
 
-    <div id="header">
-      <div class="header-top">
-        <div>
-          <h1>⚔ Dragonarok ⚔</h1>
-          <p>Dragon Gods · Card Game</p>
-        </div>
-        <div style="display: flex; gap: 10px;">
-          <button id="deck-btn" class="icon-button" onclick="showUnlockedDeck()">
-            <span class="material-symbols-outlined">inventory_2</span>
-            Unlocked Deck</button>
-          <button id="howto-btn" class="icon-button" onclick="showHowTo()">
-            <span class="material-symbols-outlined">help</span>
-            How to Play</button>
-        </div>
-      </div>
+    <div class="game-menu">
+      <button id="deck-btn" class="icon-button" onclick="showUnlockedDeck()">
+        <span class="material-symbols-outlined">inventory_2</span>
+      </button>
+      <button id="howto-btn" class="icon-button" onclick="showHowTo()">
+        <span class="material-symbols-outlined">help</span>
+      </button>
     </div>
+
+
 
     <!-- ── Battlefield: Enemy (left) vs Player (right) ── -->
     <div id="battlefield">
@@ -131,7 +128,7 @@
         <div class="hp-section">
           <div class="hp-label">
             <span>HP</span>
-            <span class="hp-value"><span id="enemy-hp">50</span> / 50</span>
+            <span class="hp-value"><span id="enemy-hp">50</span></span>
           </div>
           <div class="hp-track">
             <div class="hp-fill enemy" id="enemy-hp-bar" style="width:100%"></div>
@@ -152,7 +149,7 @@
           <div class="hp-section">
             <div class="hp-label">
               <span>HP</span>
-              <span class="hp-value"><span id="player-hp">30</span> / 30</span>
+              <span class="hp-value"><span id="player-hp"></span></span>
             </div>
             <div class="hp-track">
               <div class="hp-fill player" id="player-hp-bar" style="width:100%"></div>

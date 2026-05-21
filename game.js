@@ -21,12 +21,15 @@
 const MAX_ENERGY = 3;
 const HAND_SIZE = 5;
 const PLAYER_MAX_HP = 30;
-const ENEMY_MAX_HP = 50;
 
 const CARD_STRIKE = 'strike';
 const CARD_DEFEND = 'defend';
 const CARD_POWER_UP = 'powerUp';
+const CARD_CHOMP = 'chomp';
+const CARD_HEAL = 'heal';
+const CARD_REPEL = 'repel';
 
+const ALL_CARDS_UNLOCKED = false; // for testing: set to true to unlock all cards from the start
 /**
  * Card definitions. Each card has:
  *   id     — matches key, used as CSS class name
@@ -35,7 +38,7 @@ const CARD_POWER_UP = 'powerUp';
  *   art    — emoji icon fallback
  *   img    — image asset used for card art
  *   desc   — flavour / effect description shown on card
- *   type   — 'attack' | 'defend'
+ *   type   — 'attack' | 'defend' | 'repel'
  *   value  — damage dealt or block gained
  */
 
@@ -58,57 +61,77 @@ const CARD_DEFS = {
     id: 'powerUp', name: 'Power Up', cost: 2,
     art: '⚡', img: 'resources/cardPowerUp.png', desc: 'Double next attack',
     type: 'power', multiplier: 2,
-    unlocked: true,
-    defaultUnlocked: true,
+    unlocked: ALL_CARDS_UNLOCKED,
+    defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
-  powerStrike: {
-    id: 'powerStrike', name: 'Power Strike', cost: 1,
-    art: '⚔️', img: 'resources/cardStrike.png', desc: 'Deal 8 damage',
+  chomp: {
+    id: 'chomp', name: 'Chomp', cost: 1,
+    art: '⚔️', img: 'resources/cardChomp.png', desc: 'Deal 8 damage',
     type: 'attack', value: 8,
-    unlocked: false,
-    defaultUnlocked: false,
+    unlocked: ALL_CARDS_UNLOCKED,
+    defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
+  heal: {
+    id: 'heal', name: 'Heal', cost: 2,
+    art: '❤️', img: 'resources/cardHeal.png', desc: 'Heal 8 HP',
+    type: 'heal', value: 8,
+    unlocked: ALL_CARDS_UNLOCKED,
+    defaultUnlocked: ALL_CARDS_UNLOCKED,
+  },
+  repel: {
+    id: 'repel', name: 'Repel', cost: 1,
+    art: '🛡️', img: 'resources/cardRepel.png', desc: 'Gain 3 Block and Reflect 3 damage',
+    type: 'repel', value: 3,
+    reflect: 3,
+    unlocked: ALL_CARDS_UNLOCKED,
+    defaultUnlocked: ALL_CARDS_UNLOCKED,
+  }
 };
 const ENEMIES = [
   {
-    id: 'kera',
-    name: 'Kera The Fire Dragoness',
-    maxHp: 10,
-    sprite: 'resources/enemy1.png',
-    thumb: 'resources/enemy1checkpoint.png',
-    attacks: [
-      { id: 'flameBreath', name: 'Flame Breath', type: 'attack', value: 6 },
-      { id: 'emberShield', name: 'Ember Shield', type: 'defend', value: 6 },
-    ],
-    unlocks: ['powerStrike'],
-  },
-  {
-    id: 'ashling',
-    name: 'Ashling Warden',
-    maxHp: 6,
-    sprite: 'resources/enemy2.png',
-    thumb: 'resources/enemy2checkpoint.png',
-    attacks: [
-      { id: 'emberClaw', name: 'Ember Claw', type: 'attack', value: 5 },
-      { id: 'heatBarrier', name: 'Heat Barrier', type: 'defend', value: 8 },
-    ],
-    unlocks: [],
-  },
-  {
-    id: 'benzo',
-    name: 'Benzo The Ice Dragon',
-    maxHp: 6,
+    id: 'znichar',
+    name: 'Znichar Beast',
+    maxHp: 20,
     sprite: 'resources/enemy3.png',
     thumb: 'resources/enemy3checkpoint.png',
     attacks: [
-      { id: 'emberClaw', name: 'Ember Claw', type: 'attack', value: 5 },
-      { id: 'heatBarrier', name: 'Heat Barrier', type: 'defend', value: 8 },
+      { id: 'claw', name: 'Claws Strike', type: 'attack', value: 10 },
+      { id: 'powerClaw', name: 'Power Claw', type: 'attack', value: 16 },
+      { id: 'spinesBarrier', name: 'Spines Barrier', type: 'defend', value: 8 },
     ],
-    unlocks: [],
+    unlocks: ['powerUp', 'chomp'],
+  },
+  {
+    id: 'beryl',
+    name: 'Beryl The Bronze Dragon',
+    maxHp: 20,
+    sprite: 'resources/enemy2.png',
+    thumb: 'resources/enemy2checkpoint.png',
+    attacks: [
+      { id: 'bite', name: 'Dragon Bite', type: 'attack', value: 7 },
+      { id: 'scalesBarrier', name: 'Scales Barrier', type: 'defend', value: 10 },
+    ],
+    unlocks: ['repel', 'heal'],
+  },
+    {
+    id: 'kera',
+    name: 'Kera The Fire Dragoness',
+    maxHp: 20,
+    sprite: 'resources/enemy1.png',
+    thumb: 'resources/enemy1checkpoint.png',
+    attacks: [
+      { id: 'flameBreath', name: 'Flame Breath', type: 'attack', value: 15 },
+      { id: 'emberShield', name: 'Ember Shield', type: 'defend', value: 12 },
+    ],
+
   },
 ];
 /** The player's starting deck (card IDs). */
-const STARTING_DECK = [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_POWER_UP, CARD_POWER_UP];
+const STARTING_DECK =
+  ALL_CARDS_UNLOCKED
+    ? [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_POWER_UP, CARD_CHOMP, CARD_HEAL, CARD_REPEL]
+    : [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND];
+
 let playerDeck = [...STARTING_DECK];
 let rewardOverlayNextAction = null;
 
@@ -142,7 +165,7 @@ function initGame(enemyIndex = 0) {
   const preservedHp = gs?.player?.hp > 0 ? Math.min(gs.player.hp, PLAYER_MAX_HP) : PLAYER_MAX_HP;
 
   gs = {
-    player: { hp: preservedHp, maxHp: PLAYER_MAX_HP, block: 0, nextAttackMultiplier: 1 },
+    player: { hp: preservedHp, maxHp: PLAYER_MAX_HP, block: 0, nextAttackMultiplier: 1, repelNextAttack: 0 },
     currentEnemyIndex: enemyIndex,
     enemy: spawnEnemy(ENEMIES[enemyIndex]),
     energy: MAX_ENERGY,
@@ -313,19 +336,34 @@ function playCard(idx) {
   gs.hand.splice(idx, 1);
   gs.discard.push(cardId);
 
-  if (def.type === 'attack') {
-    const damage = def.value * gs.player.nextAttackMultiplier;
-    if (gs.player.nextAttackMultiplier > 1) {
-      gs.player.nextAttackMultiplier = 1;
-      showFloatNum('#player-pane', '⚡ Attack Doubled!', '#ffd166');
-    }
-    applyAttack(gs.enemy, '#enemy-pane', damage, "You strike the Drake for", "Your blow is absorbed by the Drake's ward!");
-  } else if (def.type === 'defend') {
-    gs.player.block += def.value;
-    showFloatNum('#player-pane', `+${def.value} 🛡`, '#5ba3f5');
-  } else if (def.type === 'power') {
-    gs.player.nextAttackMultiplier = def.multiplier || 2;
-    showFloatNum('#player-pane', '⚡ Next attack doubled!', '#ffd166');
+  switch (def.type) {
+    case 'attack':
+      const damage = def.value * gs.player.nextAttackMultiplier;
+      if (gs.player.nextAttackMultiplier > 1) {
+        gs.player.nextAttackMultiplier = 1;
+        showFloatNum('#player-pane', '⚡ Attack Doubled!', '#ffd166');
+      }
+      applyAttack(gs.enemy, '#enemy-pane', damage, "You strike the Drake for", "Your blow is absorbed by the Drake's ward!");
+      break;
+    case 'defend':
+      gs.player.block += def.value;
+      showFloatNum('#player-pane', `+${def.value} 🛡`, '#5ba3f5');
+      break;
+    case 'power':
+      gs.player.nextAttackMultiplier = def.multiplier || 2;
+      showFloatNum('#player-pane', '⚡ Next attack doubled!', '#ffd166');
+      break;
+    case 'heal':
+      const healAmount = def.value;
+      gs.player.hp = Math.min(gs.player.maxHp, gs.player.hp + healAmount);
+      showFloatNum('#player-pane', `+${healAmount} HP`, '#66bb6a');
+      break;
+    case 'repel':
+      gs.player.block += def.value;
+      gs.player.repelNextAttack = def.reflect || 0;
+      showFloatNum('#player-pane', `+${def.value} 🛡`, '#5ba3f5');
+    default:
+      console.warn(`Unknown card type: ${def.type}`);
   }
 
   renderAll();
@@ -351,6 +389,13 @@ function applyAttack(target, paneId, damage, hitMsg, blockMsg) {
     shakeEl(paneId);
   } else {
     showFloatNum(paneId, '🛡', '#5ba3f5');
+  }
+  console.log('Repel?');
+  console.log(gs.player.repelNextAttack);
+  if (gs.player.repelNextAttack > 0) {
+    gs.enemy.hp = Math.max(0, gs.enemy.hp - gs.player.repelNextAttack);
+    showFloatNum('#enemy-pane', `-${gs.player.repelNextAttack} (reflected)`, '#ff6040');
+    gs.player.repelNextAttack = 0;
   }
 }
 
@@ -466,10 +511,9 @@ function renderEnemyInfo() {
 
 function renderHP() {
   const { player: p, enemy: e } = gs;
-
-  document.getElementById('player-hp').textContent = p.hp;
+  document.getElementById('player-hp').textContent = `${p.hp} / ${p.maxHp}`;
   document.getElementById('player-hp-bar').style.width = `${(p.hp / p.maxHp) * 100}%`;
-  document.getElementById('enemy-hp').textContent = e.hp;
+  document.getElementById('enemy-hp').textContent = `${e.hp} / ${e.maxHp}`;
   document.getElementById('enemy-hp-bar').style.width = `${(e.hp / e.maxHp) * 100}%`;
 }
 
@@ -522,15 +566,12 @@ function renderHand() {
           : attackValue;
         description = `Deal ${attackValueText} damage.`;
         break;
-      case 'defend':
-        description = def.desc;
-        break;
-      case 'power':
+      default:
         description = def.desc;
         break;
     }
 
-    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' ? 'shield' : 'airwave';
+    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' || def.type === 'repel' ? 'shield' : 'airwave';
 
     card.innerHTML = `
       <div class="card-cost">${def.cost}</div>
