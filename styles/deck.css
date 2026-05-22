@@ -148,7 +148,7 @@
 
 .card-art {
   display: flex;
-  width: 100%;  
+  width: 100%;
   justify-content: center;
 }
 
@@ -184,56 +184,45 @@
 }
 
 .card-type {
-    position: absolute;
-    bottom: 10px;
-    width: 30px;
-    height: 30px;
-    background-color: #4a1a08;
-    border: 3px solid var(--card-border);
-    border-radius: 100%;
+  position: absolute;
+  bottom: 10px;
+  width: 30px;
+  height: 30px;
+  background-color: #4a1a08;
+  border: 3px solid var(--card-border);
+  border-radius: 100%;
 }
 
 .card-type .material-symbols-outlined {
-    font-size: 15px;
-    color: var(--gold-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+  font-size: 15px;
+  color: var(--gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
-#pile-row {
+.hand-area-container {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
   flex-shrink: 0;
 }
 
-.pile-counter {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 5px 12px;
+.end-turn-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-family: 'Cinzel', serif;
-  font-size: 1rem;
-  letter-spacing: 0.1em;
-  color: var(--text-dim);
-  cursor: default;
-}
-
-.pile-num {
-  font-size: 1rem;
-  color: var(--gold);
-  font-weight: 700;
+  justify-content: space-evenly;
 }
 
 #end-turn-btn {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 6px;
   font-family: 'Cinzel', serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  padding: 10px 22px;
+  font-size: 1rem;
+  padding: 10px 10px 10px 16px;
   background: linear-gradient(135deg, #4a1a08, #8b3010);
   border: 1px solid rgba(224, 80, 32, 0.5);
   border-radius: 8px;
@@ -242,7 +231,6 @@
   text-transform: uppercase;
   box-shadow: 0 0 15px rgba(224, 80, 32, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.2s;
-  flex-shrink: 0;
 }
 
 #end-turn-btn:hover:not(:disabled) {
@@ -256,4 +244,8 @@
   opacity: 0.4;
   cursor: not-allowed;
   transform: none;
+}
+
+#end-turn-btn span {
+  font-size: 1.3rem;
 }

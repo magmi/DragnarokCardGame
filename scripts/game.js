@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   2. GAME STATE
+   GAME STATE
    ═══════════════════════════════════════════════════════════ */
 
 /**
@@ -23,7 +23,6 @@ let gs;
 let campaignProgress = [];
 let selectedEnemyIndex = 0;
 
-/** @global — exposed on window so HTML onclick handlers can call it. */
 function initGame(enemyIndex = 0) {
   document.getElementById('gameover').classList.remove('show');
   hideUnlockOverlay();
@@ -46,7 +45,7 @@ function initGame(enemyIndex = 0) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   3. DECK MANAGEMENT
+   DECK MANAGEMENT
    ═══════════════════════════════════════════════════════════ */
 
 function renderDrawPileCount() {
@@ -59,7 +58,6 @@ function renderDiscardPileCount() {
   discardPileCount.textContent = gs.discard.length;
 }
 
-/** Fisher-Yates in-place shuffle. Returns the same array. */
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -68,11 +66,6 @@ function shuffle(arr) {
   return arr;
 }
 
-/**
- * Draw one card from the draw pile.
- * If the draw pile is empty, shuffle the discard into a new draw pile first.
- * Returns null if both piles are empty.
- */
 function drawCard() {
   if (gs.draw.length === 0) {
     if (gs.discard.length === 0) return null;
@@ -183,7 +176,6 @@ function pickIntent(enemy) {
   };
 }
 
-/** Fill the player's hand up to HAND_SIZE. */
 function dealHand() {
   gs.hand = [];
   for (let i = 0; i < HAND_SIZE; i++) {
@@ -195,13 +187,9 @@ function dealHand() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   4. CARD PLAY
+   CARD PLAY
    ═══════════════════════════════════════════════════════════ */
 
-/**
- * Play the card at hand[idx].
- * Validates turn phase and energy, then applies the card effect.
- */
 function playCard(idx) {
   if (gs.phase !== 'player') return;
 
@@ -209,7 +197,6 @@ function playCard(idx) {
   const def = CARD_DEFS[cardId];
   if (gs.energy < def.cost) return;
 
-  // Spend energy, remove from hand, move to discard
   gs.energy -= def.cost;
   gs.hand.splice(idx, 1);
   gs.discard.push(cardId);
@@ -248,14 +235,6 @@ function playCard(idx) {
   if (gs.enemy.hp <= 0) { handleEnemyDefeated(); return; }
 }
 
-/**
- * Apply an attack to a target, accounting for their block.
- * @param {object} target     — gs.enemy or gs.player
- * @param {string} paneId     — CSS selector for VFX target
- * @param {number} damage     — raw damage before block
- * @param {string} hitMsg     — log prefix when damage lands
- * @param {string} blockMsg   — log message when fully blocked
- */
 function applyAttack(target, paneId, damage, hitMsg, blockMsg) {
   const absorbed = Math.min(target.block, damage);
   target.block -= absorbed;
@@ -277,21 +256,16 @@ function applyAttack(target, paneId, damage, hitMsg, blockMsg) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   5. TURN FLOW
+   TURN FLOW
    ═══════════════════════════════════════════════════════════ */
 
-
-/** Called by the End Turn button. Discards hand, clears enemy block, and starts the enemy phase. */
 function endTurn() {
   if (gs.phase !== 'player') return;
   gs.phase = 'enemy';
   document.getElementById('end-turn-btn').disabled = true;
 
-  // Discard the remaining hand
   gs.discard.push(...gs.hand);
   gs.hand = [];
-
-  // Enemy block expires after the player turn ends
   gs.enemy.block = 0;
 
   renderAll();
@@ -299,7 +273,6 @@ function endTurn() {
   showBanner('Enemy Turn…', () => enemyTurn());
 }
 
-/** Enemy executes its announced intent, then sets up the next player turn. */
 function enemyTurn() {
   const { intent } = gs.enemy;
 
@@ -317,13 +290,10 @@ function enemyTurn() {
   renderAll();
   if (gs.player.hp <= 0) { endGame(false); return; }
 
-  // After a short pause, begin the next player turn
   setTimeout(beginPlayerTurn, 900);
 }
 
-/** Resets state for a fresh player turn and re-enables input. */
 function beginPlayerTurn() {
-  // Player block expires at the start of the next turn
   gs.player.block = 0;
 
   gs.enemy.intent = pickIntent(gs.enemy);
@@ -338,13 +308,9 @@ function beginPlayerTurn() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   6. GAME OVER
+   GAME OVER
    ═══════════════════════════════════════════════════════════ */
 
-/**
- * Show the victory or defeat overlay.
- * @param {boolean} won — true if the player won
- */
 function endGame(won) {
   const overlay = document.getElementById('gameover');
   const title = document.getElementById('go-title');
@@ -364,10 +330,9 @@ function endGame(won) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   7. RENDERING
+   RENDERING
    ═══════════════════════════════════════════════════════════ */
 
-/** Full re-render of all UI elements from current game state. */
 function renderAll() {
   renderEnemyInfo();
   renderHP();
@@ -429,7 +394,6 @@ function renderIntent() {
   document.getElementById('intent-text').textContent = gs.enemy.intent.text;
 }
 
-/** Re-builds the hand area from gs.hand. */
 function renderHand() {
   const area = document.getElementById('hand-area');
   area.innerHTML = '';
@@ -467,7 +431,6 @@ function renderHand() {
       <div class="card-type"><span class="material-symbols-outlined">${type}</span></div>
     `;
 
-    // Capture idx in closure so click still works after splice
     if (affordable) {
       const capturedIdx = idx;
       card.addEventListener('click', () => playCard(capturedIdx));
@@ -478,13 +441,9 @@ function renderHand() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   8. VFX HELPERS
+   VFX HELPERS
    ═══════════════════════════════════════════════════════════ */
 
-/**
- * Spawn a floating number/icon over a combatant pane.
- * Cleans itself up after the animation finishes.
- */
 function showFloatNum(selector, text, color) {
   const target = document.querySelector(selector);
   const rect = target.getBoundingClientRect();
@@ -500,7 +459,6 @@ function showFloatNum(selector, text, color) {
   setTimeout(() => el.remove(), 1200);
 }
 
-/** Briefly shake a combatant pane (on hit). */
 function shakeEl(selector) {
   const el = document.querySelector(selector);
   el.classList.remove('shaking');
@@ -509,11 +467,6 @@ function shakeEl(selector) {
   setTimeout(() => el.classList.remove('shaking'), 500);
 }
 
-/**
- * Show a phase transition banner for ~900ms, then call cb.
- * @param {string}        text — banner message
- * @param {Function|null} cb   — optional callback after banner hides
- */
 function showBanner(text, cb) {
   const banner = document.getElementById('phase-banner');
   document.getElementById('banner-text').textContent = text;
@@ -562,12 +515,6 @@ function hideUnlockedDeck() {
   overlay.setAttribute('aria-hidden', 'true');
 }
 
-/**
- * Populate a card grid container with the given card ids.
- * @param {HTMLElement} container
- * @param {string[]} cardIds
- * @param {string} emptyMessage
- */
 function renderCards(container, cardIds, emptyMessage) {
   container.innerHTML = '';
 
@@ -638,7 +585,20 @@ function resetCampaign() {
     unlocked: index === 0,
     beaten: false,
   }));
+
   selectedEnemyIndex = 0;
+
+  gs = {
+    player: { hp: PLAYER_MAX_HP, maxHp: PLAYER_MAX_HP, block: 0, nextAttackMultiplier: 1, repelNextAttack: 0 },
+    currentEnemyIndex: selectedEnemyIndex,
+    enemy: spawnEnemy(ENEMIES[selectedEnemyIndex]),
+    energy: MAX_ENERGY,
+    draw: shuffle(getDeckForBattle()),
+    discard: [],
+    hand: [],
+    phase: 'player',
+  };
+
   playerDeck = [...STARTING_DECK];
   Object.values(CARD_DEFS).forEach(def => {
     def.unlocked = !!def.defaultUnlocked;
@@ -733,7 +693,7 @@ function restartCampaign() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   9. BOOT
+   START
    ═══════════════════════════════════════════════════ */
 
 resetCampaign();
