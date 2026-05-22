@@ -1,140 +1,3 @@
-/**
- * game.js
- * Dragon Gods — Chronicle of Ash
- *
- * Sections:
- *   1. Constants & Card Definitions
- *   2. Game State
- *   3. Deck Management
- *   4. Card Play
- *   5. Turn Flow
- *   6. Game Over
- *   7. Rendering
- *   8. VFX Helpers
- *   9. Boot
- */
-
-/* ═══════════════════════════════════════════════════════════
-   1. CONSTANTS & CARD DEFINITIONS
-   ═══════════════════════════════════════════════════════════ */
-
-const MAX_ENERGY = 3;
-const HAND_SIZE = 5;
-const PLAYER_MAX_HP = 30;
-
-const CARD_STRIKE = 'strike';
-const CARD_DEFEND = 'defend';
-const CARD_POWER_UP = 'powerUp';
-const CARD_CHOMP = 'chomp';
-const CARD_HEAL = 'heal';
-const CARD_REPEL = 'repel';
-
-const ALL_CARDS_UNLOCKED = false; // for testing: set to true to unlock all cards from the start
-/**
- * Card definitions. Each card has:
- *   id     — matches key, used as CSS class name
- *   name   — display name
- *   cost   — energy cost
- *   art    — emoji icon fallback
- *   img    — image asset used for card art
- *   desc   — flavour / effect description shown on card
- *   type   — 'attack' | 'defend' | 'repel'
- *   value  — damage dealt or block gained
- */
-
-const CARD_DEFS = {
-  strike: {
-    id: 'strike', name: 'Strike', cost: 1,
-    art: '⚔️', img: 'resources/cardStrike.png', desc: 'Deal 6 damage',
-    type: 'attack', value: 6,
-    unlocked: true,
-    defaultUnlocked: true,
-  },
-  defend: {
-    id: 'defend', name: 'Defend', cost: 1,
-    art: '🛡️', img: 'resources/cardDefend.png', desc: 'Gain 5 Block',
-    type: 'defend', value: 5,
-    unlocked: true,
-    defaultUnlocked: true,
-  },
-  powerUp: {
-    id: 'powerUp', name: 'Power Up', cost: 2,
-    art: '⚡', img: 'resources/cardPowerUp.png', desc: 'Double next attack',
-    type: 'power', multiplier: 2,
-    unlocked: ALL_CARDS_UNLOCKED,
-    defaultUnlocked: ALL_CARDS_UNLOCKED,
-  },
-  chomp: {
-    id: 'chomp', name: 'Chomp', cost: 1,
-    art: '⚔️', img: 'resources/cardChomp.png', desc: 'Deal 8 damage',
-    type: 'attack', value: 8,
-    unlocked: ALL_CARDS_UNLOCKED,
-    defaultUnlocked: ALL_CARDS_UNLOCKED,
-  },
-  heal: {
-    id: 'heal', name: 'Heal', cost: 2,
-    art: '❤️', img: 'resources/cardHeal.png', desc: 'Heal 8 HP',
-    type: 'heal', value: 8,
-    unlocked: ALL_CARDS_UNLOCKED,
-    defaultUnlocked: ALL_CARDS_UNLOCKED,
-  },
-  repel: {
-    id: 'repel', name: 'Repel', cost: 1,
-    art: '🛡️', img: 'resources/cardRepel.png', desc: 'Gain 3 Block and Reflect 3 damage',
-    type: 'repel', value: 3,
-    reflect: 3,
-    unlocked: ALL_CARDS_UNLOCKED,
-    defaultUnlocked: ALL_CARDS_UNLOCKED,
-  }
-};
-const ENEMIES = [
-  {
-    id: 'znichar',
-    name: 'Znichar Beast',
-    maxHp: 20,
-    sprite: 'resources/enemy3.png',
-    thumb: 'resources/enemy3checkpoint.png',
-    attacks: [
-      { id: 'claw', name: 'Claws Strike', type: 'attack', value: 10 },
-      { id: 'powerClaw', name: 'Power Claw', type: 'attack', value: 16 },
-      { id: 'spinesBarrier', name: 'Spines Barrier', type: 'defend', value: 8 },
-    ],
-    unlocks: ['powerUp', 'chomp'],
-  },
-  {
-    id: 'beryl',
-    name: 'Beryl The Bronze Dragon',
-    maxHp: 20,
-    sprite: 'resources/enemy2.png',
-    thumb: 'resources/enemy2checkpoint.png',
-    attacks: [
-      { id: 'bite', name: 'Dragon Bite', type: 'attack', value: 7 },
-      { id: 'scalesBarrier', name: 'Scales Barrier', type: 'defend', value: 10 },
-    ],
-    unlocks: ['repel', 'heal'],
-  },
-    {
-    id: 'kera',
-    name: 'Kera The Fire Dragoness',
-    maxHp: 20,
-    sprite: 'resources/enemy1.png',
-    thumb: 'resources/enemy1checkpoint.png',
-    attacks: [
-      { id: 'flameBreath', name: 'Flame Breath', type: 'attack', value: 15 },
-      { id: 'emberShield', name: 'Ember Shield', type: 'defend', value: 12 },
-    ],
-
-  },
-];
-/** The player's starting deck (card IDs). */
-const STARTING_DECK =
-  ALL_CARDS_UNLOCKED
-    ? [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_POWER_UP, CARD_CHOMP, CARD_HEAL, CARD_REPEL]
-    : [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND];
-
-let playerDeck = [...STARTING_DECK];
-let rewardOverlayNextAction = null;
-
 /* ═══════════════════════════════════════════════════════════
    2. GAME STATE
    ═══════════════════════════════════════════════════════════ */
@@ -153,6 +16,9 @@ let rewardOverlayNextAction = null;
  *   phase:   'player' | 'enemy'
  * }}
  */
+
+let playerDeck = [...STARTING_DECK];
+let rewardOverlayNextAction = null;
 let gs;
 let campaignProgress = [];
 let selectedEnemyIndex = 0;
@@ -182,6 +48,16 @@ function initGame(enemyIndex = 0) {
 /* ═══════════════════════════════════════════════════════════
    3. DECK MANAGEMENT
    ═══════════════════════════════════════════════════════════ */
+
+function renderDrawPileCount() {
+  const drawPileCount = document.getElementById('draw-pile-count');
+  drawPileCount.textContent = gs.draw.length;
+}
+
+function renderDiscardPileCount() {
+  const discardPileCount = document.getElementById('discard-pile-count');
+  discardPileCount.textContent = gs.discard.length;
+}
 
 /** Fisher-Yates in-place shuffle. Returns the same array. */
 function shuffle(arr) {
@@ -314,6 +190,8 @@ function dealHand() {
     const card = drawCard();
     if (card) gs.hand.push(card);
   }
+  renderDrawPileCount();
+  renderDiscardPileCount();
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -390,8 +268,7 @@ function applyAttack(target, paneId, damage, hitMsg, blockMsg) {
   } else {
     showFloatNum(paneId, '🛡', '#5ba3f5');
   }
-  console.log('Repel?');
-  console.log(gs.player.repelNextAttack);
+
   if (gs.player.repelNextAttack > 0) {
     gs.enemy.hp = Math.max(0, gs.enemy.hp - gs.player.repelNextAttack);
     showFloatNum('#enemy-pane', `-${gs.player.repelNextAttack} (reflected)`, '#ff6040');
@@ -474,11 +351,11 @@ function endGame(won) {
   const sub = document.getElementById('go-sub');
 
   if (won) {
-    title.textContent = '🏆 Victory!';
+    title.textContent = 'Victory!';
     title.className = 'win';
     sub.textContent = 'Kera has fallen. The gods take notice.';
   } else {
-    title.textContent = '💀 Defeated';
+    title.textContent = 'Defeated';
     title.className = 'lose';
     sub.textContent = "You fall before the dragon's wrath";
   }
@@ -498,6 +375,8 @@ function renderAll() {
   renderEnergyOrbs();
   renderIntent();
   renderHand();
+  renderDrawPileCount();
+  renderDiscardPileCount();
 }
 
 function renderEnemyInfo() {
@@ -520,11 +399,18 @@ function renderHP() {
 function renderBlockBadges() {
   setBlockBadge('player', gs.player.block);
   setBlockBadge('enemy', gs.enemy.block);
+  setRepelBadge('player', gs.player.repelNextAttack);
 }
 
 function setBlockBadge(who, val) {
   const badge = document.getElementById(`${who}-block-badge`);
   document.getElementById(`${who}-block-val`).textContent = val;
+  badge.classList.toggle('visible', val > 0);
+}
+
+function setRepelBadge(who, val) {
+  const badge = document.getElementById(`${who}-repel-badge`);
+  document.getElementById(`${who}-repel-val`).textContent = val;
   badge.classList.toggle('visible', val > 0);
 }
 
@@ -662,32 +548,88 @@ function hideHowTo() {
 
 function showUnlockedDeck() {
   const container = document.getElementById('deck-cards-display');
+  const unlockedIds = Object.values(CARD_DEFS).filter(d => d.unlocked).map(d => d.id);
+  renderCards(container, unlockedIds, 'No unlocked cards available.');
+
+  const overlay = document.getElementById('deck-overlay');
+  overlay.setAttribute('aria-hidden', 'false');
+  overlay.classList.add('show');
+}
+
+function hideUnlockedDeck() {
+  const overlay = document.getElementById('deck-overlay');
+  overlay.classList.remove('show');
+  overlay.setAttribute('aria-hidden', 'true');
+}
+
+/**
+ * Populate a card grid container with the given card ids.
+ * @param {HTMLElement} container
+ * @param {string[]} cardIds
+ * @param {string} emptyMessage
+ */
+function renderCards(container, cardIds, emptyMessage) {
   container.innerHTML = '';
 
-  Object.values(CARD_DEFS).forEach(def => {
-    if (!def.unlocked) return;
+  if (!cardIds || cardIds.length === 0) {
+    const emptyMsg = document.createElement('div');
+    emptyMsg.className = 'unlock-empty';
+    emptyMsg.textContent = emptyMessage || 'No cards to show.';
+    container.appendChild(emptyMsg);
+    return;
+  }
+
+  cardIds.forEach(cardId => {
+    const def = CARD_DEFS[cardId];
+    if (!def) return;
 
     const artHtml = def.img ? `<img src="${def.img}" alt="${def.name}" class="card-art-img">` : def.art;
-
     const card = document.createElement('div');
     card.className = `card ${def.id}`;
+    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' || def.type === 'repel' ? 'shield' : 'airwave';
 
     card.innerHTML = `
       <div class="card-cost">${def.cost}</div>
-      <div class="card-art">${artHtml}</div>
       <div class="card-name">${def.name}</div>
-      <div class="card-divider"></div>
-      <div class="card-desc">${def.desc}</div>
+      <div class="card-art">${artHtml}</div>
+      <div class="card-desc">${def.desc}</div>      
+      <div class="card-type"><span class="material-symbols-outlined">${type}</span></div>
     `;
 
     container.appendChild(card);
   });
-
-  document.getElementById('deck-overlay').classList.add('show');
 }
 
-function hideUnlockedDeck() {
-  document.getElementById('deck-overlay').classList.remove('show');
+function showDiscardPile() {
+  if (!gs) return;
+  const container = document.getElementById('discard-pile-display');
+  renderCards(container, gs.discard, 'No cards have been discarded yet.');
+
+  const overlay = document.getElementById('discard-pile-overlay');
+  overlay.setAttribute('aria-hidden', 'false');
+  overlay.classList.add('show');
+}
+
+function hideDiscardPile() {
+  const overlay = document.getElementById('discard-pile-overlay');
+  overlay.classList.remove('show');
+  overlay.setAttribute('aria-hidden', 'true');
+}
+
+function showDrawPile() {
+  if (!gs) return;
+  const container = document.getElementById('draw-pile-display');
+  renderCards(container, gs.draw, 'The draw pile is empty.');
+
+  const overlay = document.getElementById('draw-pile-overlay');
+  overlay.setAttribute('aria-hidden', 'false');
+  overlay.classList.add('show');
+}
+
+function hideDrawPile() {
+  const overlay = document.getElementById('draw-pile-overlay');
+  overlay.classList.remove('show');
+  overlay.setAttribute('aria-hidden', 'true');
 }
 
 function resetCampaign() {

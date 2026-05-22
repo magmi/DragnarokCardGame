@@ -1,5 +1,7 @@
 #deck-overlay,
-#unlock-overlay {
+#unlock-overlay,
+#discard-pile-overlay,
+#draw-pile-overlay {
   position: fixed;
   inset: 0;
   z-index: 90;
@@ -11,7 +13,9 @@
 }
 
 #deck-overlay.show,
-#unlock-overlay.show {
+#unlock-overlay.show,
+#discard-pile-overlay.show,
+#draw-pile-overlay.show {
   display: flex;
 }
 
@@ -54,8 +58,8 @@
 }
 
 .deck-cards-grid .card {
-  width: 120px;
-  height: 160px;
+  width: 150px;
+  height: 210px;
   padding: 5px 4px 4px;
   cursor: default;
 }
@@ -69,27 +73,6 @@
   width: 16px;
   height: 16px;
   font-size: 0.85rem;
-}
-
-.deck-cards-grid .card-art {
-  margin: 8px 0 2px;
-}
-
-.deck-cards-grid .card-art img {
-  width: 70px;
-  height: 70px;
-}
-
-.deck-cards-grid .card-name {
-  font-size: 0.85rem;
-}
-
-.deck-cards-grid .card-divider {
-  margin: 1px 0;
-}
-
-.deck-cards-grid .card-desc {
-  font-size: 0.9rem;
 }
 
 #hand-area {

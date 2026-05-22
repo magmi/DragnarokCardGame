@@ -56,7 +56,6 @@
         <li>Block resets after your turn ends.</li>
         <li>Defeat the enemy before your HP reaches 0.</li>
       </ul>
-      <button class="action-btn" onclick="hideHowTo()">Got it</button>
     </div>
   </div>
 
@@ -68,7 +67,28 @@
         <button class="close-btn" onclick="hideUnlockedDeck()">×</button>
       </div>
       <div id="deck-cards-display" class="deck-cards-grid"></div>
-      <button class="action-btn" onclick="hideUnlockedDeck()">Close</button>
+    </div>
+  </div>
+
+  <!-- Discard Pile overlay -->
+  <div id="discard-pile-overlay" aria-hidden="true">
+    <div class="deck-card">
+      <div class="deck-header">
+        <h2>Discard Pile</h2>
+        <button class="close-btn" onclick="hideDiscardPile()">×</button>
+      </div>
+      <div id="discard-pile-display" class="deck-cards-grid"></div>
+    </div>
+  </div>
+
+  <!-- Draw Pile overlay -->
+  <div id="draw-pile-overlay" aria-hidden="true">
+    <div class="deck-card">
+      <div class="deck-header">
+        <h2>Draw Pile</h2>
+        <button class="close-btn" onclick="hideDrawPile()">×</button>
+      </div>
+      <div id="draw-pile-display" class="deck-cards-grid"></div>
     </div>
   </div>
 
@@ -78,25 +98,31 @@
       <div class="deck-header">
         <h2>Battle Rewards</h2>
       </div>
-      <p id="unlock-overlay-copy">You have unlocked new cards for your deck.</p>
+      <p id="unlock-overlay-copy" style="margin-bottom: 16px;">You have unlocked new cards for your deck.</p>
       <div id="unlock-cards-display" class="deck-cards-grid"></div>
-      <button id="unlock-overlay-cta" class="action-btn" onclick="returnToMapAfterVictory()">Return to Map</button>
+      <button id="unlock-overlay-cta" class="action-btn max-width-btn" onclick="returnToMapAfterVictory()">Return to
+        Map</button>
     </div>
   </div>
 
   <!-- ── Main game layout ── -->
   <div id="game">
-
     <div class="game-menu">
-      <button id="deck-btn" class="icon-button" onclick="showUnlockedDeck()">
+      <button class="game-menu-button" onclick="showUnlockedDeck()" title="Unlocked Deck" aria-label="Unlocked Deck">
         <span class="material-symbols-outlined">inventory_2</span>
       </button>
-      <button id="howto-btn" class="icon-button" onclick="showHowTo()">
+      <button class="game-menu-button" onclick="showDiscardPile()" title="Discard Pile" aria-label="Discard Pile">
+        <span id="discard-pile-count">0</span>
+        <span class="material-symbols-outlined">delete</span>
+      </button>
+      <button class="game-menu-button" onclick="showDrawPile()" title="Draw Pile" aria-label="Draw Pile">
+        <span id="draw-pile-count">0</span>
+        <span class="material-symbols-outlined">shuffle</span>
+      </button>
+      <button class="game-menu-button" onclick="showHowTo()" title="How to Play" aria-label="How to Play">
         <span class="material-symbols-outlined">help</span>
       </button>
     </div>
-
-
 
     <!-- ── Battlefield: Enemy (left) vs Player (right) ── -->
     <div id="battlefield">
@@ -121,7 +147,7 @@
         </div>
 
         <div class="block-badge" id="enemy-block-badge">
-          <span class="block-icon">🛡</span>
+          <span class="material-symbols-outlined">shield</span>
           <span id="enemy-block-val">0</span> Block
         </div>
 
@@ -156,8 +182,13 @@
             </div>
             <div class="player-block-and-energy">
               <div class="block-badge" id="player-block-badge">
-                <span class="block-icon">🛡</span>
+
+                <span class="material-symbols-outlined">shield</span>
                 <span id="player-block-val">0</span> Block
+              </div>
+              <div class="repel-badge" id="player-repel-badge">
+                <span class="material-symbols-outlined">shield</span>
+                <span id="player-repel-val">0</span> Repel
               </div>
               <div id="energy-row">
                 <span id="energy-label">ENERGY</span>
@@ -189,7 +220,8 @@
   </div><!-- /game -->
 
   <script src="sprites.js"></script>
-  <script src="game.js"></script>
+  <script src="scripts/constants.js"></script>
+  <script src="scripts/game.js"></script>
 </body>
 
 </html>

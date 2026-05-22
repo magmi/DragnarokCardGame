@@ -11,6 +11,7 @@
   --border: rgba(190, 179, 146, 0.3);
   --border-hot: rgba(201, 168, 76, 0.75);
   --blue-glow: #5ba3f5;
+  --purple-glow: #db77ff;
   --text-main: #e8dcc8;
   --text-dim: #c9b8a4;
   --text-white: #fff;
@@ -100,10 +101,40 @@ body::after {
   position: absolute;
   top: 0px;
   left: 0px;
+  z-index: 5;
+  background-color: #281219;
+  padding: 10px;
+  border-radius: 0px 0px 20px 0px;
+  border-right: 1px solid #ba4d4d;
+  border-bottom: 1px solid #ba4d4d;
 }
 
-#howto-btn,
-#deck-btn,
+.game-menu-button {
+  display: flex;
+  position: relative;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px 10px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+.game-menu-button:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+}
+
+#discard-pile-count,
+#draw-pile-count {
+  position: absolute;
+  bottom: -2px;
+  right: 2px;
+}
+
 .action-btn,
 .close-btn {
   font-family: 'Cinzel', serif;
@@ -119,12 +150,7 @@ body::after {
 
 .max-width-btn {
   max-width: 200px;
-}
-
-.icon-button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  margin: auto;
 }
 
 .close-btn {
@@ -135,7 +161,6 @@ body::after {
   background: transparent;
 }
 
-#howto-btn:hover,
 .action-btn:hover,
 .close-btn:hover {
   background: rgba(255, 255, 255, 0.14);
@@ -340,8 +365,25 @@ body::after {
   transform: scale(1);
 }
 
-.block-icon {
-  font-size: 0.9rem;
+.repel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(145, 42, 173, 0.25);
+  border: 1px solid rgba(235, 91, 245, 0.4);
+  border-radius: 20px;
+  padding: 3px 10px 3px 7px;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--purple-glow);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: all 0.3s;
+}
+
+.repel-badge.visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 #phase-banner {
@@ -354,7 +396,7 @@ body::after {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 #phase-banner.show {
