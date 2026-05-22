@@ -120,7 +120,7 @@ function showUnlockRewardOverlay(unlockedIds, buttonText, onCloseAction) {
       const def = CARD_DEFS[cardId];
       if (!def) return;
 
-      const artHtml = def.img ? `<img src="${def.img}" alt="${def.name}" class="card-art-img">` : def.art;
+      const artHtml = `<img src="${def.img}" alt="${def.name}" class="card-art-img">`;
       const card = document.createElement('div');
       card.className = `card ${def.id}`;
       card.innerHTML = `
@@ -401,7 +401,7 @@ function renderHand() {
   gs.hand.forEach((cardId, idx) => {
     const def = CARD_DEFS[cardId];
     const affordable = gs.energy >= def.cost;
-    const artHtml = def.img ? `<img src="${def.img}" alt="${def.name}" class="card-art-img">` : def.art;
+    const artHtml = `<img src="${def.img}" alt="${def.name}" class="card-art-img">`;
 
     const card = document.createElement('div');
     card.className = `card card-deal ${cardId}${affordable ? '' : ' unaffordable'}`;
@@ -530,7 +530,7 @@ function renderCards(container, cardIds, emptyMessage) {
     const def = CARD_DEFS[cardId];
     if (!def) return;
 
-    const artHtml = def.img ? `<img src="${def.img}" alt="${def.name}" class="card-art-img">` : def.art;
+    const artHtml = `<img src="${def.img}" alt="${def.name}" class="card-art-img">`;
     const card = document.createElement('div');
     card.className = `card ${def.id}`;
     const type = def.type === 'attack' ? 'swords' : def.type === 'defend' || def.type === 'repel' ? 'shield' : 'airwave';
@@ -635,6 +635,7 @@ function renderMap() {
     node.innerHTML = `
     <img src="${enemy.thumb}" alt="${enemy.name}" class="node-sprite">
       <span class="node-label">Level ${index + 1}</span>
+      <div class="card-divider"></div>
       <span class="node-name">${enemy.name}</span>
       <span class="node-status">${statusText}</span>
     `;

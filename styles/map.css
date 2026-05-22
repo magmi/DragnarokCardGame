@@ -62,7 +62,7 @@
 }
 
 .map-node {
-    min-width: 500px;
+    min-width: 300px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(255, 255, 255, 0.05);
     border-radius: 18px;
@@ -113,7 +113,7 @@
 }
 
 .node-sprite {
-    width: 50px;
+    width: 70px;
     height: auto;
     border-radius: 12px;
     object-fit: cover;
