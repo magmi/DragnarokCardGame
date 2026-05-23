@@ -12,19 +12,10 @@ const CARD_POWER_UP = 'powerUp';
 const CARD_CHOMP = 'chomp';
 const CARD_HEAL = 'heal';
 const CARD_REPEL = 'repel';
+const CARD_BURN = 'burn';
+const CARD_VULNERABLE = 'vulnerable'
 
-const ALL_CARDS_UNLOCKED = false; // for testing: set to true to unlock all cards from the start
-/**
- * Card definitions. Each card has:
- *   id     — matches key, used as CSS class name
- *   name   — display name
- *   cost   — energy cost
- *   art    — emoji icon fallback
- *   img    — image asset used for card art
- *   desc   — flavour / effect description shown on card
- *   type   — 'attack' | 'defend' | 'repel'
- *   value  — damage dealt or block gained
- */
+const ALL_CARDS_UNLOCKED = true; // for testing: set to true to unlock all cards from the start
 
 const CARD_DEFS = {
   strike: {
@@ -69,6 +60,20 @@ const CARD_DEFS = {
     reflect: 3,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
+  },
+  vulnerable: {
+    id: 'vulnerable', name: 'Bite', cost: 2,
+    img: 'resources/cardVulnerable.png', desc: 'Deal 10 damage and apply 3 vulnerable',
+    type: 'attack', value: 10, vulnerable: 3,
+    unlocked: ALL_CARDS_UNLOCKED,
+    defaultUnlocked: ALL_CARDS_UNLOCKED
+  },
+  burn: {
+    id:'burn', name: 'Fire Breath', cost: 2,
+    img: 'resources/cardBurn.png', desc: 'Deal 5 damage and apply 2 burn',
+    type: 'attack', value: 5, burn: 2,
+    unlocked: ALL_CARDS_UNLOCKED,
+    defaultUnlocked: ALL_CARDS_UNLOCKED
   }
 };
 const ENEMIES = [
@@ -121,5 +126,5 @@ const ENEMIES = [
 
 const STARTING_DECK =
   ALL_CARDS_UNLOCKED
-    ? [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_POWER_UP, CARD_CHOMP, CARD_HEAL, CARD_REPEL]
+    ? [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_POWER_UP, CARD_CHOMP, CARD_HEAL, CARD_REPEL, CARD_BURN, CARD_VULNERABLE]
     : [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_DEFEND, CARD_DEFEND];

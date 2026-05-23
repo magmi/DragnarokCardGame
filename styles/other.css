@@ -12,6 +12,7 @@
   --border-hot: rgba(201, 168, 76, 0.75);
   --blue-glow: #5ba3f5;
   --purple-glow: #db77ff;
+  --green-glow: #38bb60;
   --text-main: #e8dcc8;
   --text-dim: #c9b8a4;
   --text-white: #fff;
@@ -353,46 +354,46 @@ body::after {
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.block-badge {
+.badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: rgba(42, 106, 173, 0.25);
-  border: 1px solid rgba(91, 163, 245, 0.4);
   border-radius: 20px;
   padding: 3px 10px 3px 7px;
   font-family: 'Cinzel', serif;
   font-size: 1rem;
-  color: var(--blue-glow);
   opacity: 0;
   transform: scale(0.85);
   transition: all 0.3s;
 }
 
-.block-badge.visible {
+.badge.visible {
   opacity: 1;
   transform: scale(1);
+}
+
+.block-badge {
+  background: rgba(42, 106, 173, 0.25);
+  border: 1px solid rgba(91, 163, 245, 0.4);
+  color: var(--blue-glow);
 }
 
 .repel-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
   background: rgba(145, 42, 173, 0.25);
   border: 1px solid rgba(235, 91, 245, 0.4);
-  border-radius: 20px;
-  padding: 3px 10px 3px 7px;
-  font-family: 'Cinzel', serif;
-  font-size: 1rem;
   color: var(--purple-glow);
-  opacity: 0;
-  transform: scale(0.85);
-  transition: all 0.3s;
 }
 
-.repel-badge.visible {
-  opacity: 1;
-  transform: scale(1);
+.burn-badge {
+  background: rgba(173, 42, 42, 0.25);
+  border: 1px solid rgba(245, 91, 91, 0.4);
+  color: var(--ember);
+}
+
+.vulnerable-badge {
+  background: rgba(42, 173, 83, 0.25);
+  border: 1px solid rgba(91, 237, 245, 0.4);
+  color: var(--green-glow);
 }
 
 #phase-banner {

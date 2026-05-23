@@ -85,6 +85,8 @@ function spawnEnemy(template) {
     hp: template.maxHp,
     block: 0,
     intent: pickIntent(template),
+    vulnerable: 0,
+    burn: 0,
   };
 }
 
@@ -206,27 +208,35 @@ function playCard(idx) {
       const damage = def.value * gs.player.nextAttackMultiplier;
       if (gs.player.nextAttackMultiplier > 1) {
         gs.player.nextAttackMultiplier = 1;
-        showFloatNum('#player-pane', '⚡ Attack Doubled!', '#ffd166');
+        showFloatNum('#player-panel', 'Attack Doubled!', '#ffd166');
       }
-      applyAttack(gs.enemy, '#enemy-pane', damage, "You strike the Drake for", "Your blow is absorbed by the Drake's ward!");
+
+      if (def.burn > 0) {
+        gs.enemy.burn = def.burn
+      }
+      if (def.vulnerable > 0) {
+        gs.enemy.vulnerable = def.vulnerable;
+      }
+
+      applyAttack(gs.enemy, '#enemy-panel', damage);
       break;
     case 'defend':
       gs.player.block += def.value;
-      showFloatNum('#player-pane', `+${def.value} 🛡`, '#5ba3f5');
+      showFloatNum('#player-panel', `+${def.value} Block`, '#5ba3f5');
       break;
     case 'power':
       gs.player.nextAttackMultiplier = def.multiplier || 2;
-      showFloatNum('#player-pane', '⚡ Next attack doubled!', '#ffd166');
+      showFloatNum('#player-panel', 'Next attack doubled!', '#ffd166');
       break;
     case 'heal':
       const healAmount = def.value;
       gs.player.hp = Math.min(gs.player.maxHp, gs.player.hp + healAmount);
-      showFloatNum('#player-pane', `+${healAmount} HP`, '#66bb6a');
+      showFloatNum('#player-panel', `+${healAmount} HP`, '#66bb6a');
       break;
     case 'repel':
       gs.player.block += def.value;
       gs.player.repelNextAttack = def.reflect || 0;
-      showFloatNum('#player-pane', `+${def.value} 🛡`, '#5ba3f5');
+      showFloatNum('#player-panel', `+${def.value} Block`, '#5ba3f5');
     default:
       console.warn(`Unknown card type: ${def.type}`);
   }
@@ -235,7 +245,7 @@ function playCard(idx) {
   if (gs.enemy.hp <= 0) { handleEnemyDefeated(); return; }
 }
 
-function applyAttack(target, paneId, damage, hitMsg, blockMsg) {
+function applyAttack(target, paneId, damage) {
   const absorbed = Math.min(target.block, damage);
   target.block -= absorbed;
   const dealt = damage - absorbed;
@@ -250,7 +260,7 @@ function applyAttack(target, paneId, damage, hitMsg, blockMsg) {
 
   if (gs.player.repelNextAttack > 0) {
     gs.enemy.hp = Math.max(0, gs.enemy.hp - gs.player.repelNextAttack);
-    showFloatNum('#enemy-pane', `-${gs.player.repelNextAttack} (reflected)`, '#ff6040');
+    showFloatNum('#enemy-panel', `-${gs.player.repelNextAttack} (reflected)`, '#ff6040');
     gs.player.repelNextAttack = 0;
   }
 }
@@ -274,17 +284,18 @@ function endTurn() {
 }
 
 function enemyTurn() {
+  if (gs.enemy.burn > 0) {
+    applyAttack(gs.enemy, '#enemy-panel', gs.enemy.burn);
+    gs.enemy.burn -= 1;
+  }
+
   const { intent } = gs.enemy;
 
   if (intent.type === 'attack') {
-    applyAttack(
-      gs.player, '#player-pane', intent.value,
-      `${gs.enemy.name} strikes you — you take`,
-      `${gs.enemy.name}'s assault is blocked by your ward!`
-    );
+    applyAttack(gs.player, '#player-panel', intent.value);
   } else {
     gs.enemy.block += intent.value;
-    showFloatNum('#enemy-pane', `+${intent.value} 🛡`, '#5ba3f5');
+    showFloatNum('#enemy-panel', `+${intent.value} Block`, '#5ba3f5');
   }
 
   renderAll();
@@ -336,7 +347,7 @@ function endGame(won) {
 function renderAll() {
   renderEnemyInfo();
   renderHP();
-  renderBlockBadges();
+  renderBadges();
   renderEnergyOrbs();
   renderIntent();
   renderHand();
@@ -345,7 +356,7 @@ function renderAll() {
 }
 
 function renderEnemyInfo() {
-  const nameEl = document.querySelector('#enemy-pane .combatant-name');
+  const nameEl = document.querySelector('#enemy-panel .combatant-name');
   if (nameEl) nameEl.textContent = gs.enemy.name;
   const spriteArea = document.getElementById('enemy-sprite');
   if (spriteArea) {
@@ -361,21 +372,17 @@ function renderHP() {
   document.getElementById('enemy-hp-bar').style.width = `${(e.hp / e.maxHp) * 100}%`;
 }
 
-function renderBlockBadges() {
-  setBlockBadge('player', gs.player.block);
-  setBlockBadge('enemy', gs.enemy.block);
-  setRepelBadge('player', gs.player.repelNextAttack);
+function renderBadges() {
+  setBadge('player', 'block', gs.player.block);
+  setBadge('enemy', 'block', gs.enemy.block);
+  setBadge('player', 'repel', gs.player.repelNextAttack);
+  setBadge('enemy', 'vulnerable', gs.enemy.vulnerable);
+  setBadge('enemy', 'burn', gs.enemy.burn);
 }
 
-function setBlockBadge(who, val) {
-  const badge = document.getElementById(`${who}-block-badge`);
-  document.getElementById(`${who}-block-val`).textContent = val;
-  badge.classList.toggle('visible', val > 0);
-}
-
-function setRepelBadge(who, val) {
-  const badge = document.getElementById(`${who}-repel-badge`);
-  document.getElementById(`${who}-repel-val`).textContent = val;
+function setBadge(who, badgeName, val) {
+  const badge = document.getElementById(`${who}-${badgeName}-badge`);
+  document.getElementById(`${who}-${badgeName}-val`).textContent = val;
   badge.classList.toggle('visible', val > 0);
 }
 
@@ -414,7 +421,13 @@ function renderHand() {
         const attackValueText = gs.player.nextAttackMultiplier > 1
           ? `<span style="color: #66bb6a;">${attackValue}</span>`
           : attackValue;
-        description = `Deal ${attackValueText} damage.`;
+        description = `Deal ${attackValueText} damage`;
+        if (def.vulnerable > 0) {
+          description += ` and apply ${def.vulnerable} vulnerable`;
+        }
+        if (def.burn > 0) {
+          description += ` and apply ${def.burn} burn`;
+        }
         break;
       default:
         description = def.desc;
