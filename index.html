@@ -141,13 +141,18 @@
 
   <!-- ── Main game layout ── -->
   <div id="game">
-    <div class="game-menu">
-      <button class="game-menu-button" onclick="showUnlockedDeck()" title="Unlocked Deck" aria-label="Unlocked Deck">
-        <span class="material-symbols-outlined">inventory_2</span>
+    <div class="game-menu" id="game-menu">
+      <button class="game-menu-toggle" onclick="toggleGameMenu()" title="Menu" aria-label="Menu">
+        <span class="material-symbols-outlined">menu</span>
       </button>
-      <button class="game-menu-button" onclick="showHowTo()" title="How to Play" aria-label="How to Play">
-        <span class="material-symbols-outlined">help</span>
-      </button>
+      <div class="game-menu-items">
+        <button class="game-menu-button" onclick="showUnlockedDeck(); toggleGameMenu()" title="Unlocked Deck" aria-label="Unlocked Deck">
+          <span class="material-symbols-outlined">inventory_2</span>
+        </button>
+        <button class="game-menu-button" onclick="showHowTo(); toggleGameMenu()" title="How to Play" aria-label="How to Play">
+          <span class="material-symbols-outlined">help</span>
+        </button>
+      </div>
     </div>
 
     <!-- ── Battlefield: Enemy (left) vs Player (right) ── -->

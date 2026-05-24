@@ -427,7 +427,7 @@ function renderHand() {
       case 'attack':
         const attackValue = def.value * gs.player.nextAttackMultiplier;
         const attackValueText = gs.player.nextAttackMultiplier > 1
-          ? `<span style="color: #66bb6a;">${attackValue}</span>`
+          ? ` <span style="color: #66bb6a;">${attackValue}</span> `
           : attackValue;
         description = `Deal ${attackValueText} damage`;
         if (def.vulnerable > 0) {
@@ -517,6 +517,10 @@ function hideStartScreen() {
 
 function startGame() {
   startSelectedEnemy();
+}
+
+function toggleGameMenu() {
+  document.getElementById('game-menu').classList.toggle('open');
 }
 
 function showHowTo() {
