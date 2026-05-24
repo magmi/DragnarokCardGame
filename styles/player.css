@@ -16,6 +16,22 @@
   flex-direction: row;
 }
 
+.player-sprite-area {
+  width: 110px;
+  height: 110px;
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-sprite-area img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .player-block-and-energy {
   margin-top: 15px;
   display: flex;
@@ -24,12 +40,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-}
-
-.player-svg {
-  width: 90px;
-  height: 90px;
-  filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.3));
 }
 
 .hp-fill.player {
@@ -44,7 +54,7 @@
   justify-content: end;
 }
 
-#energy-label {
+.energy-label {
   font-family: 'Cinzel', serif;
   font-size: 1rem;
   letter-spacing: 0.15em;

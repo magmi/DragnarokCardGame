@@ -1,26 +1,73 @@
 @media (max-width: 900px) {
-  #hand-area {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    min-width: unset;
-    min-height: unset;
-    gap: 8px;
-    padding-bottom: 0;
-  }
+    .mobile-hidden {
+        display: none;
+    }
 
-  .hand-area-container {
-    overflow-y: auto;
-    max-height: 45vh;
-    padding: 8px 4px;
-  }
+    #map-overlay {
+        padding: 5px;
+    }
 
-  .card {
-    width: 130px;
-    height: 180px;
-  }
+    .header img {
+        width: 150px;
+    }
 
-  .card:hover:not(.unaffordable) {
-    transform: translateY(-10px) scale(1.04);
-  }
+    .header p {
+        font-size: 0.6rem;
+        margin-bottom: 10px;
+    }
+
+    .map-actions {
+        flex-direction: row;
+        gap: 2px;
+    }
+
+    .action-btn {
+        width: unset;
+    }
+
+    .hand-area-container {
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        padding: 8px 4px;
+    }
+
+    #hand-area {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: flex-end;
+        min-width: unset;
+        min-height: unset;
+        width: max-content;
+        gap: 8px;
+        padding-bottom: 4px;
+    }
+
+    .card {
+        width: 150px;
+        height: 200px;
+    }
+
+    .card:hover:not(.unaffordable) {
+        transform: translateY(-10px) scale(1.04);
+    }
+
+    /* Player */
+    .player-sprite-and-hp .hp-section {
+        min-width: 0;
+    }
+
+    .player-block-and-energy {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .energy-label {
+        font-size: 0.8rem;
+    }
+
+    .orb {
+        width: 10px;
+        height: 10px;
+    }
 }

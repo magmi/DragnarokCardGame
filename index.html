@@ -33,8 +33,7 @@
         <img src="resources/ui/DragnarokLogo.png" class="header-logo" alt="header logo" />
         <p>Dragon Gods · Card Game</p>
       </div>
-      <p class="header-description">Choose your next level. Only unlocked enemies can be challenged. Defeat one to
-        unlock the next.</p>
+      <p class="header-description">Choose your next opponent</p>
       <div id="map-list">
       </div>
       <div class="map-actions">
@@ -57,6 +56,16 @@
         <li>End your turn to let the enemy execute its intent.</li>
         <li>Defeat the enemy before your HP reaches 0.</li>
       </ul>
+
+      <h3 class="howto-section-title">Energy</h3>
+      <div class="howto-status-row">
+        <div class="howto-orbs">
+          <div class="orb"></div>
+          <div class="orb"></div>
+          <div class="orb spent"></div>
+        </div>
+        <p>You start each turn with 3 energy. Spend it to play cards — each card shows its cost in the top-left corner. Spent orbs (dimmed) are restored at the start of your next turn.</p>
+      </div>
 
       <h3 class="howto-section-title">Status Effects</h3>
       <div class="howto-status-row">
@@ -170,26 +179,27 @@
           <!-- Injected by sprites.js -->
         </div>
 
-        <div class="enemy-status">
-          <div class="badge block-badge" id="enemy-block-badge">
-            <span class="material-symbols-outlined">shield</span>
-            <span id="enemy-block-val">0</span> Block
-          </div>
-          <div class="badge burn-badge" id="enemy-burn-badge">
-            <span class="material-symbols-outlined">
-              mode_heat
-            </span>
-            <span id="enemy-burn-val">0</span>
-          </div>
-          <div class="badge vulnerable-badge" id="enemy-vulnerable-badge">
-            <span class="material-symbols-outlined">
-              heart_minus
-            </span>
-            <span id="enemy-vulnerable-val">0</span>
-          </div>
-        </div>
+
 
         <div class="hp-section">
+          <div class="enemy-status">
+            <div class="badge block-badge" id="enemy-block-badge">
+              <span class="material-symbols-outlined">shield</span>
+              <span id="enemy-block-val">0</span> Block
+            </div>
+            <div class="badge burn-badge" id="enemy-burn-badge">
+              <span class="material-symbols-outlined">
+                mode_heat
+              </span>
+              <span id="enemy-burn-val">0</span>
+            </div>
+            <div class="badge vulnerable-badge" id="enemy-vulnerable-badge">
+              <span class="material-symbols-outlined">
+                heart_minus
+              </span>
+              <span id="enemy-vulnerable-val">0</span>
+            </div>
+          </div>
           <div class="hp-label">
             <span>HP</span>
             <span class="hp-value"><span id="enemy-hp">50</span></span>
@@ -207,7 +217,7 @@
         <span class="combatant-name">Krystel</span>
         <div class="card-divider"></div>
         <div class="player-sprite-and-hp">
-          <div class="sprite-area" id="player-sprite">
+          <div class="player-sprite-area" id="player-sprite">
             <!-- Injected by sprites.js -->
           </div>
           <div class="hp-section">
@@ -221,14 +231,14 @@
             <div class="player-block-and-energy">
               <div class="badge block-badge" id="player-block-badge">
                 <span class="material-symbols-outlined">shield</span>
-                <span id="player-block-val">0</span> Block
+                <span id="player-block-val">0</span> <span class="mobile-hidden"> Block </span>
               </div>
               <div class="badge repel-badge" id="player-repel-badge">
                 <span class="material-symbols-outlined">shield</span>
-                <span id="player-repel-val">0</span> Repel
+                <span id="player-repel-val">0</span> <span class="mobile-hidden">Repel </span>
               </div>
               <div id="energy-row">
-                <span id="energy-label">ENERGY</span>
+                <span class="energy-label mobile-hidden">ENERGY</span>
                 <div id="orbs"></div>
               </div>
             </div>
