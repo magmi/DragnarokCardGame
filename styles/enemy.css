@@ -7,16 +7,18 @@
 
 #enemy-sprite img {
   height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
 
 .enemy-sprite-area {
   position: relative;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
-  height: 0;
+  min-height: 0;
+  width: 100%;
 }
 
 #enemy-panel::after {

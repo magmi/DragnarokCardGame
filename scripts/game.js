@@ -249,10 +249,8 @@ function applyAttack(target, paneId, damage) {
   target.block -= absorbed;
   var dealt = damage - absorbed;
 
-  // If target is vulnerable damage dealt is doubled
   if (target.vulnerable > 0) {
-    dealt *= 2;
-    target.vulnerable -= 1;
+    dealt = Math.round(dealt * 1.25);
   }
 
   target.hp = Math.max(0, target.hp - dealt);
@@ -294,6 +292,9 @@ function enemyTurn() {
   if (gs.enemy.burn > 0) {
     applyAttack(gs.enemy, '#enemy-panel', gs.enemy.burn);
     gs.enemy.burn -= 1;
+  }
+  if (gs.enemy.vulnerable > 0) {
+    gs.enemy.vulnerable -= 1;
   }
 
   const { intent } = gs.enemy;
@@ -501,6 +502,13 @@ function showBanner(text, cb) {
 function showStartScreen() {
   renderMap();
   document.getElementById('map-overlay').classList.add('show');
+  setTimeout(() => {
+    const mapList = document.getElementById('map-list');
+    const unlockedNodes = mapList.querySelectorAll('.map-node.unlocked');
+    if (unlockedNodes.length > 0) {
+      unlockedNodes[unlockedNodes.length - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, 0);
 }
 
 function hideStartScreen() {

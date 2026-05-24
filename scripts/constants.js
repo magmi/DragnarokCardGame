@@ -80,7 +80,7 @@ const ENEMIES = [
   {
     id: 'znichar',
     name: 'Znichar Beast',
-    maxHp: 40,
+    maxHp: 4,
     sprite: 'resources/enemies/enemy3.png',
     thumb: 'resources/enemies/enemy3checkpoint.png',
     attacks: [
@@ -95,7 +95,7 @@ const ENEMIES = [
   {
     id: 'beryl',
     name: 'Beryl The Bronze Dragon',
-    maxHp: 50,
+    maxHp: 5,
     sprite: 'resources/enemies/enemy2.png',
     thumb: 'resources/enemies/enemy2checkpoint.png',
     attacks: [

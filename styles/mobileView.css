@@ -1,0 +1,26 @@
+@media (max-width: 900px) {
+  #hand-area {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    min-width: unset;
+    min-height: unset;
+    gap: 8px;
+    padding-bottom: 0;
+  }
+
+  .hand-area-container {
+    overflow-y: auto;
+    max-height: 45vh;
+    padding: 8px 4px;
+  }
+
+  .card {
+    width: 130px;
+    height: 180px;
+  }
+
+  .card:hover:not(.unaffordable) {
+    transform: translateY(-10px) scale(1.04);
+  }
+}
