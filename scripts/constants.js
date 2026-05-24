@@ -20,42 +20,42 @@ const ALL_CARDS_UNLOCKED = true; // for testing: set to true to unlock all cards
 const CARD_DEFS = {
   strike: {
     id: 'strike', name: 'Strike', cost: 1,
-    img: 'resources/cardStrike.png', desc: 'Deal 6 damage',
+    img: 'resources/cards/cardStrike.png', desc: 'Deal 6 damage',
     type: 'attack', value: 6,
     unlocked: true,
     defaultUnlocked: true,
   },
   defend: {
     id: 'defend', name: 'Defend', cost: 1,
-    img: 'resources/cardDefend.png', desc: 'Gain 5 Block',
+    img: 'resources/cards/cardDefend.png', desc: 'Gain 5 Block',
     type: 'defend', value: 5,
     unlocked: true,
     defaultUnlocked: true,
   },
   powerUp: {
     id: 'powerUp', name: 'Power Up', cost: 2,
-    img: 'resources/cardPowerUp.png', desc: 'Double next attack',
+    img: 'resources/cards/cardPowerUp.png', desc: 'Double next attack',
     type: 'power', multiplier: 2,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
   chomp: {
     id: 'chomp', name: 'Chomp', cost: 1,
-    img: 'resources/cardChomp.png', desc: 'Deal 8 damage',
+    img: 'resources/cards/cardChomp.png', desc: 'Deal 8 damage',
     type: 'attack', value: 8,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
   heal: {
     id: 'heal', name: 'Heal', cost: 2,
-    img: 'resources/cardHeal.png', desc: 'Heal 8 HP',
+    img: 'resources/cards/cardHeal.png', desc: 'Heal 8 HP',
     type: 'heal', value: 8,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
   repel: {
     id: 'repel', name: 'Repel', cost: 1,
-    img: 'resources/cardRepel.png', desc: 'Gain 3 Block and Reflect 3 damage',
+    img: 'resources/cards/cardRepel.png', desc: 'Gain 3 Block and Reflect 3 damage',
     type: 'repel', value: 3,
     reflect: 3,
     unlocked: ALL_CARDS_UNLOCKED,
@@ -63,14 +63,14 @@ const CARD_DEFS = {
   },
   vulnerable: {
     id: 'vulnerable', name: 'Bite', cost: 2,
-    img: 'resources/cardVulnerable.png', desc: 'Deal 10 damage and apply 3 vulnerable',
+    img: 'resources/cards/cardVulnerable.png', desc: 'Deal 10 damage and apply 3 vulnerable',
     type: 'attack', value: 10, vulnerable: 3,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED
   },
   burn: {
     id:'burn', name: 'Fire Breath', cost: 2,
-    img: 'resources/cardBurn.png', desc: 'Deal 5 damage and apply 2 burn',
+    img: 'resources/cards/cardBurn.png', desc: 'Deal 5 damage and apply 2 burn',
     type: 'attack', value: 5, burn: 2,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED
@@ -81,8 +81,8 @@ const ENEMIES = [
     id: 'znichar',
     name: 'Znichar Beast',
     maxHp: 40,
-    sprite: 'resources/enemy3.png',
-    thumb: 'resources/enemy3checkpoint.png',
+    sprite: 'resources/enemies/enemy3.png',
+    thumb: 'resources/enemies/enemy3checkpoint.png',
     attacks: [
       { id: 'attack1', name: 'Claws Strike', type: 'attack', value: 10 },
       { id: 'attack2', name: 'Bite', type: 'attack', value: 12 },
@@ -96,8 +96,8 @@ const ENEMIES = [
     id: 'beryl',
     name: 'Beryl The Bronze Dragon',
     maxHp: 50,
-    sprite: 'resources/enemy2.png',
-    thumb: 'resources/enemy2checkpoint.png',
+    sprite: 'resources/enemies/enemy2.png',
+    thumb: 'resources/enemies/enemy2checkpoint.png',
     attacks: [
       { id: 'attack1', name: 'Dragon Bite', type: 'attack', value: 14 },
       { id: 'attack2', name: 'Dragon Bite', type: 'attack', value: 9 },
@@ -111,8 +111,8 @@ const ENEMIES = [
     id: 'kera',
     name: 'Kera The Fire Dragoness',
     maxHp: 100,
-    sprite: 'resources/enemy1.png',
-    thumb: 'resources/enemy1checkpoint.png',
+    sprite: 'resources/enemies/enemy1.png',
+    thumb: 'resources/enemies/enemy1checkpoint.png',
     attacks: [
       { id: 'attack1', name: 'Flame Breath', type: 'attack', value: 15 },
       { id: 'attack2', name: 'Flame Breath', type: 'attack', value: 14 },

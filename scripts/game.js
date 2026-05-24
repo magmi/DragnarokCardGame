@@ -210,6 +210,7 @@ function playCard(idx) {
         gs.player.nextAttackMultiplier = 1;
         showFloatNum('#player-panel', 'Attack Doubled!', '#ffd166');
       }
+      applyAttack(gs.enemy, '#enemy-panel', damage);
 
       if (def.burn > 0) {
         gs.enemy.burn = def.burn
@@ -217,8 +218,6 @@ function playCard(idx) {
       if (def.vulnerable > 0) {
         gs.enemy.vulnerable = def.vulnerable;
       }
-
-      applyAttack(gs.enemy, '#enemy-panel', damage);
       break;
     case 'defend':
       gs.player.block += def.value;
@@ -248,7 +247,14 @@ function playCard(idx) {
 function applyAttack(target, paneId, damage) {
   const absorbed = Math.min(target.block, damage);
   target.block -= absorbed;
-  const dealt = damage - absorbed;
+  var dealt = damage - absorbed;
+
+  // If target is vulnerable damage dealt is doubled
+  if (target.vulnerable > 0) {
+    dealt *= 2;
+    target.vulnerable -= 1;
+  }
+
   target.hp = Math.max(0, target.hp - dealt);
 
   if (dealt > 0) {
@@ -258,6 +264,7 @@ function applyAttack(target, paneId, damage) {
     showFloatNum(paneId, '🛡', '#5ba3f5');
   }
 
+  // Repel attack
   if (gs.player.repelNextAttack > 0) {
     gs.enemy.hp = Math.max(0, gs.enemy.hp - gs.player.repelNextAttack);
     showFloatNum('#enemy-panel', `-${gs.player.repelNextAttack} (reflected)`, '#ff6040');

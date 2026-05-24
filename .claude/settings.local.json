@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\cards\" \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\enemies\" \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\player\" \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\ui\")",
+      "Bash(Move-Item 'c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\card*.png' 'c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\cards\" *)",
+      "Bash(Move-Item 'c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\player.png' 'c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\player\" *)",
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\" -Recurse | ForEach-Object { $_.FullName })"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\UlaKU\\Projects\\DragnarokCardGame\\resources"
+    ]
+  }
+}

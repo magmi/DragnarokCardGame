@@ -232,6 +232,41 @@ body::after {
   margin-bottom: 10px;
 }
 
+.howto-card {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.howto-section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 4px 0 14px;
+  opacity: 0.7;
+}
+
+.howto-status-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.howto-status-row .badge {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.howto-status-row p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding-top: 3px;
+}
+
 .action-btn {
   width: 100%;
   margin-top: 8px;
