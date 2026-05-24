@@ -448,7 +448,7 @@ function renderHand() {
       <div class="card-cost">${def.cost}</div>
       <div class="card-name">${def.name}</div>
       <div class="card-art">${artHtml}</div>
-      <div class="card-desc">${description}</div>
+      <div class="card-desc"><span>${description}</span></div>
       <div class="card-type"><span class="material-symbols-outlined">${type}</span></div>
     `;
 
