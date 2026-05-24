@@ -64,7 +64,8 @@
           <div class="orb"></div>
           <div class="orb spent"></div>
         </div>
-        <p>You start each turn with 3 energy. Spend it to play cards — each card shows its cost in the top-left corner. Spent orbs (dimmed) are restored at the start of your next turn.</p>
+        <p>You start each turn with 3 energy. Spend it to play cards — each card shows its cost in the top-left corner.
+          Spent orbs (dimmed) are restored at the start of your next turn.</p>
       </div>
 
       <h3 class="howto-section-title">Status Effects</h3>
@@ -143,14 +144,6 @@
     <div class="game-menu">
       <button class="game-menu-button" onclick="showUnlockedDeck()" title="Unlocked Deck" aria-label="Unlocked Deck">
         <span class="material-symbols-outlined">inventory_2</span>
-      </button>
-      <button class="game-menu-button" onclick="showDiscardPile()" title="Discard Pile" aria-label="Discard Pile">
-        <span id="discard-pile-count">0</span>
-        <span class="material-symbols-outlined">delete</span>
-      </button>
-      <button class="game-menu-button" onclick="showDrawPile()" title="Draw Pile" aria-label="Draw Pile">
-        <span id="draw-pile-count">0</span>
-        <span class="material-symbols-outlined">shuffle</span>
       </button>
       <button class="game-menu-button" onclick="showHowTo()" title="How to Play" aria-label="How to Play">
         <span class="material-symbols-outlined">help</span>
@@ -252,12 +245,21 @@
     </div>
 
     <div class="end-turn-row">
+      <button class="game-menu-button" onclick="showDrawPile()" title="Draw Pile" aria-label="Draw Pile">
+        <span id="draw-pile-count">0</span>
+        <span class="material-symbols-outlined">shuffle</span>
+      </button>
       <button id="end-turn-btn" onclick="endTurn()">
         End Turn
         <span class="material-symbols-outlined">
           arrow_right_alt
         </span>
       </button>
+      <button class="game-menu-button" onclick="showDiscardPile()" title="Discard Pile" aria-label="Discard Pile">
+        <span id="discard-pile-count">0</span>
+        <span class="material-symbols-outlined">delete</span>
+      </button>
+
     </div>
 
   </div>
