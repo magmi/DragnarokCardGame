@@ -27,6 +27,20 @@
   padding: 0;
 }
 
+#version-badge {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 9999;
+  text-transform: uppercase;
+}
+
 body {
   font-family: 'Crimson Pro', serif;
   background: var(--void);

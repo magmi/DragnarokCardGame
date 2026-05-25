@@ -1,3 +1,5 @@
+document.getElementById('version-badge').textContent = CONFIG.version;
+
 /* ═══════════════════════════════════════════════════════════
    GAME STATE
    ═══════════════════════════════════════════════════════════ */
