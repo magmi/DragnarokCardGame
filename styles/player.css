@@ -70,7 +70,7 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--gold-light), var(--gold-dark));
+  background: radial-gradient(circle at 35% 35%, #ffffff, #ffac00);
   transition: all 0.3s;
 }
 

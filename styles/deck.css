@@ -106,6 +106,16 @@
   box-shadow: 0 0 8px var(--card-border);
 }
 
+.card.defend {
+  background: linear-gradient(0deg, #241c1a 0%, #174a69 100%);
+}
+
+.card.special{
+  background: linear-gradient(0deg, #241c1a 0%, #501769 100%);
+}
+
+
+
 .card::before {
   content: '';
   position: absolute;
@@ -123,7 +133,7 @@
 }
 
 .card.unaffordable {
-  opacity: 0.45;
+  opacity: 0.45 !important;
   cursor: not-allowed;
 }
 
@@ -134,8 +144,8 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--gold-light), var(--gold-dark));
-  border: 1px solid var(--gold);
+  background: radial-gradient(circle, #ffffff, #f5a700);
+  border: 1px solid #ffffff;
   font-family: 'Cinzel', serif;
   font-size: 1rem;
   font-weight: 700;
@@ -163,7 +173,7 @@
   color: var(--text-white);
   text-align: center;
   text-transform: uppercase;
-  margin-bottom: 4px;
+  margin: 4px 0;
 }
 
 .card-divider {
@@ -182,7 +192,6 @@
   padding: 0 2px;
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -214,6 +223,8 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  max-width: 800px;
+  width: 100%;
 }
 
 #end-turn-btn {

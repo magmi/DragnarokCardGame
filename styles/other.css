@@ -61,11 +61,12 @@ body::after {
 }
 
 #game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
   height: 100vh;
   margin: 0 auto;
   padding: 16px 20px;
@@ -194,7 +195,8 @@ body::after {
 
 .max-width-btn {
   max-width: 200px;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .close-btn {
@@ -343,7 +345,7 @@ body::after {
   flex-shrink: 0;
 }
 
-.combatant-pane {
+.combatant-panel {
   background: var(--glass);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -357,7 +359,7 @@ body::after {
   transition: border-color 0.3s;
 }
 
-.combatant-pane::before {
+.combatant-panel::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -366,7 +368,7 @@ body::after {
   pointer-events: none;
 }
 
-.combatant-pane::after {
+.combatant-panel::after {
   content: '';
   position: absolute;
   top: 0;
@@ -523,24 +525,6 @@ body::after {
   font-size: 0.8rem;
   letter-spacing: 0.2em;
   color: var(--text-dim);
-}
-
-#restart-btn {
-  font-family: 'Cinzel', serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  padding: 12px 30px;
-  border-radius: 8px;
-  cursor: pointer;
-  background: linear-gradient(135deg, #3a1a05, #7a3010);
-  border: 1px solid var(--gold-dark);
-  color: var(--gold-light);
-  transition: all 0.2s;
-}
-
-#restart-btn:hover {
-  background: linear-gradient(135deg, #5a2a0a, #a04020);
-  box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
 }
 
 .action-btn.secondary {

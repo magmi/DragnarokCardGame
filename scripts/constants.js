@@ -35,7 +35,7 @@ const CARD_DEFS = {
   powerUp: {
     id: 'powerUp', name: 'Power Up', cost: 2,
     img: 'resources/cards/cardPowerUp.png', desc: 'Double next attack',
-    type: 'power', multiplier: 2,
+    type: 'special', multiplier: 2,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
@@ -49,14 +49,14 @@ const CARD_DEFS = {
   heal: {
     id: 'heal', name: 'Heal', cost: 2,
     img: 'resources/cards/cardHeal.png', desc: 'Heal 8 HP',
-    type: 'heal', value: 8,
+    type: 'special', value: 8,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
   repel: {
     id: 'repel', name: 'Repel', cost: 1,
     img: 'resources/cards/cardRepel.png', desc: 'Gain 3 Block and Reflect 3 damage',
-    type: 'repel', value: 3,
+    type: 'special', value: 3,
     reflect: 3,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,

@@ -23,7 +23,7 @@
   <div id="gameover">
     <h2 id="go-title"></h2>
     <p id="go-sub"></p>
-    <button id="restart-btn" onclick="restartCampaign()">⚔ Play Again</button>
+    <button class="action-btn max-width-btn" onclick="restartCampaign()">Play Again</button>
   </div>
 
   <!-- Start game map overlay -->
@@ -146,7 +146,7 @@
     </div>
   </div>
 
-  <!-- ── Main game layout ── -->
+  <!-- Main game layout -->
   <div id="game">
     <div class="game-menu" id="game-menu">
       <button class="game-menu-toggle" onclick="toggleGameMenu()" title="Menu" aria-label="Menu">
@@ -164,11 +164,11 @@
       </div>
     </div>
 
-    <!-- ── Battlefield: Enemy (left) vs Player (right) ── -->
+    <!-- Battlefield -->
     <div id="battlefield">
 
-      <!-- Enemy pane -->
-      <div class="combatant-pane" id="enemy-panel">
+      <!-- Enemy panel -->
+      <div class="combatant-panel" id="enemy-panel">
         <div class="enemy-info">
           <span class="combatant-name">Kera The Fire Dragoness</span>
           <div class="card-divider"></div>
@@ -185,8 +185,6 @@
         <div class="enemy-sprite-area" id="enemy-sprite">
           <!-- Injected by sprites.js -->
         </div>
-
-
 
         <div class="hp-section">
           <div class="enemy-status">
@@ -219,8 +217,8 @@
 
       </div>
 
-      <!-- Player pane -->
-      <div class="combatant-pane" id="player-panel">
+      <!-- Player panel -->
+      <div class="combatant-panel" id="player-panel">
         <span class="combatant-name">Krystel</span>
         <div class="card-divider"></div>
         <div class="player-sprite-and-hp">

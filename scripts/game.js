@@ -124,7 +124,7 @@ function showUnlockRewardOverlay(unlockedIds, buttonText, onCloseAction) {
 
       const artHtml = `<img src="${def.img}" alt="${def.name}" class="card-art-img">`;
       const card = document.createElement('div');
-      card.className = `card ${def.id}`;
+      card.className = `card ${def.type}`;
       card.innerHTML = `
         <div class="card-cost">${def.cost}</div>
         <div class="card-art">${artHtml}</div>
@@ -223,19 +223,23 @@ function playCard(idx) {
       gs.player.block += def.value;
       showFloatNum('#player-panel', `+${def.value} Block`, '#5ba3f5');
       break;
-    case 'power':
-      gs.player.nextAttackMultiplier = def.multiplier || 2;
-      showFloatNum('#player-panel', 'Next attack doubled!', '#ffd166');
+    case 'special':
+      switch (def.id) {
+        case 'powerUp':
+          gs.player.nextAttackMultiplier = def.multiplier || 2;
+          showFloatNum('#player-panel', 'Next attack doubled!', '#ffd166');
+          break;
+        case 'heal':
+          const healAmount = def.value;
+          gs.player.hp = Math.min(gs.player.maxHp, gs.player.hp + healAmount);
+          showFloatNum('#player-panel', `+${healAmount} HP`, '#66bb6a');
+          break;
+        case 'repel':
+          gs.player.block += def.value;
+          gs.player.repelNextAttack = def.reflect || 0;
+          showFloatNum('#player-panel', `+${def.value} Block`, '#5ba3f5');
+      }
       break;
-    case 'heal':
-      const healAmount = def.value;
-      gs.player.hp = Math.min(gs.player.maxHp, gs.player.hp + healAmount);
-      showFloatNum('#player-panel', `+${healAmount} HP`, '#66bb6a');
-      break;
-    case 'repel':
-      gs.player.block += def.value;
-      gs.player.repelNextAttack = def.reflect || 0;
-      showFloatNum('#player-panel', `+${def.value} Block`, '#5ba3f5');
     default:
       console.warn(`Unknown card type: ${def.type}`);
   }
@@ -256,10 +260,10 @@ function applyAttack(target, paneId, damage) {
   target.hp = Math.max(0, target.hp - dealt);
 
   if (dealt > 0) {
-    showFloatNum(paneId, `-${dealt}`, '#ff6040');
+    showFloatNum(paneId, `-${dealt} HP`, '#ff6040');
     shakeEl(paneId);
   } else {
-    showFloatNum(paneId, '🛡', '#5ba3f5');
+    showFloatNum(paneId, 'Blocked', '#5ba3f5');
   }
 
   // Repel attack
@@ -338,11 +342,11 @@ function endGame(won) {
   if (won) {
     title.textContent = 'Victory!';
     title.className = 'win';
-    sub.textContent = 'Kera has fallen. The gods take notice.';
+    sub.textContent = 'Kera has fallen. Play again?';
   } else {
     title.textContent = 'Defeated';
     title.className = 'lose';
-    sub.textContent = "You fall before the dragon's wrath";
+    sub.textContent = "Game over. Play again?";
   }
 
   setTimeout(() => overlay.classList.add('show'), 600);
@@ -419,7 +423,7 @@ function renderHand() {
     const artHtml = `<img src="${def.img}" alt="${def.name}" class="card-art-img">`;
 
     const card = document.createElement('div');
-    card.className = `card card-deal ${cardId}${affordable ? '' : ' unaffordable'}`;
+    card.className = `card card-deal ${def.type}${affordable ? '' : ' unaffordable'}`;
     card.style.animationDelay = `${idx * 0.07}s`;
 
     var description = '';
@@ -442,12 +446,13 @@ function renderHand() {
         break;
     }
 
-    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' || def.type === 'repel' ? 'shield' : 'airwave';
+    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' ? 'shield' : 'airwave';
 
     card.innerHTML = `
       <div class="card-cost">${def.cost}</div>
-      <div class="card-name">${def.name}</div>
       <div class="card-art">${artHtml}</div>
+      <div class="card-name">${def.name}</div>
+      <div class="card-divider"></div>
       <div class="card-desc"><span>${description}</span></div>
       <div class="card-type"><span class="material-symbols-outlined">${type}</span></div>
     `;
@@ -564,13 +569,14 @@ function renderCards(container, cardIds, emptyMessage) {
 
     const artHtml = `<img src="${def.img}" alt="${def.name}" class="card-art-img">`;
     const card = document.createElement('div');
-    card.className = `card ${def.id}`;
-    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' || def.type === 'repel' ? 'shield' : 'airwave';
+    card.className = `card ${def.type}`;
+    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' ? 'shield' : 'airwave';
 
     card.innerHTML = `
       <div class="card-cost">${def.cost}</div>
-      <div class="card-name">${def.name}</div>
       <div class="card-art">${artHtml}</div>
+      <div class="card-name">${def.name}</div>
+      <div class="card-divider"></div>
       <div class="card-desc">${def.desc}</div>      
       <div class="card-type"><span class="material-symbols-outlined">${type}</span></div>
     `;
@@ -612,6 +618,7 @@ function hideDrawPile() {
 }
 
 function resetCampaign() {
+  document.getElementById('end-turn-btn').disabled = false;
   campaignProgress = ENEMIES.map((enemy, index) => ({
     id: enemy.id,
     unlocked: index === 0,
