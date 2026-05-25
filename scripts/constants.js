@@ -19,57 +19,57 @@ const ALL_CARDS_UNLOCKED = false; // for testing: set to true to unlock all card
 
 const CARD_DEFS = {
   strike: {
-    id: 'strike', name: 'Strike', cost: 1,
+    id: CARD_STRIKE, name: 'Strike', cost: 1,
     img: 'resources/cards/cardStrike.png', desc: 'Deal 6 damage',
     type: 'attack', value: 6,
     unlocked: true,
     defaultUnlocked: true,
   },
   defend: {
-    id: 'defend', name: 'Defend', cost: 1,
+    id: CARD_DEFEND, name: 'Defend', cost: 1,
     img: 'resources/cards/cardDefend.png', desc: 'Gain 5 Block',
     type: 'defend', value: 5,
     unlocked: true,
     defaultUnlocked: true,
   },
+  vulnerable: {
+    id: CARD_VULNERABLE, name: 'Bite', cost: 2,
+    img: 'resources/cards/cardVulnerable.png', desc: 'Deal 10 damage and apply 3 vulnerable',
+    type: 'attack', value: 10, vulnerable: 3,
+    unlocked: true,
+    defaultUnlocked: true
+  },
   powerUp: {
-    id: 'powerUp', name: 'Power Up', cost: 2,
+    id: CARD_POWER_UP, name: 'Power Up', cost: 2,
     img: 'resources/cards/cardPowerUp.png', desc: 'Double next attack',
     type: 'special', multiplier: 2,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
   chomp: {
-    id: 'chomp', name: 'Chomp', cost: 1,
+    id: CARD_CHOMP, name: 'Chomp', cost: 1,
     img: 'resources/cards/cardChomp.png', desc: 'Deal 8 damage',
     type: 'attack', value: 8,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
   heal: {
-    id: 'heal', name: 'Heal', cost: 2,
+    id: CARD_HEAL, name: 'Heal', cost: 2,
     img: 'resources/cards/cardHeal.png', desc: 'Heal 8 HP',
     type: 'special', value: 8,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
   repel: {
-    id: 'repel', name: 'Repel', cost: 1,
+    id: CARD_REPEL, name: 'Repel', cost: 1,
     img: 'resources/cards/cardRepel.png', desc: 'Gain 3 Block and Reflect 3 damage',
     type: 'special', value: 3,
     reflect: 3,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
-  vulnerable: {
-    id: 'vulnerable', name: 'Bite', cost: 2,
-    img: 'resources/cards/cardVulnerable.png', desc: 'Deal 10 damage and apply 3 vulnerable',
-    type: 'attack', value: 10, vulnerable: 3,
-    unlocked: ALL_CARDS_UNLOCKED,
-    defaultUnlocked: ALL_CARDS_UNLOCKED
-  },
   burn: {
-    id: 'burn', name: 'Hell Fire', cost: 2,
+    id: CARD_BURN, name: 'Hell Fire', cost: 2,
     img: 'resources/cards/cardBurn.png', desc: 'Deal 5 damage and apply 2 burn',
     type: 'attack', value: 5, burn: 2,
     unlocked: ALL_CARDS_UNLOCKED,

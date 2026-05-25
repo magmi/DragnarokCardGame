@@ -203,6 +203,22 @@
   border-radius: 100%;
 }
 
+.card-orbs {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.card-orb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff, #ffac00);
+  box-shadow: 0 0 4px rgba(255, 172, 0, 0.6);
+  flex-shrink: 0;
+}
+
 .card-type .material-symbols-outlined {
   font-size: 15px;
   color: var(--gold-light);

@@ -123,14 +123,16 @@ function showUnlockRewardOverlay(unlockedIds, buttonText, onCloseAction) {
       if (!def) return;
 
       const artHtml = `<img src="${def.img}" alt="${def.name}" class="card-art-img">`;
+      const orbsHtml = Array.from({ length: def.cost }, () => `<div class="card-orb"></div>`).join('');
+
       const card = document.createElement('div');
       card.className = `card ${def.type}`;
       card.innerHTML = `
-        <div class="card-cost">${def.cost}</div>
         <div class="card-art">${artHtml}</div>
         <div class="card-name">${def.name}</div>
         <div class="card-divider"></div>
         <div class="card-desc">${def.desc}</div>
+        <div class="card-orbs">${orbsHtml}</div>
       `;
       container.appendChild(card);
     });
@@ -446,15 +448,13 @@ function renderHand() {
         break;
     }
 
-    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' ? 'shield' : 'airwave';
-
+    const orbsHtml = Array.from({ length: def.cost }, () => `<div class="card-orb"></div>`).join('');
     card.innerHTML = `
-      <div class="card-cost">${def.cost}</div>
       <div class="card-art">${artHtml}</div>
       <div class="card-name">${def.name}</div>
       <div class="card-divider"></div>
       <div class="card-desc"><span>${description}</span></div>
-      <div class="card-type"><span class="material-symbols-outlined">${type}</span></div>
+      <div class="card-orbs">${orbsHtml}</div>
     `;
 
     if (affordable) {
@@ -537,7 +537,7 @@ function hideHowTo() {
 }
 
 function showUnlockedDeck() {
-  const container = document.getElementById('deck-cards-display');
+  const container = document.getElementById('unlocked-cards-display');
   const unlockedIds = Object.values(CARD_DEFS).filter(d => d.unlocked).map(d => d.id);
   renderCards(container, unlockedIds, 'No unlocked cards available.');
 
@@ -570,15 +570,14 @@ function renderCards(container, cardIds, emptyMessage) {
     const artHtml = `<img src="${def.img}" alt="${def.name}" class="card-art-img">`;
     const card = document.createElement('div');
     card.className = `card ${def.type}`;
-    const type = def.type === 'attack' ? 'swords' : def.type === 'defend' ? 'shield' : 'airwave';
 
+    const orbsHtml = Array.from({ length: def.cost }, () => `<div class="card-orb"></div>`).join('');
     card.innerHTML = `
-      <div class="card-cost">${def.cost}</div>
       <div class="card-art">${artHtml}</div>
       <div class="card-name">${def.name}</div>
       <div class="card-divider"></div>
       <div class="card-desc">${def.desc}</div>      
-      <div class="card-type"><span class="material-symbols-outlined">${type}</span></div>
+      <div class="card-orbs">${orbsHtml}</div>
     `;
 
     container.appendChild(card);
