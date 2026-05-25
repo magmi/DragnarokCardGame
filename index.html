@@ -48,7 +48,9 @@
     <div class="howto-card">
       <div class="howto-header">
         <h2>How to Play</h2>
-        <button class="close-btn" onclick="hideHowTo()">×</button>
+        <button class="close-btn" onclick="hideHowTo()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
       </div>
 
       <p>Play cards at the bottom of the screen to attack enemies, defend, and survive.</p>
@@ -101,13 +103,15 @@
   </div>
 
   <!-- Unlocked Deck overlay -->
-  <div id="deck-overlay" aria-hidden="true">
+  <div id="unlocked-deck-overlay" aria-hidden="true">
     <div class="deck-card">
       <div class="deck-header">
         <h2>Unlocked Cards</h2>
-        <button class="close-btn" onclick="hideUnlockedDeck()">×</button>
+        <button class="close-btn" onclick="hideUnlockedDeck()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
       </div>
-      <div id="unlocked-cards-display" class="deck-cards-grid"></div>
+      <div id="unlocked-deck-display" class="deck-cards-grid"></div>
     </div>
   </div>
 
@@ -116,7 +120,9 @@
     <div class="deck-card">
       <div class="deck-header">
         <h2>Discard Pile</h2>
-        <button class="close-btn" onclick="hideDiscardPile()">×</button>
+        <button class="close-btn" onclick="hideDiscardPile()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
       </div>
       <div id="discard-pile-display" class="deck-cards-grid"></div>
     </div>
@@ -127,7 +133,9 @@
     <div class="deck-card">
       <div class="deck-header">
         <h2>Draw Pile</h2>
-        <button class="close-btn" onclick="hideDrawPile()">×</button>
+        <button class="close-btn" onclick="hideDrawPile()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
       </div>
       <div id="draw-pile-display" class="deck-cards-grid"></div>
     </div>
@@ -213,8 +221,6 @@
             <div class="hp-fill enemy" id="enemy-hp-bar" style="width:100%"></div>
           </div>
         </div>
-
-
       </div>
 
       <!-- Player panel -->
@@ -271,9 +277,7 @@
         <span id="discard-pile-count">0</span>
         <span class="material-symbols-outlined">delete</span>
       </button>
-
     </div>
-
   </div>
 
   <script src="sprites.js"></script>

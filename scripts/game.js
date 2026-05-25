@@ -537,17 +537,17 @@ function hideHowTo() {
 }
 
 function showUnlockedDeck() {
-  const container = document.getElementById('unlocked-cards-display');
+  const container = document.getElementById('unlocked-deck-display');
   const unlockedIds = Object.values(CARD_DEFS).filter(d => d.unlocked).map(d => d.id);
   renderCards(container, unlockedIds, 'No unlocked cards available.');
 
-  const overlay = document.getElementById('deck-overlay');
+  const overlay = document.getElementById('unlocked-deck-overlay');
   overlay.setAttribute('aria-hidden', 'false');
   overlay.classList.add('show');
 }
 
 function hideUnlockedDeck() {
-  const overlay = document.getElementById('deck-overlay');
+  const overlay = document.getElementById('unlocked-deck-overlay');
   overlay.classList.remove('show');
   overlay.setAttribute('aria-hidden', 'true');
 }

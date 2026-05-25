@@ -1,4 +1,4 @@
-#deck-overlay,
+#unlocked-deck-overlay,
 #unlock-overlay,
 #discard-pile-overlay,
 #draw-pile-overlay {
@@ -12,7 +12,7 @@
   padding: 24px;
 }
 
-#deck-overlay.show,
+#unlocked-deck-overlay.show,
 #unlock-overlay.show,
 #discard-pile-overlay.show,
 #draw-pile-overlay.show {
