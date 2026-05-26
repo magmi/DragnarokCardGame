@@ -3,6 +3,11 @@
         display: none;
     }
 
+    #game {
+        padding: 6px 10px;
+        gap: 4px;
+    }
+
     #map-overlay {
         padding: 5px;
     }
@@ -29,7 +34,7 @@
         overflow-x: auto;
         overflow-y: hidden;
         width: 100%;
-        padding: 8px 4px;
+        padding: 4px 4px;
     }
 
     #hand-area {
@@ -44,8 +49,8 @@
     }
 
     .card {
-        width: 150px;
-        height: 200px;
+        width: 130px;
+        height: 175px;
     }
 
     .card:hover:not(.unaffordable) {
