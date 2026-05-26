@@ -1,4 +1,4 @@
-const CONFIG = {
+var CONFIG = {
   version: 'Alpha 0.015',
-  filesVersion: '20260526T1346'
+  filesVersion: '20260526T1520'
 };
