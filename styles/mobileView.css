@@ -91,6 +91,11 @@
     }
 
     /* Player */
+    .player-sprite-area {
+        width: 70px;
+        height: 70px;
+    }
+
     .player-sprite-and-hp .hp-section {
         min-width: 0;
     }
