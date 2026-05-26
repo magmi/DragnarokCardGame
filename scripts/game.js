@@ -413,8 +413,11 @@ function renderEnergyOrbs() {
 }
 
 function renderIntent() {
+  const intentColor = gs.enemy.intent.type === 'attack' ? '#e05020' : '#5ba3f5';
   document.getElementById('intent-icon').innerHTML = gs.enemy.intent.icon;
   document.getElementById('intent-text').textContent = gs.enemy.intent.text;
+  document.getElementById('intent-text').style.color = intentColor;
+  document.getElementById('intent-box').style.borderColor = intentColor;
 }
 
 function renderHand() {
