@@ -672,13 +672,27 @@ function renderMap() {
 
     const statusText = progress.beaten ? 'Cleared' : progress.unlocked ? 'Available' : 'Locked';
 
-    node.innerHTML = `
-    <img src="${enemy.thumb}" alt="${enemy.name}" class="node-sprite">
-      <span class="node-label">Level ${index + 1}</span>
-      <div class="card-divider"></div>
-      <span class="node-name">${enemy.name}</span>
-      <span class="node-status">${statusText}</span>
+    if (progress.unlocked) {
+
+      node.innerHTML = `
+      <div class="node-content">
+        <img src="${enemy.thumb}" alt="${enemy.name}" class="node-sprite">
+        <span class="node-label">Level ${index + 1}</span>
+        <div class="card-divider"></div>
+        <span class="node-name">${enemy.name}</span>
+        <span class="node-status">${statusText}</span>
+      </div>
     `;
+    } else {
+      node.innerHTML = `
+      <div class="node-content">
+        <div class="node-sprite-placeholder"></div>
+        <span class="node-label">Level ${index + 1}</span>
+        <div class="card-divider"></div>
+        <span class="node-status">${statusText}</span>
+      </div>
+    `;
+    }
 
     mapList.appendChild(node);
 

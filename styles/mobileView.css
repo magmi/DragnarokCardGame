@@ -3,6 +3,7 @@
         display: none;
     }
 
+
     #game {
         padding: 6px 10px;
         gap: 4px;
@@ -55,6 +56,38 @@
 
     .card:hover:not(.unaffordable) {
         transform: translateY(-10px) scale(1.04);
+    }
+
+    .card-desc {
+        font-size: 0.85rem;
+    }
+
+    .card-art img {
+        width: 80%;
+    }
+
+    .card-name {
+        font-size: 0.9rem;
+    }
+
+    .intent-label {
+        font-size: 0.75rem;
+    }
+
+    .intent-box {
+        font-size: 0.75rem;
+    }
+
+    .intent-icon span {
+        font-size: 1.4rem;
+    }
+
+    .combatant-panel {
+        padding: 5px 5px;
+    }
+
+    .combatant-name {
+        font-size: 0.8rem;
     }
 
     /* Player */

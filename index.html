@@ -8,7 +8,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles/style.css">
+  <script src="scripts/config.js"></script>
+  <script>document.write('<link rel="stylesheet" href="styles/style.css?v=' + CONFIG.filesVersion + '">');</script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
 
@@ -282,10 +283,11 @@
     </div>
   </div>
 
-  <script src="sprites.js"></script>
-  <script src="scripts/config.js"></script>
-  <script src="scripts/constants.js"></script>
-  <script src="scripts/game.js"></script>
+  <script>
+    ['sprites.js', 'scripts/constants.js', 'scripts/game.js'].forEach(function(s) {
+      document.write('<script src="' + s + '?v=' + CONFIG.filesVersion + '"><\/script>');
+    });
+  </script>
 </body>
 
 </html>
