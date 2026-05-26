@@ -35,6 +35,18 @@
   <div id="gameover">
     <h2 id="go-title"></h2>
     <p id="go-sub"></p>
+    <p id="go-level-info"></p>
+    <div id="go-exp-section">
+      <div id="go-exp-gained"></div>
+      <div class="go-exp-bar-row">
+        <span id="go-exp-lvl-label">LVL 1</span>
+        <div id="go-exp-bar-track">
+          <div id="go-exp-bar-fill"></div>
+        </div>
+      </div>
+      <div id="go-lvlup-msg"></div>
+      <div id="go-upgrade-info"></div>
+    </div>
     <button class="action-btn max-width-btn" onclick="restartCampaign()">Play Again</button>
   </div>
 
@@ -238,6 +250,14 @@
       <!-- Player panel -->
       <div class="combatant-panel" id="player-panel">
         <span class="combatant-name">Krystel</span>
+        <div class="player-level-row">
+          <div class="player-level-badge-container">LVL
+            <div id="player-level-badge">
+              0
+            </div>
+          </div>
+          <div id="player-exp-text">0 / 0 EXP</div>
+        </div>
         <div class="card-divider"></div>
         <div class="player-sprite-and-hp">
           <div class="player-sprite-area" id="player-sprite">

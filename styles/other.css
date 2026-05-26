@@ -541,6 +541,89 @@ body::after {
   color: var(--text-dim);
 }
 
+#go-exp-section {
+  display: none;
+  width: 260px;
+  margin: 4px 0;
+  padding: 20px 10px;
+  background: #13007c29;
+  border: 1px solid #ed00ff6e;
+  border-radius: 20px;
+}
+
+#go-exp-gained {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: --var(--gold);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.go-exp-bar-row {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  flex: 1;
+  align-items: stretch;
+}
+
+#go-exp-lvl-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: #c9a84c;
+  white-space: nowrap;
+  min-width: 36px;
+}
+
+#go-exp-bar-track {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid rgba(180, 79, 255, 0.3);
+}
+
+#go-exp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7b2ff7, #c44dff);
+  width: 0%;
+  transition: width 0.8s ease;
+  border-radius: 5px;
+}
+
+#go-lvlup-msg {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: #c9a84c;
+  text-align: center;
+  margin-top: 8px;
+  min-height: 1.4em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#go-lvlup-msg.show {
+  opacity: 1;
+}
+
+#go-upgrade-info {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  color: var(--text-main);
+  text-align: center;
+  min-height: 1.2em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#go-upgrade-info.show {
+  opacity: 1;
+}
+
 .action-btn.secondary {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.1);

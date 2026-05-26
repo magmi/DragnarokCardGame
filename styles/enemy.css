@@ -50,6 +50,10 @@
   gap: 8px;
 }
 
+.intent-icon {
+  display: flex;
+}
+
 .intent-label {
   font-family: 'Crimson Pro', serif;
   font-size: 1rem;

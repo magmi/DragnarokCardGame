@@ -8,6 +8,44 @@
   background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.4), transparent);
 }
 
+.player-level-row {
+  display: flex;
+  position: absolute;
+  align-items: baseline;
+  gap: 2px;
+  top: 10px;
+  left: 10px;
+  flex-direction: column;
+}
+
+.player-level-badge-container {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    align-items: center;
+}
+
+#player-level-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--text-main);
+    border-radius: 50%;
+    background: var(--void);
+    border: 1px solid var(--text-main);
+    padding: 5px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#player-exp-text {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
 .player-sprite-and-hp {
   width: 100%;
   align-items: center;

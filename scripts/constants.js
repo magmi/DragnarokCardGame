@@ -6,6 +6,10 @@ const MAX_ENERGY = 3;
 const HAND_SIZE = 5;
 const PLAYER_MAX_HP = 30;
 
+const LEVEL_THRESHOLDS = [30, 60, 100, 150, 200];
+const LEVELUP_ATK_BONUS = 1;
+const LEVELUP_HP_BONUS = 5;
+
 const CARD_STRIKE = 'strike';
 const CARD_DEFEND = 'defend';
 const CARD_POWER_UP = 'powerUp';
@@ -91,6 +95,7 @@ const ENEMIES = [
       { id: 'defend1', name: 'Spines Barrier', type: 'defend', value: 8 },
     ],
     unlocks: [CARD_POWER_UP, CARD_CHOMP],
+    expValue: 20,
   },
   {
     id: 'beryl',
@@ -99,13 +104,14 @@ const ENEMIES = [
     sprite: 'resources/enemies/enemy2.png',
     thumb: 'resources/enemies/enemy2checkpoint.png',
     attacks: [
-      { id: 'attack1', name: 'Dragon Bite', type: 'attack', value: 14 },
+      { id: 'attack1', name: 'Dragon Bite', type: 'attack', value: 10 },
       { id: 'attack2', name: 'Dragon Bite', type: 'attack', value: 9 },
       { id: 'attack3', name: 'Dragon Bite', type: 'attack', value: 11 },
       { id: 'attack4', name: 'Dragon Bite', type: 'attack', value: 12 },
       { id: 'defend1', name: 'Scales Barrier', type: 'defend', value: 10 },
     ],
     unlocks: [CARD_REPEL, CARD_HEAL, CARD_BURN],
+    expValue: 30,
   },
   {
     id: 'kera',
@@ -120,7 +126,7 @@ const ENEMIES = [
       { id: 'attack4', name: 'Flame Breath', type: 'attack', value: 12 },
       { id: 'defend1', name: 'Ember Shield', type: 'defend', value: 12 },
     ],
-
+    expValue: 60,
   },
 ];
 
