@@ -1,3 +1,3 @@
 const CONFIG = {
-  version: 'Alpha 0.012',
+  version: 'Alpha 0.013',
 };
