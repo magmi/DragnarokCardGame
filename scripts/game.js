@@ -502,6 +502,7 @@ function endGame(won) {
   const sub = document.getElementById('go-sub');
   const levelInfo = document.getElementById('go-level-info');
   const expSection = document.getElementById('go-exp-section');
+  const img = document.getElementById('go-img');
 
   if (levelInfo) {
     const maxLevel = LEVEL_THRESHOLDS.length + 1;
@@ -509,12 +510,14 @@ function endGame(won) {
   }
 
   if (won) {
+    img.src = 'resources/ui/gameWon.png';
     title.textContent = 'Victory!';
     title.className = 'win';
     sub.textContent = 'Kera has fallen. Play again?';
     if (expSection) expSection.style.display = 'none';
     setTimeout(() => overlay.classList.add('show'), 600);
   } else {
+    img.src = 'resources/ui/gameOver.png';
     title.textContent = 'Defeated';
     title.className = 'lose';
     sub.textContent = 'Game over. Play again?';
@@ -679,9 +682,38 @@ function showBanner(text, cb) {
   }, 900);
 }
 
+let _bannerBtnCb = null;
+
+function showLevelCleared(btnLabel, cb) {
+  const banner = document.getElementById('phase-banner');
+  const btn = document.getElementById('banner-btn');
+  const img = document.getElementById('banner-img');
+  document.getElementById('banner-text').textContent = 'Level Cleared';
+  img.style.display = 'block';
+  btn.textContent = btnLabel;
+  btn.style.display = 'block';
+  _bannerBtnCb = cb;
+  banner.classList.add('show');
+}
+
+function onBannerBtnClick() {
+  const banner = document.getElementById('phase-banner');
+  const btn = document.getElementById('banner-btn');
+  const img = document.getElementById('banner-img');
+  banner.classList.remove('show');
+  btn.style.display = 'none';
+  img.style.display = 'none';
+  const cb = _bannerBtnCb;
+  _bannerBtnCb = null;
+  if (cb) setTimeout(cb, 200);
+}
+
 function showStartScreen() {
   renderMap();
   document.getElementById('map-overlay').classList.add('show');
+  if (!localStorage.getItem('tutorial_seen')) {
+    showTutorial();
+  }
   setTimeout(() => {
     const mapList = document.getElementById('map-list');
     const unlockedNodes = mapList.querySelectorAll('.map-node.unlocked');
@@ -902,13 +934,13 @@ function handleEnemyDefeated() {
     campaignProgress[nextIndex].unlocked = true;
     selectedEnemyIndex = nextIndex;
     renderMap();
-    showBanner('Level Cleared', () => {
+    showLevelCleared('Continue', () => {
       showUnlockRewardOverlay(unlockedCards, 'Return to Map', () => {
         showStartScreen();
       });
     });
   } else {
-    showBanner('Level Cleared', () => {
+    showLevelCleared('Continue', () => {
       showUnlockRewardOverlay(unlockedCards, 'Continue', () => {
         endGame(true);
       });

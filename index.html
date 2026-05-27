@@ -17,6 +17,7 @@
     document.write('<link rel="stylesheet" href="styles/deck.css?v=' + CONFIG.filesVersion + '">');
     document.write('<link rel="stylesheet" href="styles/map.css?v=' + CONFIG.filesVersion + '">');
     document.write('<link rel="stylesheet" href="styles/mobileView.css?v=' + CONFIG.filesVersion + '">');
+    document.write('<link rel="stylesheet" href="styles/tutorial.css?v=' + CONFIG.filesVersion + '">');
   </script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
@@ -28,13 +29,16 @@
 
   <!-- Phase transition banner (shown between turns) -->
   <div id="phase-banner">
+    <img id="banner-img" src="resources/ui/levelCleared.png" style="display:none" />
     <span class="banner-text" id="banner-text"></span>
+    <button id="banner-btn" class="action-btn max-width-btn" onclick="onBannerBtnClick()" style="display:none"></button>
   </div>
 
   <!-- Game over / victory overlay -->
   <div id="gameover">
     <h2 id="go-title"></h2>
     <p id="go-sub"></p>
+    <img id="go-img" src="" alt="" />
     <p id="go-level-info"></p>
     <div id="go-exp-section">
       <div id="go-exp-gained"></div>
@@ -48,6 +52,103 @@
       <div id="go-upgrade-info"></div>
     </div>
     <button class="action-btn max-width-btn" onclick="restartCampaign()">Play Again</button>
+  </div>
+
+  <!-- Tutorial overlay -->
+  <div id="tutorial-overlay">
+    <div class="tutorial-card">
+      <div class="tutorial-body">
+        <button class="tutorial-arrow" id="tutorial-prev" onclick="tutorialNav(-1)">&#8249;</button>
+
+        <div class="tutorial-slides">
+
+          <div class="tutorial-slide">
+            <img class="tutorial-img" src="resources/tutorial/tut1.jpg" />
+            <h2 class="tutorial-title">Welcome, Warrior</h2>
+            <div class="card-divider"></div>
+
+            <p class="tutorial-text">
+              You play as Krystel. Defeat every enemy on your path and survive to claim victory.</p>
+          </div>
+
+          <div class="tutorial-slide">
+            <img class="tutorial-img" src="resources/tutorial/tut2.jpg" />
+            <h2 class="tutorial-title">Choose Your Battle</h2>
+            <div class="card-divider"></div>
+
+            <p class="tutorial-text">
+              Select an enemy on the map and press Begin Battle. Each encounter grows more dangerous.
+            </p>
+          </div>
+
+          <div class="tutorial-slide">
+            <img class="tutorial-img" src="resources/tutorial/tut3.jpg" />
+            <h2 class="tutorial-title">Play Your Cards</h2>
+            <div class="card-divider"></div>
+
+            <p class="tutorial-text">
+              Each turn, you draw a hand of cards. Click a card to play it and combine attacks, defense and effects.
+            </p>
+          </div>
+
+          <div class="tutorial-slide">
+            <img class="tutorial-img" src="resources/tutorial/tut4.jpg" />
+            <h2 class="tutorial-title">Manage Energy</h2>
+            <div class="card-divider"></div>
+            <p class="tutorial-text">
+              Every card costs Energy. You begin each turn with 3 Energy Orbs, so spend them wisely and end your turn
+              when ready.
+            </p>
+          </div>
+
+          <div class="tutorial-slide">
+            <img class="tutorial-img" src="resources/tutorial/tut7.jpg" />
+            <h2 class="tutorial-title">Read Enemy Intent</h2>
+            <div class="card-divider"></div>
+            <p class="tutorial-text">Enemies reveal their next action above their heads. Use this information to
+              prepare.
+            </p>
+          </div>
+
+          <div class="tutorial-slide">
+            <img class="tutorial-img" src="resources/tutorial/tut5.jpg" />
+            <h2 class="tutorial-title">Use Block</h2>
+            <div class="card-divider"></div>
+            <p class="tutorial-text">Your block absorbs incoming damage and resets each turn.</p>
+          </div>
+
+          <div class="tutorial-slide">
+            <img class="tutorial-img" src="resources/tutorial/tut6.jpg" />
+            <h2 class="tutorial-title">Watch Status Effects</h2>
+            <div class="card-divider"></div>
+            <p class="tutorial-text">Enemy also has Block. Watch out for Burn and Vulnerable - they can tip the scales
+            </p>
+          </div>
+
+          <div class="tutorial-slide">
+            <img class="tutorial-img" src="resources/tutorial/tut8.jpg" />
+            <h2 class="tutorial-title">Grow Stronger</h2>
+            <div class="card-divider"></div>
+            <p class="tutorial-text">Defeat is not the end. Earn EXP from fallen enemies and
+              return stronger for the next battle. Good Luck!</p>
+          </div>
+        </div>
+
+        <button class="tutorial-arrow" id="tutorial-next" onclick="tutorialNav(1)">&#8250;</button>
+      </div>
+      <div class="tutorial-dots">
+        <span class="tutorial-dot"></span>
+        <span class="tutorial-dot"></span>
+        <span class="tutorial-dot"></span>
+        <span class="tutorial-dot"></span>
+        <span class="tutorial-dot"></span>
+        <span class="tutorial-dot"></span>
+        <span class="tutorial-dot"></span>
+        <span class="tutorial-dot"></span>
+
+      </div>
+      <button class="action-btn tutorial-got-it" id="tutorial-got-it" onclick="dismissTutorial()">Got it</button>
+    </div>
   </div>
 
   <!-- Start game map overlay -->
@@ -313,7 +414,7 @@
   </div>
 
   <script>
-    ['sprites.js', 'scripts/constants.js', 'scripts/game.js'].forEach(function (s) {
+    ['sprites.js', 'scripts/constants.js', 'scripts/tutorial.js', 'scripts/game.js'].forEach(function (s) {
       document.write('<script src="' + s + '?v=' + CONFIG.filesVersion + '"><\/script>');
     });
   </script>

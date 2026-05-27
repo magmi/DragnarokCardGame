@@ -482,12 +482,22 @@ body::after {
   inset: 0;
   z-index: 50;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 28px;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s;
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+#banner-btn {
+  pointer-events: auto;
+}
+
+#banner-img {
+  width: min(600px, 80%);
 }
 
 #phase-banner.show {
@@ -520,6 +530,10 @@ body::after {
   display: flex;
 }
 
+#go-img {
+  width: min(600px, 80%);
+}
+
 #gameover h2 {
   font-family: 'Cinzel Decorative', cursive;
   font-size: 2.2rem;
@@ -546,8 +560,8 @@ body::after {
   width: 260px;
   margin: 4px 0;
   padding: 20px 10px;
-  background: #13007c29;
-  border: 1px solid #ed00ff6e;
+  background: #7c000029;
+  border: 1px solid #ff89006e;
   border-radius: 20px;
 }
 
@@ -587,7 +601,7 @@ body::after {
 
 #go-exp-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7b2ff7, #c44dff);
+  background: linear-gradient(90deg, #f7632f, #ffc64d);
   width: 0%;
   transition: width 0.8s ease;
   border-radius: 5px;
