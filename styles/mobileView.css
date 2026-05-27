@@ -7,6 +7,11 @@
         font-size: 0.7rem;
     }
 
+    #end-turn-btn {
+        gap: 2px;
+        font-size: 0.7rem;
+    }
+
     .game-menu {
         gap: 5px;
     }
