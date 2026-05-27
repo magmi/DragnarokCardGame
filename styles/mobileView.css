@@ -3,6 +3,18 @@
         display: none;
     }
 
+    .game-menu-label {
+        font-size: 0.7rem;
+    }
+
+    .game-menu {
+        gap: 5px;
+    }
+
+    .deck-card h2 {
+        font-size: 1.1rem;
+    }
+
     .tutorial-title {
         font-size: 1.1rem;
     }
