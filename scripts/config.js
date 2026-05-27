@@ -1,4 +1,4 @@
 var CONFIG = {
-  version: 'Alpha 0.017',
-  filesVersion: '20260526T1847'
+  version: 'Alpha 0.018',
+  filesVersion: '20260527T1847'
 };
