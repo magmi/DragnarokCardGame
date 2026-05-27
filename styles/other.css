@@ -120,53 +120,17 @@ body::after {
   margin-top: 2px;
 }
 
-
 .game-menu {
   display: flex;
-  flex-direction: column;
+  gap: 10px;
   align-items: center;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 5;
-  background-color: #281219;
-  border-radius: 0px 0px 20px 0px;
-  border-right: 1px solid #ba4d4d;
-  border-bottom: 1px solid #ba4d4d;
-  overflow: hidden;
 }
 
-.game-menu-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  color: var(--text-main);
-  transition: background 0.2s;
-  width: 100%;
-}
-
-.game-menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.game-menu-items {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 0 10px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease, padding 0.25s ease;
-}
-
-.game-menu.open .game-menu-items {
-  max-height: 300px;
-  padding: 0 10px 10px;
+.game-menu-label {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
 }
 
 .game-menu-button {

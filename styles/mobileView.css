@@ -3,6 +3,14 @@
         display: none;
     }
 
+    .tutorial-title {
+        font-size: 1.1rem;
+    }
+
+    .tutorial-text {
+        font-size: 1.1rem;
+        min-height: calc(1.1rem * 1.6 * 4);
+    }
 
     #game {
         padding: 6px 10px;

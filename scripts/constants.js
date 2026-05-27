@@ -95,7 +95,7 @@ const ENEMIES = [
       { id: 'defend1', name: 'Spines Barrier', type: 'defend', value: 8 },
     ],
     unlocks: [CARD_POWER_UP, CARD_CHOMP],
-    expValue: 20,
+    expValue: 40,
   },
   {
     id: 'beryl',
@@ -111,7 +111,7 @@ const ENEMIES = [
       { id: 'defend1', name: 'Scales Barrier', type: 'defend', value: 10 },
     ],
     unlocks: [CARD_REPEL, CARD_HEAL, CARD_BURN],
-    expValue: 30,
+    expValue: 60,
   },
   {
     id: 'kera',
@@ -126,7 +126,7 @@ const ENEMIES = [
       { id: 'attack4', name: 'Flame Breath', type: 'attack', value: 12 },
       { id: 'defend1', name: 'Ember Shield', type: 'defend', value: 12 },
     ],
-    expValue: 60,
+    expValue: 100,
   },
 ];
 

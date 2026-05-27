@@ -463,6 +463,8 @@ function enemyTurn() {
     gs.enemy.vulnerable -= 1;
   }
 
+  if (gs.enemy.hp <= 0) { renderAll(); handleEnemyDefeated(); return; }
+
   const { intent } = gs.enemy;
 
   if (intent.type === 'attack') {
@@ -474,6 +476,7 @@ function enemyTurn() {
 
   renderAll();
   if (gs.player.hp <= 0) { endGame(false); return; }
+  if (gs.enemy.hp <= 0) { handleEnemyDefeated(); return; }
 
   setTimeout(beginPlayerTurn, 900);
 }
@@ -731,10 +734,6 @@ function startGame() {
   startSelectedEnemy();
 }
 
-function toggleGameMenu() {
-  document.getElementById('game-menu').classList.toggle('open');
-}
-
 function showHowTo() {
   document.getElementById('howto-overlay').classList.add('show');
 }
@@ -930,22 +929,24 @@ function handleEnemyDefeated() {
   const nextIndex = finishedIndex + 1;
   const hasNext = nextIndex < ENEMIES.length;
 
-  if (hasNext) {
-    campaignProgress[nextIndex].unlocked = true;
-    selectedEnemyIndex = nextIndex;
-    renderMap();
-    showLevelCleared('Continue', () => {
-      showUnlockRewardOverlay(unlockedCards, 'Return to Map', () => {
-        showStartScreen();
+  setTimeout(() => {
+    if (hasNext) {
+      campaignProgress[nextIndex].unlocked = true;
+      selectedEnemyIndex = nextIndex;
+      renderMap();
+      showLevelCleared('Continue', () => {
+        showUnlockRewardOverlay(unlockedCards, 'Return to Map', () => {
+          showStartScreen();
+        });
       });
-    });
-  } else {
-    showLevelCleared('Continue', () => {
-      showUnlockRewardOverlay(unlockedCards, 'Continue', () => {
-        endGame(true);
+    } else {
+      showLevelCleared('Continue', () => {
+        showUnlockRewardOverlay(unlockedCards, 'Continue', () => {
+          endGame(true);
+        });
       });
-    });
-  }
+    }
+  }, 500);
 }
 
 function restartCampaign() {
