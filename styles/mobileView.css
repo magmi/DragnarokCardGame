@@ -3,6 +3,10 @@
         display: none;
     }
 
+    #version-badge {
+        font-size: 0.6rem;
+    }
+
     .game-menu-label {
         font-size: 0.7rem;
     }
