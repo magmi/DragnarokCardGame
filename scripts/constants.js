@@ -44,7 +44,7 @@ const CARD_DEFS = {
     defaultUnlocked: true
   },
   powerUp: {
-    id: CARD_POWER_UP, name: 'Power Up', cost: 2,
+    id: CARD_POWER_UP, name: 'Power Up', cost: 1,
     img: 'resources/cards/cardPowerUp.png', desc: 'Double next attack',
     type: 'special', multiplier: 2,
     unlocked: ALL_CARDS_UNLOCKED,
@@ -66,16 +66,16 @@ const CARD_DEFS = {
   },
   repel: {
     id: CARD_REPEL, name: 'Repel', cost: 1,
-    img: 'resources/cards/cardRepel.png', desc: 'Gain 3 Block and Reflect 3 damage',
-    type: 'special', value: 3,
-    reflect: 3,
+    img: 'resources/cards/cardRepel.png', desc: 'Gain 5 Block and Reflect 5 damage',
+    type: 'special', value: 5,
+    reflect: 5,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED,
   },
   burn: {
     id: CARD_BURN, name: 'Hell Fire', cost: 2,
-    img: 'resources/cards/cardBurn.png', desc: 'Deal 5 damage and apply 2 burn',
-    type: 'attack', value: 5, burn: 2,
+    img: 'resources/cards/cardBurn.png', desc: 'Deal 5 damage and apply 5 burn',
+    type: 'attack', value: 5, burn: 5,
     unlocked: ALL_CARDS_UNLOCKED,
     defaultUnlocked: ALL_CARDS_UNLOCKED
   }
