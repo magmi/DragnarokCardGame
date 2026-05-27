@@ -29,9 +29,14 @@
 
   <!-- Phase transition banner (shown between turns) -->
   <div id="phase-banner">
-    <img id="banner-img" src="resources/ui/levelCleared.png" style="display:none" />
     <span class="banner-text" id="banner-text"></span>
-    <button id="banner-btn" class="action-btn max-width-btn" onclick="onBannerBtnClick()" style="display:none"></button>
+  </div>
+
+  <!-- Level cleared panel (shown after defeating an enemy) -->
+  <div id="level-cleared-banner">
+    <img id="banner-img" src="resources/ui/levelCleared.png" />
+    <span class="banner-text">Level Cleared</span>
+    <button id="banner-btn" class="action-btn max-width-btn" onclick="onBannerBtnClick()"></button>
   </div>
 
   <!-- Game over / victory overlay -->
@@ -123,7 +128,6 @@
             <div class="card-divider"></div>
             <p class="tutorial-text">Enemy also has Block. Watch out for Burn and Vulnerable - they can tip the scales.
             </p>
-            
           </div>
 
           <div class="tutorial-slide">

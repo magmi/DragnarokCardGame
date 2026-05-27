@@ -688,24 +688,16 @@ function showBanner(text, cb) {
 let _bannerBtnCb = null;
 
 function showLevelCleared(btnLabel, cb) {
-  const banner = document.getElementById('phase-banner');
+  const panel = document.getElementById('level-cleared-banner');
   const btn = document.getElementById('banner-btn');
-  const img = document.getElementById('banner-img');
-  document.getElementById('banner-text').textContent = 'Level Cleared';
-  img.style.display = 'block';
   btn.textContent = btnLabel;
-  btn.style.display = 'block';
   _bannerBtnCb = cb;
-  banner.classList.add('show');
+  panel.classList.add('show');
 }
 
 function onBannerBtnClick() {
-  const banner = document.getElementById('phase-banner');
-  const btn = document.getElementById('banner-btn');
-  const img = document.getElementById('banner-img');
-  banner.classList.remove('show');
-  btn.style.display = 'none';
-  img.style.display = 'none';
+  const panel = document.getElementById('level-cleared-banner');
+  panel.classList.remove('show');
   const cb = _bannerBtnCb;
   _bannerBtnCb = null;
   if (cb) setTimeout(cb, 200);

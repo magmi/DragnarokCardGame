@@ -449,23 +449,38 @@ body::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s;
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-#banner-btn {
+#phase-banner.show {
+  opacity: 1;
+}
+
+#level-cleared-banner {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#level-cleared-banner.show {
+  opacity: 1;
   pointer-events: auto;
 }
 
 #banner-img {
   width: min(600px, 80%);
-}
-
-#phase-banner.show {
-  opacity: 1;
 }
 
 .banner-text {
