@@ -305,6 +305,12 @@ body::after {
   background: linear-gradient(135deg, #6a2a10, #b04020);
 }
 
+.action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 #battlefield {
   width: 100%;
   max-width: 800px;

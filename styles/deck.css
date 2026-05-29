@@ -66,6 +66,21 @@
   box-shadow: none;
 }
 
+.deck-cards-grid .card.selectable {
+  cursor: pointer;
+}
+
+.deck-cards-grid .card.selectable:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.deck-cards-grid .card.selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 20px var(--gold);
+  transform: scale(1.1);
+}
+
 .deck-cards-grid .card-cost {
   width: 16px;
   height: 16px;

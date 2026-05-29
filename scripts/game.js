@@ -177,6 +177,7 @@ loadPlayerProgress();
 
 let playerDeck = [...STARTING_DECK];
 let rewardOverlayNextAction = null;
+let pendingUnlockSelection = null;
 let gs;
 let campaignProgress = [];
 let selectedEnemyIndex = 0;
@@ -251,34 +252,32 @@ function spawnEnemy(template) {
 }
 
 function awardEnemyUnlocks(enemy) {
-  const unlockedIds = (enemy.unlocks || []).filter(cardId => {
+  return (enemy.unlocks || []).filter(cardId => {
     const def = CARD_DEFS[cardId];
     return def && !def.unlocked;
   });
-
-  unlockedIds.forEach(cardId => {
-    CARD_DEFS[cardId].unlocked = true;
-    if (!playerDeck.includes(cardId)) playerDeck.push(cardId);
-  });
-
-  return unlockedIds;
 }
 
-function showUnlockRewardOverlay(unlockedIds, buttonText, onCloseAction) {
+function showUnlockRewardOverlay(candidateIds, buttonText, onCloseAction) {
   const copy = document.getElementById('unlock-overlay-copy');
   const cta = document.getElementById('unlock-overlay-cta');
   const container = document.getElementById('unlock-cards-display');
   container.innerHTML = '';
 
-  if (unlockedIds.length === 0) {
-    copy.textContent = 'No new cards were unlocked.';
+  pendingUnlockSelection = null;
+
+  if (candidateIds.length === 0) {
+    copy.textContent = 'No new cards available.';
     const message = document.createElement('div');
     message.className = 'unlock-empty';
     message.textContent = 'You can return to the map to continue your journey.';
     container.appendChild(message);
+    if (cta) cta.disabled = false;
   } else {
-    copy.textContent = 'You have unlocked new cards for your deck!';
-    unlockedIds.forEach(cardId => {
+    copy.textContent = 'Choose one card to add to your deck!';
+    if (cta) cta.disabled = true;
+
+    candidateIds.forEach(cardId => {
       const def = CARD_DEFS[cardId];
       if (!def) return;
 
@@ -286,7 +285,7 @@ function showUnlockRewardOverlay(unlockedIds, buttonText, onCloseAction) {
       const orbsHtml = Array.from({ length: def.cost }, () => `<div class="card-orb"></div>`).join('');
 
       const card = document.createElement('div');
-      card.className = `card ${def.type}`;
+      card.className = `card ${def.type} selectable`;
       card.innerHTML = `
         <div class="card-art">${artHtml}</div>
         <div class="card-name">${def.name}</div>
@@ -294,6 +293,12 @@ function showUnlockRewardOverlay(unlockedIds, buttonText, onCloseAction) {
         <div class="card-desc">${def.desc}</div>
         <div class="card-orbs">${orbsHtml}</div>
       `;
+      card.addEventListener('click', () => {
+        container.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        pendingUnlockSelection = cardId;
+        if (cta) cta.disabled = false;
+      });
       container.appendChild(card);
     });
   }
@@ -305,6 +310,12 @@ function showUnlockRewardOverlay(unlockedIds, buttonText, onCloseAction) {
 
 function closeUnlockRewardOverlay() {
   document.getElementById('unlock-overlay').classList.remove('show');
+  if (pendingUnlockSelection) {
+    const cardId = pendingUnlockSelection;
+    pendingUnlockSelection = null;
+    CARD_DEFS[cardId].unlocked = true;
+    if (!playerDeck.includes(cardId)) playerDeck.push(cardId);
+  }
   if (rewardOverlayNextAction) {
     const callback = rewardOverlayNextAction;
     rewardOverlayNextAction = null;
@@ -315,6 +326,7 @@ function closeUnlockRewardOverlay() {
 function hideUnlockOverlay() {
   document.getElementById('unlock-overlay').classList.remove('show');
   rewardOverlayNextAction = null;
+  pendingUnlockSelection = null;
 }
 
 function returnToMapAfterVictory() {
