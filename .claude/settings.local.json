@@ -5,7 +5,9 @@
       "Bash(Move-Item 'c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\card*.png' 'c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\cards\" *)",
       "Bash(Move-Item 'c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\player.png' 'c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\\\\player\" *)",
       "PowerShell(Get-ChildItem \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\" -Recurse | ForEach-Object { $_.FullName })",
-      "Bash(Test-Path \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\styles\\\\mobileView.css\")"
+      "Bash(Test-Path \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\styles\\\\mobileView.css\")",
+      "Bash(node --check scripts/encounters.js)",
+      "Bash(node --check scripts/campaign.js)"
     ],
     "additionalDirectories": [
       "c:\\Users\\UlaKU\\Projects\\DragnarokCardGame\\resources"

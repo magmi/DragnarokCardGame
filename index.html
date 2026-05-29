@@ -16,6 +16,7 @@
     document.write('<link rel="stylesheet" href="styles/player.css?v=' + CONFIG.filesVersion + '">');
     document.write('<link rel="stylesheet" href="styles/deck.css?v=' + CONFIG.filesVersion + '">');
     document.write('<link rel="stylesheet" href="styles/map.css?v=' + CONFIG.filesVersion + '">');
+    document.write('<link rel="stylesheet" href="styles/encounter.css?v=' + CONFIG.filesVersion + '">');
     document.write('<link rel="stylesheet" href="styles/tutorial.css?v=' + CONFIG.filesVersion + '">');
     document.write('<link rel="stylesheet" href="styles/mobileView.css?v=' + CONFIG.filesVersion + '">');
   </script>
@@ -284,6 +285,21 @@
     </div>
   </div>
 
+  <!-- Random encounter overlay -->
+  <div id="encounter-overlay" aria-hidden="true">
+    <div class="encounter-card">
+      <div class="encounter-header">
+        <h2 id="encounter-title"></h2>
+      </div>
+      <img id="encounter-img" src="" alt="" />
+      <p id="encounter-desc"></p>
+      <div id="encounter-options" class="encounter-options"></div>
+      <div id="encounter-result" class="encounter-result"></div>
+      <button id="encounter-continue" class="action-btn max-width-btn" onclick="closeEncounter()"
+        style="display:none">Continue</button>
+    </div>
+  </div>
+
   <!-- Main game layout -->
   <div id="game">
 
@@ -421,6 +437,7 @@
       'scripts/render.js',
       'scripts/overlays.js',
       'scripts/campaign.js',
+      'scripts/encounters.js',
       'scripts/combat.js',
       'scripts/tutorial.js',
       'scripts/game.js',

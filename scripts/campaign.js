@@ -51,6 +51,7 @@ function resetCampaign() {
   Object.values(CARD_DEFS).forEach(def => {
     def.unlocked = !!def.defaultUnlocked;
   });
+  resetEncounters();
   hideUnlockOverlay();
   renderMap();
 }
@@ -65,16 +66,30 @@ function renderMap() {
     const progress = campaignProgress[index];
 
     if (index > 0) {
-      const arrow = document.createElement('span');
-      arrow.className = 'map-arrow material-symbols-outlined';
-      arrow.style.opacity = progress.unlocked ? '1' : '0.3';
-      arrow.innerHTML = 'arrow_downward';
-      mapList.appendChild(arrow);
+      const makeArrow = (lit) => {
+        const arrow = document.createElement('span');
+        arrow.className = 'map-arrow material-symbols-outlined';
+        arrow.style.opacity = lit ? '1' : '0.3';
+        arrow.innerHTML = 'arrow_downward';
+        return arrow;
+      };
+
+      // Encounter slot sits in the gap between enemy (index - 1) and enemy index.
+      const encounterNode = renderEncounterNode(index - 1);
+      if (encounterNode) {
+        // Arrow into the encounter lights up once the previous enemy is cleared.
+        mapList.appendChild(makeArrow(!!campaignProgress[index - 1]?.beaten));
+        mapList.appendChild(encounterNode);
+        // Arrow into the enemy lights up once that enemy unlocks (encounter resolved).
+        mapList.appendChild(makeArrow(progress.unlocked));
+      } else {
+        mapList.appendChild(makeArrow(progress.unlocked));
+      }
     }
 
     const node = document.createElement('button');
     node.type = 'button';
-    node.className = `map-node ${progress.unlocked ? 'unlocked' : 'locked'}${index === selectedEnemyIndex ? ' selected' : ''}`;
+    node.className = `map-node ${progress.unlocked ? 'unlocked' : 'locked'}${progress.unlocked && index === selectedEnemyIndex ? ' selected' : ''}`;
     node.disabled = !progress.unlocked;
     node.addEventListener('click', () => selectMapNode(index));
 
@@ -131,7 +146,7 @@ function handleEnemyDefeated() {
 
   setTimeout(() => {
     if (hasNext) {
-      campaignProgress[nextIndex].unlocked = true;
+      // The next enemy stays locked until the encounter in the gap is resolved.
       selectedEnemyIndex = nextIndex;
       renderMap();
       showLevelCleared('Continue', () => {

@@ -80,6 +80,7 @@ const CARD_DEFS = {
     defaultUnlocked: ALL_CARDS_UNLOCKED
   }
 };
+
 const ENEMIES = [
   {
     id: 'znichar',
@@ -134,3 +135,164 @@ const STARTING_DECK =
   ALL_CARDS_UNLOCKED
     ? [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_POWER_UP, CARD_CHOMP, CARD_HEAL, CARD_REPEL, CARD_BURN, CARD_VULNERABLE]
     : [CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_STRIKE, CARD_DEFEND, CARD_DEFEND, CARD_DEFEND, CARD_DEFEND, CARD_VULNERABLE];
+
+const ENCOUNTERS = [
+  {
+    id: 'banditToll',
+    title: 'The Bandit Toll',
+    img: 'resources/encounters/bandits.jpg',
+    description: 'Bandits block your road! They demand all your valuables. What do you do?',
+    options: [
+      {
+        label: 'Give them your valuables',
+        outcomes: [
+          {
+            chance: 1,
+            message: 'The group leaves. You lose some of your cards but avoid a fight.',
+            effects: [{ type: 'loseRandomCard' }],
+          },
+        ],
+      },
+      {
+        label: 'Fight them (50% success)',
+        outcomes: [
+          {
+            chance: 0.5,
+            message: 'You defeat the bandits! You feel stronger.',
+            effects: [{ type: 'maxHp', amount: 5 }],
+          },
+          {
+            chance: 0.5,
+            message: 'They overpower you and leave you bleeding.',
+            effects: [{ type: 'hp', amount: -10 }],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'warriorMage',
+    title: 'The Warrior mage',
+    img: 'resources/encounters/warrior.jpg',
+    description: 'You encounter skilled warrior on a horse.',
+    options: [
+      {
+        label: 'Eat him and take his powers (40% chance)',
+        outcomes: [
+          {
+            chance: 0.4,
+            message: 'You feel stronger.',
+            effects: [{ type: 'attackBonus', amount: 1 }],
+          },
+          {
+            chance: 0.6,
+            message: 'He was stronger',
+            effects: [{ type: 'hp', amount: -5 }],
+          },
+        ],
+      },
+      {
+        label: 'Let him be',
+        outcomes: [
+          {
+            chance: 1,
+            message: 'He went away.',
+            effects: [{ type: 'maxHp', amount: 5 }],
+          }
+        ],
+      },
+    ],
+  },
+  {
+    id: 'angryDragonGod',
+    title: 'Dragon God',
+    img: 'resources/encounters/dragonGod.jpg',
+    description: 'You encounter a Dragnarok. The ancient dragon god offers you a boon — but at a cost.',
+    options: [
+      {
+        label: 'Pray for a blessing (60% success)',
+        outcomes: [
+          {
+            chance: 0.6,
+            message: 'A warm light flows over you, knitting your wounds.',
+            effects: [{ type: 'hp', amount: 12 }],
+          },
+          {
+            chance: 0.4,
+            message: 'The shrine spirit takes offense and lashes out.',
+            effects: [{ type: 'hp', amount: -5 }],
+          },
+        ],
+      },
+      {
+        label: 'Offer your blood (-6 HP)',
+        outcomes: [
+          {
+            chance: 1,
+            message: 'Power surges through your veins at a painful price.',
+            effects: [{ type: 'hp', amount: -6 }, { type: 'attackBonus', amount: 2 }],
+          },
+        ],
+      },
+      {
+        label: 'Leave it untouched',
+        outcomes: [
+          {
+            chance: 1,
+            message: 'Nothing happens.',
+            effects: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'hoodedMerchant',
+    title: 'The Hooded Merchant',
+    img: 'resources/encounters/merchant.jpg',
+    description: 'A cloaked figure beckons from a roadside stall lined with ' +
+      'curious wares. "Care to make a deal, traveler?"',
+    options: [
+      {
+        label: 'Buy the elixir (50% success)',
+        outcomes: [
+          {
+            chance: 0.5,
+            message: 'Vitality surges through your body — you feel hardier than ever.',
+            effects: [{ type: 'maxHp', amount: 5 }],
+          },
+          {
+            chance: 0.5,
+            message: 'It was poison! Your stomach churns in agony.',
+            effects: [{ type: 'hp', amount: -8 }],
+          },
+        ],
+      },
+      {
+        label: 'Replace random card for strength potion',
+        outcomes: [
+          {
+            chance: 1,
+            message: 'You trade away a card.',
+            effects: [{ type: 'loseRandomCard' }, { type: 'attackBonus', amount: 1 }],
+          },
+        ],
+      },
+      {
+        label: 'Steal one of her wares (40% success)',
+        outcomes: [
+          {
+            chance: 0.4,
+            message: 'You slip a blade up your sleeve, unseen.',
+            effects: [{ type: 'addCard', cardId: CARD_CHOMP }],
+          },
+          {
+            chance: 0.6,
+            message: "Caught! The merchant stabbed you in your toe.",
+            effects: [{ type: 'hp', amount: -10 }],
+          },
+        ],
+      },
+    ],
+  },
+];
