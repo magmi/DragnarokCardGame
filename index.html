@@ -413,7 +413,18 @@
   </div>
 
   <script>
-    ['sprites.js', 'scripts/constants.js', 'scripts/tutorial.js', 'scripts/game.js'].forEach(function (s) {
+    [
+      'sprites.js',
+      'scripts/constants.js',
+      'scripts/player.js',
+      'scripts/vfx.js',
+      'scripts/render.js',
+      'scripts/overlays.js',
+      'scripts/campaign.js',
+      'scripts/combat.js',
+      'scripts/tutorial.js',
+      'scripts/game.js',
+    ].forEach(function (s) {
       document.write('<script src="' + s + '?v=' + CONFIG.filesVersion + '"><\/script>');
     });
   </script>
