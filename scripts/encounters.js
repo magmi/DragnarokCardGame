@@ -184,6 +184,7 @@ function closeEncounter() {
   overlay.classList.remove('show');
   overlay.setAttribute('aria-hidden', 'true');
   renderMap();
+  scrollToActiveNode();
 }
 
 /* ── Map node ────────────────────────────────────────────────────────────── */

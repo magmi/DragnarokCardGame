@@ -8,13 +8,18 @@ function showStartScreen() {
   if (!localStorage.getItem('tutorial_seen')) {
     showTutorial();
   }
-  setTimeout(() => {
-    const mapList = document.getElementById('map-list');
-    const unlockedNodes = mapList.querySelectorAll('.map-node.unlocked');
-    if (unlockedNodes.length > 0) {
-      unlockedNodes[unlockedNodes.length - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }, 0);
+  setTimeout(scrollToActiveNode, 0);
+}
+
+// Scrolls to the furthest reachable point on the map — the available encounter
+// or unlocked enemy, whichever is later in the progression chain.
+function scrollToActiveNode() {
+  const mapList = document.getElementById('map-list');
+  if (!mapList) return;
+  const activeNodes = mapList.querySelectorAll('.map-node.unlocked, .encounter-node.available');
+  if (activeNodes.length > 0) {
+    activeNodes[activeNodes.length - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 }
 
 function hideStartScreen() {
