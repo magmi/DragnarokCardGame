@@ -3,6 +3,14 @@
         display: none;
     }
 
+    .encounter-header h2 {
+        font-size: 1.1rem;
+    }
+
+    #encounter-desc {
+        font-size: 1.1rem;
+    }
+
     #version-badge {
         font-size: 0.6rem;
     }

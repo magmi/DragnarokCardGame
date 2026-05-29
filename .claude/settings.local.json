@@ -7,7 +7,9 @@
       "PowerShell(Get-ChildItem \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\resources\" -Recurse | ForEach-Object { $_.FullName })",
       "Bash(Test-Path \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\\\\styles\\\\mobileView.css\")",
       "Bash(node --check scripts/encounters.js)",
-      "Bash(node --check scripts/campaign.js)"
+      "Bash(node --check scripts/campaign.js)",
+      "Bash(node --check scripts/constants.js)",
+      "Bash(node --check scripts/game.js)"
     ],
     "additionalDirectories": [
       "c:\\Users\\UlaKU\\Projects\\DragnarokCardGame\\resources"

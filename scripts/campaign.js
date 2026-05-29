@@ -30,8 +30,14 @@ function startGame() {
   startSelectedEnemy();
 }
 
+// Rolls a fresh lineup for the run: one random enemy from each stage.
+function rollRunEnemies() {
+  return ENEMY_STAGES.map(stage => stage[Math.floor(Math.random() * stage.length)]);
+}
+
 function resetCampaign() {
   document.getElementById('end-turn-btn').disabled = false;
+  ENEMIES = rollRunEnemies();
   campaignProgress = ENEMIES.map((enemy, index) => ({
     id: enemy.id,
     unlocked: index === 0,

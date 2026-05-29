@@ -477,7 +477,7 @@ body::after {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 #level-cleared-banner.show {

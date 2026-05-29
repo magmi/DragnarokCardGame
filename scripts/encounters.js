@@ -94,10 +94,18 @@ function applyEncounterEffects(effects) {
       return;
     }
     const payload = effect.amount ?? effect.cardId;
-    const summary = handler(payload);
-    if (summary) details.push(summary);
+    const text = handler(payload);
+    if (text) details.push({ text, tone: getEffectTone(effect) });
   });
   return details;
+}
+
+// Tone drives the result chip color. Prefer the explicit `tone` on the effect;
+// otherwise fall back to the sign of a numeric amount.
+function getEffectTone(effect) {
+  if (effect.tone) return effect.tone;
+  if (typeof effect.amount === 'number') return effect.amount >= 0 ? 'positive' : 'negative';
+  return '';
 }
 
 /* ── Overlay flow ────────────────────────────────────────────────────────── */
@@ -158,7 +166,9 @@ function chooseEncounterOption(optionIndex) {
 function showEncounterResult(message, details) {
   const result = document.getElementById('encounter-result');
   const detailHtml = (details && details.length)
-    ? `<div class="encounter-result-effects">${details.map(d => `<span>${d}</span>`).join('')}</div>`
+    ? `<div class="encounter-result-effects">${details.map(d =>
+        `<span class="effect-chip${d.tone ? ' ' + d.tone : ''}">${d.text}</span>`
+      ).join('')}</div>`
     : '';
   result.innerHTML = `<p class="encounter-result-msg">${message}</p>${detailHtml}`;
   result.classList.add('show');

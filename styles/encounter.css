@@ -113,6 +113,18 @@
   padding: 4px 12px;
 }
 
+.encounter-result-effects span.positive {
+  color: #66bb6a;
+  background: rgba(102, 187, 106, 0.12);
+  border-color: rgba(102, 187, 106, 0.4);
+}
+
+.encounter-result-effects span.negative {
+  color: #ff6040;
+  background: rgba(255, 96, 64, 0.12);
+  border-color: rgba(255, 96, 64, 0.4);
+}
+
 /* ── Map encounter node ──────────────────────────────────────────────────── */
 
 .encounter-node {

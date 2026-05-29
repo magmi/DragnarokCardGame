@@ -81,55 +81,113 @@ const CARD_DEFS = {
   }
 };
 
-const ENEMIES = [
-  {
-    id: 'znichar',
-    name: 'Znichar Beast',
-    maxHp: 4,
-    sprite: 'resources/enemies/enemy3.png',
-    thumb: 'resources/enemies/enemy3checkpoint.png',
-    attacks: [
-      { id: 'attack1', name: 'Claws Strike', type: 'attack', value: 10 },
-      { id: 'attack2', name: 'Bite', type: 'attack', value: 12 },
-      { id: 'attack3', name: 'Power Claw', type: 'attack', value: 8 },
-      { id: 'attack4', name: 'Chomp', type: 'attack', value: 9 },
-      { id: 'defend1', name: 'Spines Barrier', type: 'defend', value: 8 },
-    ],
-    unlocks: [CARD_POWER_UP, CARD_CHOMP],
-    expValue: 40,
-  },
-  {
-    id: 'beryl',
-    name: 'Beryl The Bronze Dragon',
-    maxHp: 5,
-    sprite: 'resources/enemies/enemy2.png',
-    thumb: 'resources/enemies/enemy2checkpoint.png',
-    attacks: [
-      { id: 'attack1', name: 'Dragon Bite', type: 'attack', value: 10 },
-      { id: 'attack2', name: 'Dragon Bite', type: 'attack', value: 9 },
-      { id: 'attack3', name: 'Dragon Bite', type: 'attack', value: 11 },
-      { id: 'attack4', name: 'Dragon Bite', type: 'attack', value: 12 },
-      { id: 'defend1', name: 'Scales Barrier', type: 'defend', value: 10 },
-    ],
-    unlocks: [CARD_REPEL, CARD_HEAL, CARD_BURN],
-    expValue: 60,
-  },
-  {
-    id: 'kera',
-    name: 'Kera The Fire Dragoness',
-    maxHp: 10,
-    sprite: 'resources/enemies/enemy1.png',
-    thumb: 'resources/enemies/enemy1checkpoint.png',
-    attacks: [
-      { id: 'attack1', name: 'Flame Breath', type: 'attack', value: 15 },
-      { id: 'attack2', name: 'Flame Breath', type: 'attack', value: 14 },
-      { id: 'attack3', name: 'Flame Breath', type: 'attack', value: 10 },
-      { id: 'attack4', name: 'Flame Breath', type: 'attack', value: 12 },
-      { id: 'defend1', name: 'Ember Shield', type: 'defend', value: 12 },
-    ],
-    expValue: 100,
-  },
+const ENEMY_STAGES = [
+  // Stage 1
+  [
+    {
+      id: 'icewolf',
+      name: 'Ice Wolf',
+      maxHp: 4,
+      sprite: 'resources/enemies/enemy4.png',
+      thumb: 'resources/enemies/enemy4checkpoint.png',
+      attacks: [
+        { id: 'attack1', name: 'Ferocious Bite', type: 'attack', value: 11 },
+        { id: 'attack2', name: 'Frozen Fang', type: 'attack', value: 12 },
+        { id: 'attack3', name: 'Lunge', type: 'attack', value: 8 },
+        { id: 'attack4', name: 'Maul', type: 'attack', value: 9 },
+        { id: 'defend1', name: 'Guard', type: 'defend', value: 8 },
+      ],
+      unlocks: [CARD_POWER_UP, CARD_CHOMP],
+      expValue: 40,
+    },
+    {
+      id: 'cursed',
+      name: 'Cursed',
+      maxHp: 4,
+      sprite: 'resources/enemies/enemy6.png',
+      thumb: 'resources/enemies/enemy6checkpoint.png',
+      attacks: [
+        { id: 'attack1', name: 'Mutilate', type: 'attack', value: 12 },
+        { id: 'attack2', name: 'Slash', type: 'attack', value: 5 },
+        { id: 'attack3', name: 'Bite', type: 'attack', value: 9 },
+      ],
+      unlocks: [CARD_POWER_UP, CARD_CHOMP],
+      expValue: 40,
+    },
+    {
+      id: 'znichar',
+      name: 'Znichar Beast',
+      maxHp: 4,
+      sprite: 'resources/enemies/enemy3.png',
+      thumb: 'resources/enemies/enemy3checkpoint.png',
+      attacks: [
+        { id: 'attack1', name: 'Claws Strike', type: 'attack', value: 10 },
+        { id: 'attack2', name: 'Bite', type: 'attack', value: 12 },
+        { id: 'attack3', name: 'Power Claw', type: 'attack', value: 8 },
+        { id: 'attack4', name: 'Chomp', type: 'attack', value: 9 },
+        { id: 'defend1', name: 'Spines Barrier', type: 'defend', value: 8 },
+      ],
+      unlocks: [CARD_POWER_UP, CARD_CHOMP],
+      expValue: 40,
+    },
+  ],
+  // Stage 2
+  [
+    {
+      id: 'frey',
+      name: 'Frey the Water Dragon',
+      maxHp: 4,
+      sprite: 'resources/enemies/enemy5.png',
+      thumb: 'resources/enemies/enemy5checkpoint.png',
+      attacks: [
+        { id: 'attack1', name: 'Water Breath', type: 'attack', value: 15 },
+        { id: 'attack2', name: 'Bite', type: 'attack', value: 12 },
+        { id: 'attack3', name: 'Slash', type: 'attack', value: 10 },
+        { id: 'attack4', name: 'Bite', type: 'attack', value: 12 },
+        { id: 'defend1', name: 'Brace', type: 'defend', value: 12 },
+      ],
+      unlocks: [CARD_POWER_UP, CARD_CHOMP],
+      expValue: 40,
+    },
+    {
+      id: 'beryl',
+      name: 'Beryl The Bronze Dragon',
+      maxHp: 5,
+      sprite: 'resources/enemies/enemy2.png',
+      thumb: 'resources/enemies/enemy2checkpoint.png',
+      attacks: [
+        { id: 'attack1', name: 'Dragon Bite', type: 'attack', value: 10 },
+        { id: 'attack2', name: 'Dragon Bite', type: 'attack', value: 9 },
+        { id: 'attack3', name: 'Dragon Bite', type: 'attack', value: 11 },
+        { id: 'attack4', name: 'Dragon Bite', type: 'attack', value: 12 },
+        { id: 'defend1', name: 'Scales Barrier', type: 'defend', value: 10 },
+      ],
+      unlocks: [CARD_REPEL, CARD_HEAL, CARD_BURN],
+      expValue: 60,
+    },
+  ],
+  // Stage 3
+  [
+    {
+      id: 'kera',
+      name: 'Kera The Fire Dragoness',
+      maxHp: 10,
+      sprite: 'resources/enemies/enemy1.png',
+      thumb: 'resources/enemies/enemy1checkpoint.png',
+      attacks: [
+        { id: 'attack1', name: 'Flame Breath', type: 'attack', value: 15 },
+        { id: 'attack2', name: 'Flame Breath', type: 'attack', value: 14 },
+        { id: 'attack3', name: 'Flame Breath', type: 'attack', value: 10 },
+        { id: 'attack4', name: 'Flame Breath', type: 'attack', value: 12 },
+        { id: 'defend1', name: 'Ember Shield', type: 'defend', value: 12 },
+      ],
+      expValue: 100,
+    },
+  ],
 ];
+
+// Active enemy lineup for the current run — one enemy rolled from each stage.
+let ENEMIES = [];
 
 const STARTING_DECK =
   ALL_CARDS_UNLOCKED
@@ -149,7 +207,7 @@ const ENCOUNTERS = [
           {
             chance: 1,
             message: 'The group leaves. You lose some of your cards but avoid a fight.',
-            effects: [{ type: 'loseRandomCard' }],
+            effects: [{ type: 'loseRandomCard', tone: 'negative' }],
           },
         ],
       },
@@ -159,12 +217,12 @@ const ENCOUNTERS = [
           {
             chance: 0.5,
             message: 'You defeat the bandits! You feel stronger.',
-            effects: [{ type: 'maxHp', amount: 5 }],
+            effects: [{ type: 'maxHp', amount: 5, tone: 'positive' }],
           },
           {
             chance: 0.5,
             message: 'They overpower you and leave you bleeding.',
-            effects: [{ type: 'hp', amount: -10 }],
+            effects: [{ type: 'hp', amount: -10, tone: 'negative' }],
           },
         ],
       },
@@ -174,30 +232,30 @@ const ENCOUNTERS = [
     id: 'warriorMage',
     title: 'The Warrior mage',
     img: 'resources/encounters/warrior.jpg',
-    description: 'You encounter skilled warrior on a horse.',
+    description: 'You sense powerful mage riding toward you.',
     options: [
       {
-        label: 'Eat him and take his powers (40% chance)',
+        label: 'Devour him and claim his power (40% chance)',
         outcomes: [
           {
             chance: 0.4,
-            message: 'You feel stronger.',
-            effects: [{ type: 'attackBonus', amount: 1 }],
+            message: 'His strength flows into your veins.',
+            effects: [{ type: 'attackBonus', amount: 1, tone: 'positive' }],
           },
           {
             chance: 0.6,
-            message: 'He was stronger',
-            effects: [{ type: 'hp', amount: -5 }],
+            message: 'The warrior overpowers you before escaping.',
+            effects: [{ type: 'hp', amount: -5, tone: 'negative' }],
           },
         ],
       },
       {
-        label: 'Let him be',
+        label: 'Leave him alone',
         outcomes: [
           {
             chance: 1,
-            message: 'He went away.',
-            effects: [{ type: 'maxHp', amount: 5 }],
+            message: 'The rider disappears into the distance.',
+            effects: [],
           }
         ],
       },
@@ -207,20 +265,20 @@ const ENCOUNTERS = [
     id: 'angryDragonGod',
     title: 'Dragon God',
     img: 'resources/encounters/dragonGod.jpg',
-    description: 'You encounter a Dragnarok. The ancient dragon god offers you a boon — but at a cost.',
+    description: 'You encounter a Dragnarok. The ancient dragon god offers you power - but at a cost.',
     options: [
       {
-        label: 'Pray for a blessing (60% success)',
+        label: 'Pray for a blessing (60% chance)',
         outcomes: [
           {
             chance: 0.6,
-            message: 'A warm light flows over you, knitting your wounds.',
-            effects: [{ type: 'hp', amount: 12 }],
+            message: 'A warm light flows over you, healing you.',
+            effects: [{ type: 'hp', amount: 12, tone: 'positive' }],
           },
           {
             chance: 0.4,
-            message: 'The shrine spirit takes offense and lashes out.',
-            effects: [{ type: 'hp', amount: -5 }],
+            message: 'You get cursed.',
+            effects: [{ type: 'hp', amount: -5, tone: 'negative' }],
           },
         ],
       },
@@ -230,7 +288,7 @@ const ENCOUNTERS = [
           {
             chance: 1,
             message: 'Power surges through your veins at a painful price.',
-            effects: [{ type: 'hp', amount: -6 }, { type: 'attackBonus', amount: 2 }],
+            effects: [{ type: 'hp', amount: -6, tone: 'negative' }, { type: 'attackBonus', amount: 1, tone: 'positive' }],
           },
         ],
       },
@@ -254,17 +312,17 @@ const ENCOUNTERS = [
       'curious wares. "Care to make a deal, traveler?"',
     options: [
       {
-        label: 'Buy the elixir (50% success)',
+        label: 'Buy the elixir (50% chance)',
         outcomes: [
           {
             chance: 0.5,
-            message: 'Vitality surges through your body — you feel hardier than ever.',
-            effects: [{ type: 'maxHp', amount: 5 }],
+            message: 'Vitality surges through your body.',
+            effects: [{ type: 'maxHp', amount: 5, tone: 'positive' }],
           },
           {
             chance: 0.5,
-            message: 'It was poison! Your stomach churns in agony.',
-            effects: [{ type: 'hp', amount: -8 }],
+            message: 'It was poison!',
+            effects: [{ type: 'hp', amount: -8, tone: 'negative' }],
           },
         ],
       },
@@ -274,7 +332,7 @@ const ENCOUNTERS = [
           {
             chance: 1,
             message: 'You trade away a card.',
-            effects: [{ type: 'loseRandomCard' }, { type: 'attackBonus', amount: 1 }],
+            effects: [{ type: 'loseRandomCard', tone: 'negative' }, { type: 'attackBonus', amount: 1, tone: 'positive' }],
           },
         ],
       },
@@ -283,13 +341,13 @@ const ENCOUNTERS = [
         outcomes: [
           {
             chance: 0.4,
-            message: 'You slip a blade up your sleeve, unseen.',
-            effects: [{ type: 'addCard', cardId: CARD_CHOMP }],
+            message: 'You stole a valuable item without being noticed.',
+            effects: [{ type: 'addCard', cardId: CARD_CHOMP, tone: 'positive' }],
           },
           {
             chance: 0.6,
-            message: "Caught! The merchant stabbed you in your toe.",
-            effects: [{ type: 'hp', amount: -10 }],
+            message: "The merchant catches you and drives a dagger into your hand.",
+            effects: [{ type: 'hp', amount: -10, tone: 'negative' }],
           },
         ],
       },
