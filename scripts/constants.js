@@ -87,7 +87,7 @@ const ENEMY_STAGES = [
     {
       id: 'icewolf',
       name: 'Ice Wolf',
-      maxHp: 4,
+      maxHp: 40,
       sprite: 'resources/enemies/enemy4.png',
       thumb: 'resources/enemies/enemy4checkpoint.png',
       attacks: [
@@ -103,7 +103,7 @@ const ENEMY_STAGES = [
     {
       id: 'cursed',
       name: 'Cursed',
-      maxHp: 4,
+      maxHp: 40,
       sprite: 'resources/enemies/enemy6.png',
       thumb: 'resources/enemies/enemy6checkpoint.png',
       attacks: [
@@ -117,7 +117,7 @@ const ENEMY_STAGES = [
     {
       id: 'znichar',
       name: 'Znichar Beast',
-      maxHp: 4,
+      maxHp: 40,
       sprite: 'resources/enemies/enemy3.png',
       thumb: 'resources/enemies/enemy3checkpoint.png',
       attacks: [
@@ -136,7 +136,7 @@ const ENEMY_STAGES = [
     {
       id: 'frey',
       name: 'Frey the Water Dragon',
-      maxHp: 4,
+      maxHp: 50,
       sprite: 'resources/enemies/enemy5.png',
       thumb: 'resources/enemies/enemy5checkpoint.png',
       attacks: [
@@ -146,13 +146,13 @@ const ENEMY_STAGES = [
         { id: 'attack4', name: 'Bite', type: 'attack', value: 12 },
         { id: 'defend1', name: 'Brace', type: 'defend', value: 12 },
       ],
-      unlocks: [CARD_POWER_UP, CARD_CHOMP],
-      expValue: 40,
+      unlocks: [CARD_REPEL, CARD_HEAL, CARD_BURN],
+      expValue: 60,
     },
     {
       id: 'beryl',
       name: 'Beryl The Bronze Dragon',
-      maxHp: 5,
+      maxHp: 50,
       sprite: 'resources/enemies/enemy2.png',
       thumb: 'resources/enemies/enemy2checkpoint.png',
       attacks: [
@@ -171,7 +171,7 @@ const ENEMY_STAGES = [
     {
       id: 'kera',
       name: 'Kera The Fire Dragoness',
-      maxHp: 10,
+      maxHp: 100,
       sprite: 'resources/enemies/enemy1.png',
       thumb: 'resources/enemies/enemy1checkpoint.png',
       attacks: [
