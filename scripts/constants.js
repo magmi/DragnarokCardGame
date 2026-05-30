@@ -156,11 +156,11 @@ const ENEMY_STAGES = [
       sprite: 'resources/enemies/enemy2.png',
       thumb: 'resources/enemies/enemy2checkpoint.png',
       attacks: [
-        { id: 'attack1', name: 'Dragon Bite', type: 'attack', value: 10 },
-        { id: 'attack2', name: 'Dragon Bite', type: 'attack', value: 9 },
-        { id: 'attack3', name: 'Dragon Bite', type: 'attack', value: 11 },
+        { id: 'attack1', name: 'Dragon Bite', type: 'attack', value: 13 },
+        { id: 'attack2', name: 'Tail Swipe', type: 'attack', value: 11 },
+        { id: 'attack3', name: 'Bronze Claw', type: 'attack', value: 14 },
         { id: 'attack4', name: 'Dragon Bite', type: 'attack', value: 12 },
-        { id: 'defend1', name: 'Scales Barrier', type: 'defend', value: 10 },
+        { id: 'defend1', name: 'Scales Barrier', type: 'defend', value: 12 },
       ],
       unlocks: [CARD_REPEL, CARD_HEAL, CARD_BURN],
       expValue: 60,
@@ -175,11 +175,11 @@ const ENEMY_STAGES = [
       sprite: 'resources/enemies/enemy1.png',
       thumb: 'resources/enemies/enemy1checkpoint.png',
       attacks: [
-        { id: 'attack1', name: 'Flame Breath', type: 'attack', value: 15 },
-        { id: 'attack2', name: 'Flame Breath', type: 'attack', value: 14 },
-        { id: 'attack3', name: 'Flame Breath', type: 'attack', value: 10 },
-        { id: 'attack4', name: 'Flame Breath', type: 'attack', value: 12 },
-        { id: 'defend1', name: 'Ember Shield', type: 'defend', value: 12 },
+        { id: 'attack1', name: 'Flame Breath', type: 'attack', value: 16 },
+        { id: 'attack2', name: 'Inferno', type: 'attack', value: 18 },
+        { id: 'attack3', name: 'Flame Breath', type: 'attack', value: 14 },
+        { id: 'attack4', name: 'Tail Attack', type: 'attack', value: 13 },
+        { id: 'defend1', name: 'Ember Shield', type: 'defend', value: 15 },
       ],
       expValue: 100,
     },
@@ -293,7 +293,7 @@ const ENCOUNTERS = [
         ],
       },
       {
-        label: 'Leave it untouched',
+        label: 'Leave',
         outcomes: [
           {
             chance: 1,
@@ -308,11 +308,10 @@ const ENCOUNTERS = [
     id: 'hoodedMerchant',
     title: 'The Hooded Merchant',
     img: 'resources/encounters/merchant.jpg',
-    description: 'A cloaked figure beckons from a roadside stall lined with ' +
-      'curious wares. "Care to make a deal, traveler?"',
+    description: 'A shady merchant approaches. "Care to make a deal, traveler?"',
     options: [
       {
-        label: 'Buy the elixir (50% chance)',
+        label: 'Buy elixir (50% chance)',
         outcomes: [
           {
             chance: 0.5,

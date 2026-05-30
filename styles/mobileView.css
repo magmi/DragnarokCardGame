@@ -1,6 +1,22 @@
+/* ═══════════════════════════════════════════════════════════
+   MOBILE VIEWS
+   ═══════════════════════════════════════════════════════════ */
+
 @media (max-width: 900px) {
     .mobile-hidden {
         display: none;
+    }
+
+    #encounter-overlay {
+        padding: 10px;
+    }
+
+    .encounter-card {
+        padding: 10px;
+    }
+
+    .encounter-action {
+        font-size: 0.8rem;
     }
 
     .encounter-header h2 {
