@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   VFX HELPERS
+   VFX
    ═══════════════════════════════════════════════════════════ */
 
 function showFloatNum(selector, text, color) {
@@ -20,7 +20,7 @@ function showFloatNum(selector, text, color) {
 function shakeEl(selector) {
   const el = document.querySelector(selector);
   el.classList.remove('shaking');
-  void el.offsetWidth; // force reflow to restart animation
+  void el.offsetWidth;
   el.classList.add('shaking');
   setTimeout(() => el.classList.remove('shaking'), 500);
 }

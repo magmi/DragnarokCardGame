@@ -14,6 +14,17 @@ function renderAll() {
   renderPlayerLevel();
 }
 
+function renderMapPlayerHeader() {
+  const hpEl = document.getElementById('map-player-hp');
+  const atkEl = document.getElementById('map-player-atk');
+  if (hpEl) {
+    const maxHp = getPlayerMaxHp();
+    const hp = gs?.player?.hp ?? maxHp;
+    hpEl.textContent = `${hp} / ${maxHp}`;
+  }
+  if (atkEl) atkEl.textContent = `+${playerAttackBonus}`;
+}
+
 function renderEnemyInfo() {
   const nameEl = document.querySelector('#enemy-panel .combatant-name');
   if (nameEl) nameEl.textContent = gs.enemy.name;

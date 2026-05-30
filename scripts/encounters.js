@@ -1,34 +1,23 @@
 /* ═══════════════════════════════════════════════════════════
-   RANDOM ENCOUNTERS
+   ENCOUNTERS
    ═══════════════════════════════════════════════════════════ */
-
-
-/* ── Per-run encounter progress (one slot per gap between enemies) ───────── */
 
 let encounterProgress = [];
 let activeEncounter = null;
 
 function resetEncounters() {
-  // One encounter slot sits in each gap between consecutive enemies.
   encounterProgress = ENEMIES.slice(1).map(() => ({ resolved: false }));
   activeEncounter = null;
 }
 
-/**
- * Gap `gapIndex` sits between enemy `gapIndex` and enemy `gapIndex + 1`.
- * It opens once the enemy before it is beaten, and stays open until resolved.
- */
 function isEncounterAvailable(gapIndex) {
   return !!campaignProgress[gapIndex]?.beaten && !encounterProgress[gapIndex]?.resolved;
 }
-
-/* ── Outcome resolution ──────────────────────────────────────────────────── */
 
 function getRandomEncounter() {
   return ENCOUNTERS[Math.floor(Math.random() * ENCOUNTERS.length)];
 }
 
-/** Pick one outcome from a list using cumulative `chance` weights. */
 function rollOutcome(outcomes) {
   const roll = Math.random();
   let cumulative = 0;
@@ -39,11 +28,6 @@ function rollOutcome(outcomes) {
   return outcomes[outcomes.length - 1];
 }
 
-/**
- * Effect handlers. Each receives its payload (amount or cardId) and returns a
- * short human-readable summary line, or '' if nothing visible happened.
- * Effects mutate the shared run state directly (gs, playerDeck, bonuses).
- */
 const ENCOUNTER_EFFECTS = {
   hp(amount) {
     if (!gs?.player) return '';
@@ -100,15 +84,11 @@ function applyEncounterEffects(effects) {
   return details;
 }
 
-// Tone drives the result chip color. Prefer the explicit `tone` on the effect;
-// otherwise fall back to the sign of a numeric amount.
 function getEffectTone(effect) {
   if (effect.tone) return effect.tone;
   if (typeof effect.amount === 'number') return effect.amount >= 0 ? 'positive' : 'negative';
   return '';
 }
-
-/* ── Overlay flow ────────────────────────────────────────────────────────── */
 
 function openEncounter(gapIndex) {
   if (!isEncounterAvailable(gapIndex)) return;
@@ -155,7 +135,6 @@ function chooseEncounterOption(optionIndex) {
   const outcome = rollOutcome(option.outcomes);
   const details = applyEncounterEffects(outcome.effects);
 
-  // Lock in the choice — disable all options.
   document.querySelectorAll('#encounter-options .encounter-option').forEach(btn => {
     btn.disabled = true;
   });
@@ -182,7 +161,6 @@ function closeEncounter() {
     const { gapIndex } = activeEncounter;
     encounterProgress[gapIndex].resolved = true;
 
-    // Resolving the encounter unlocks the enemy on the far side of the gap.
     const nextEnemyIndex = gapIndex + 1;
     if (campaignProgress[nextEnemyIndex]) {
       campaignProgress[nextEnemyIndex].unlocked = true;
@@ -197,12 +175,6 @@ function closeEncounter() {
   scrollToActiveNode();
 }
 
-/* ── Map node ────────────────────────────────────────────────────────────── */
-
-/**
- * Builds the encounter slot element for the gap between enemy `gapIndex` and
- * enemy `gapIndex + 1`. Returns null if that gap has no slot.
- */
 function renderEncounterNode(gapIndex) {
   if (gapIndex < 0 || gapIndex >= encounterProgress.length) return null;
 

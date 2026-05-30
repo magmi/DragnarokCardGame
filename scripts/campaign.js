@@ -11,8 +11,6 @@ function showStartScreen() {
   setTimeout(scrollToActiveNode, 0);
 }
 
-// Scrolls to the furthest reachable point on the map — the available encounter
-// or unlocked enemy, whichever is later in the progression chain.
 function scrollToActiveNode() {
   const mapList = document.getElementById('map-list');
   if (!mapList) return;
@@ -30,7 +28,6 @@ function startGame() {
   startSelectedEnemy();
 }
 
-// Rolls a fresh lineup for the run: one random enemy from each stage.
 function rollRunEnemies() {
   return ENEMY_STAGES.map(stage => stage[Math.floor(Math.random() * stage.length)]);
 }
@@ -67,7 +64,20 @@ function resetCampaign() {
   renderMap();
 }
 
+function renderMapPlayerHeader() {
+  const hpEl = document.getElementById('map-player-hp');
+  const atkEl = document.getElementById('map-player-atk');
+  if (hpEl) {
+    const maxHp = getPlayerMaxHp();
+    const hp = gs?.player?.hp ?? maxHp;
+    hpEl.textContent = `${hp} / ${maxHp}`;
+  }
+  if (atkEl) atkEl.textContent = `+${playerAttackBonus}`;
+}
+
 function renderMap() {
+  renderMapPlayerHeader();
+
   const mapList = document.getElementById('map-list');
   if (!mapList) return;
 

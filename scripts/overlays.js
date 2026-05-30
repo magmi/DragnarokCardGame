@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   OVERLAYS & MODALS
+   OVERLAYS
    ═══════════════════════════════════════════════════════════ */
 
 function showUnlockRewardOverlay(candidateIds, buttonText, onCloseAction) {

@@ -19,7 +19,7 @@ const CARD_REPEL = 'repel';
 const CARD_BURN = 'burn';
 const CARD_VULNERABLE = 'vulnerable'
 
-const ALL_CARDS_UNLOCKED = false; // for testing: set to true to unlock all cards from the start
+const ALL_CARDS_UNLOCKED = false; // for testing
 
 const CARD_DEFS = {
   strike: {
