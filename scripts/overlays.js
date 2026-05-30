@@ -82,14 +82,6 @@ function returnToEndgameAfterVictory() {
   endGame(true);
 }
 
-function showHowTo() {
-  document.getElementById('howto-overlay').classList.add('show');
-}
-
-function hideHowTo() {
-  document.getElementById('howto-overlay').classList.remove('show');
-}
-
 function showUnlockedDeck() {
   const container = document.getElementById('unlocked-deck-display');
   const unlockedIds = Object.values(CARD_DEFS).filter(d => d.unlocked).map(d => d.id);
