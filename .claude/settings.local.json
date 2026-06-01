@@ -9,7 +9,8 @@
       "Bash(node --check scripts/encounters.js)",
       "Bash(node --check scripts/campaign.js)",
       "Bash(node --check scripts/constants.js)",
-      "Bash(node --check scripts/game.js)"
+      "Bash(node --check scripts/game.js)",
+      "Bash(node --check scripts/loader.js)"
     ],
     "additionalDirectories": [
       "c:\\Users\\UlaKU\\Projects\\DragnarokCardGame\\resources"
