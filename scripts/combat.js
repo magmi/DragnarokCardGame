@@ -20,13 +20,16 @@ function playCard(idx) {
         gs.player.nextAttackMultiplier = 1;
         showFloatNum('#player-panel', 'Attack Doubled!', '#ffd166');
       }
-      applyAttack(gs.enemy, '#enemy-panel', damage);
+      applyAttack('player', gs.enemy, '#enemy-panel', damage);
 
       if (def.burn > 0) {
         gs.enemy.burn = def.burn;
       }
       if (def.vulnerable > 0) {
         gs.enemy.vulnerable = def.vulnerable;
+      }
+      if (def.weak > 0) {
+        gs.enemy.weak = def.weak;
       }
       break;
     case 'defend':
@@ -58,12 +61,22 @@ function playCard(idx) {
   if (gs.enemy.hp <= 0) { handleEnemyDefeated(); return; }
 }
 
-function applyAttack(target, paneId, damage) {
+// `source` is who is attacking: 'player' or 'enemy' (or null for non-attack
+// damage like burn, which has no attacker).
+function applyAttack(source, target, paneId, damage) {
   // Vulnerable amplifies the incoming hit BEFORE block absorbs it, so the
   // bonus damage isn't swallowed by block.
   let incoming = damage;
+
   if (target.vulnerable > 0) {
-    incoming = Math.round(incoming * 1.25);
+    incoming = Math.round(incoming * VULNERABLE_MULTIPLIER);
+  }
+
+  // Weak reduces the attacker's damage. `source` is the string 'player'/'enemy'
+  // (or null for burn), so resolve it to the actual combatant first.
+  const attacker = source === 'player' ? gs.player : source === 'enemy' ? gs.enemy : null;
+  if (attacker && attacker.weak > 0) {
+    incoming = Math.round(incoming * WEAK_MULTIPLIER);
   }
 
   const absorbed = Math.min(target.block, incoming);
@@ -79,8 +92,8 @@ function applyAttack(target, paneId, damage) {
     showFloatNum(paneId, 'Blocked', '#5ba3f5');
   }
 
-  // Repel attack
-  if (gs.player.repelNextAttack > 0) {
+  // Repel only reflects when the enemy is the one attacking the player.
+  if (source === 'enemy' && gs.player.repelNextAttack > 0) {
     gs.enemy.hp = Math.max(0, gs.enemy.hp - gs.player.repelNextAttack);
     showFloatNum('#enemy-panel', `-${gs.player.repelNextAttack} (reflected)`, '#ff6040');
     gs.player.repelNextAttack = 0;
@@ -108,11 +121,14 @@ function endTurn() {
 
 function enemyTurn() {
   if (gs.enemy.burn > 0) {
-    applyAttack(gs.enemy, '#enemy-panel', gs.enemy.burn);
+    applyAttack(null, gs.enemy, '#enemy-panel', gs.enemy.burn); // burn has no attacker
     gs.enemy.burn -= 1;
   }
   if (gs.enemy.vulnerable > 0) {
     gs.enemy.vulnerable -= 1;
+  }
+  if (gs.enemy.weak > 0) {
+    gs.enemy.weak -= 1;
   }
 
   if (gs.enemy.hp <= 0) { renderAll(); handleEnemyDefeated(); return; }
@@ -120,10 +136,16 @@ function enemyTurn() {
   const { intent } = gs.enemy;
 
   if (intent.type === 'attack') {
-    applyAttack(gs.player, '#player-panel', intent.value);
+    applyAttack('enemy', gs.player, '#player-panel', intent.value);
   } else if (intent.type === 'special') {
-    gs.player.vulnerable += intent.vulnerable;
-    showFloatNum('#player-panel', `Vulnerable ${intent.vulnerable}`, '#c77dff');
+    if (intent.weak > 0) {
+      gs.player.weak += intent.weak;
+      showFloatNum('#player-panel', `Weak ${intent.weak}`, '#c77dff');
+    }
+    if (intent.vulnerable > 0) {
+      gs.player.vulnerable += intent.vulnerable;
+      showFloatNum('#player-panel', `Vulnerable ${intent.vulnerable}`, '#c77dff');
+    }
   } else {
     gs.enemy.block += intent.value;
     showFloatNum('#enemy-panel', `+${intent.value} Block`, '#5ba3f5');
@@ -138,9 +160,10 @@ function enemyTurn() {
 
 function beginPlayerTurn() {
   gs.player.block = 0;
-  // Vulnerable ticks down at the start of the player's own turn, so the value
-  // shown during the turn is exactly what the upcoming enemy attack will use.
+  // Vulnerable and weak tick down at the start of the player's own turn, so the
+  // value shown during the turn is what the upcoming action will actually use.
   if (gs.player.vulnerable > 0) gs.player.vulnerable -= 1;
+  if (gs.player.weak > 0) gs.player.weak -= 1;
 
   gs.enemy.intent = pickIntent(gs.enemy);
   gs.energy = MAX_ENERGY;

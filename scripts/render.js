@@ -47,11 +47,15 @@ function renderBadges() {
   setBadge('enemy', 'block', gs.enemy.block);
   setBadge('player', 'repel', gs.player.repelNextAttack);
   setBadge('player', 'vulnerable', gs.player.vulnerable);
-  setBadge('enemy', 'vulnerable', gs.enemy.vulnerable);
+  setBadge('player', 'weak', gs.player.weak);
+
   setBadge('enemy', 'burn', gs.enemy.burn);
+  setBadge('enemy', 'vulnerable', gs.enemy.vulnerable);
+  setBadge('enemy', 'weak', gs.enemy.weak);
 }
 
 function setBadge(who, badgeName, val) {
+  console.log(`Setting badge: ${who} ${badgeName} = ${val}`);
   const badge = document.getElementById(`${who}-${badgeName}-badge`);
   document.getElementById(`${who}-${badgeName}-val`).textContent = val;
   badge.classList.toggle('visible', val > 0);
@@ -72,19 +76,22 @@ function renderIntent() {
   const intentColor = intent.type === 'attack' ? '#e05020'
     : intent.type === 'special' ? '#c77dff' : '#5ba3f5';
 
-  let html;
+  let html = `${intent.name} for ${intent.value}`;
   if (intent.type === 'attack') {
-    if (gs.player.vulnerable > 0) {
-      const boosted = Math.round(intent.value * 1.25);
-      html = `${intent.name} for <span style="color:#ffb38a">${boosted}</span>`;
-    } else {
-      html = `${intent.name} for ${intent.value}`;
+    // Mirror applyAttack: vulnerable (on the player) then weak (on the enemy).
+    let shown = intent.value;
+    if (gs.player.vulnerable > 0) shown = Math.round(shown * VULNERABLE_MULTIPLIER);
+    if (gs.enemy.weak > 0) shown = Math.round(shown * WEAK_MULTIPLIER);
+    if (shown !== intent.value) {
+      const color = shown > intent.value ? '#ffb38a' : '#b380ff';
+      html = `${intent.name} for <span style="color:${color}">${shown}</span>`;
     }
   } else if (intent.type === 'special') {
-    html = `${intent.name} (+${intent.vulnerable} Vulnerable)`;
-  } else {
-    html = `${intent.name} for ${intent.value}`;
+    if (intent.vulnerable > 0) html = `${intent.name} (+${intent.vulnerable} Vulnerable)`;
+    else if (intent.weak > 0) html = `${intent.name} (+${intent.weak} Weak)`;
+    else html = intent.name;
   }
+
 
   document.getElementById('intent-icon').innerHTML = intent.icon;
   document.getElementById('intent-text').innerHTML = html;
@@ -115,6 +122,9 @@ function renderHand() {
         description = `Deal ${attackValueText} damage`;
         if (def.vulnerable > 0) {
           description += ` and apply ${def.vulnerable} vulnerable`;
+        }
+        if (def.weak > 0) {
+          description += ` and apply ${def.weak} weak`;
         }
         if (def.burn > 0) {
           description += ` and apply ${def.burn} burn`;

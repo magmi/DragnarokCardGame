@@ -5,6 +5,8 @@
 const MAX_ENERGY = 3;
 const HAND_SIZE = 5;
 const PLAYER_MAX_HP = 30;
+const VULNERABLE_MULTIPLIER = 1.25;
+const WEAK_MULTIPLIER = 0.75;
 
 const LEVEL_THRESHOLDS = [30, 60, 100, 150, 200];
 const LEVELUP_ATK_BONUS = 1;
@@ -95,7 +97,7 @@ const ENEMY_STAGES = [
         //{ id: 'attack2', name: 'Frozen Fang', type: 'attack', value: 12 },
         //{ id: 'attack3', name: 'Lunge', type: 'attack', value: 8 },
         { id: 'attack4', name: 'Maul', type: 'attack', value: 9 },
-        { id: 'special1', name: 'Frost Curse', type: 'special', vulnerable: 2 },
+        { id: 'special1', name: 'Frost Curse', type: 'special', weak: 2 },
         { id: 'defend1', name: 'Guard', type: 'defend', value: 8 },
       ],
       unlocks: [CARD_POWER_UP, CARD_CHOMP],
@@ -111,7 +113,7 @@ const ENEMY_STAGES = [
         //{ id: 'attack1', name: 'Mutilate', type: 'attack', value: 12 },
         //{ id: 'attack2', name: 'Slash', type: 'attack', value: 5 },
         { id: 'attack3', name: 'Bite', type: 'attack', value: 9 },
-        { id: 'special1', name: 'Hex', type: 'special', vulnerable: 2 },
+        { id: 'special1', name: 'Hex', type: 'special', weak: 2 },
       ],
       unlocks: [CARD_POWER_UP, CARD_CHOMP],
       expValue: 40,
@@ -127,7 +129,7 @@ const ENEMY_STAGES = [
         //{ id: 'attack2', name: 'Bite', type: 'attack', value: 12 },
         //{ id: 'attack3', name: 'Power Claw', type: 'attack', value: 8 },
         { id: 'attack4', name: 'Chomp', type: 'attack', value: 9 },
-        { id: 'special1', name: 'Weakening Roar', type: 'special', vulnerable: 2 },
+        { id: 'special1', name: 'Weakening Roar', type: 'special', weak: 2 },
         { id: 'defend1', name: 'Spines Barrier', type: 'defend', value: 8 },
       ],
       unlocks: [CARD_POWER_UP, CARD_CHOMP],
@@ -147,7 +149,7 @@ const ENEMY_STAGES = [
         { id: 'attack2', name: 'Bite', type: 'attack', value: 12 },
         { id: 'attack3', name: 'Slash', type: 'attack', value: 10 },
         { id: 'attack4', name: 'Bite', type: 'attack', value: 12 },
-        { id: 'special1', name: 'Crushing Tide', type: 'special', vulnerable: 2 },
+        { id: 'special1', name: 'Crushing Tide', type: 'special', weak: 2 },
         { id: 'defend1', name: 'Brace', type: 'defend', value: 12 },
       ],
       unlocks: [CARD_REPEL, CARD_HEAL, CARD_BURN],

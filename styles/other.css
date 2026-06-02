@@ -447,6 +447,12 @@ body::after {
   color: var(--green-glow);
 }
 
+.weak-badge {
+  background: rgba(120, 130, 150, 0.25);
+  border: 1px solid rgba(170, 180, 200, 0.4);
+  color: #b8c0d0;
+}
+
 #phase-banner {
   position: fixed;
   inset: 0;
