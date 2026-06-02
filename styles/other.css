@@ -441,16 +441,11 @@ body::after {
   color: var(--ember);
 }
 
+.weak-badge,
 .vulnerable-badge {
-  background: rgba(42, 173, 83, 0.25);
-  border: 1px solid rgba(91, 237, 245, 0.4);
-  color: var(--green-glow);
-}
-
-.weak-badge {
-  background: rgba(120, 130, 150, 0.25);
-  border: 1px solid rgba(170, 180, 200, 0.4);
-  color: #b8c0d0;
+  background: rgb(173 42 42 / 25%);
+  border: 1px solid rgb(245 91 91 / 40%);
+  color: #ff7676;
 }
 
 #phase-banner {

@@ -114,11 +114,19 @@ function renderHand() {
 
     var description = '';
     switch (def.type) {
-      case 'attack':
-        const attackValue = (def.value + playerAttackBonus) * gs.player.nextAttackMultiplier;
-        const attackValueText = gs.player.nextAttackMultiplier > 1
-          ? ` <span style="color: #66bb6a;">${attackValue}</span> `
-          : attackValue;
+      case 'attack': {
+        let attackValue = (def.value + playerAttackBonus) * gs.player.nextAttackMultiplier;
+        const boosted = gs.player.nextAttackMultiplier > 1;
+        const weakened = gs.player.weak > 0;
+        // Weak reduces the player's outgoing damage, matching applyAttack.
+        if (weakened) attackValue = Math.round(attackValue * WEAK_MULTIPLIER);
+
+        let attackValueText = attackValue;
+        if (weakened) {
+          attackValueText = ` <span style="color: #ff3131;">${attackValue}</span> `;
+        } else if (boosted) {
+          attackValueText = ` <span style="color: #66bb6a;">${attackValue}</span> `;
+        }
         description = `Deal ${attackValueText} damage`;
         if (def.vulnerable > 0) {
           description += ` and apply ${def.vulnerable} vulnerable`;
@@ -130,6 +138,7 @@ function renderHand() {
           description += ` and apply ${def.burn} burn`;
         }
         break;
+      }
       default:
         description = def.desc;
         break;
