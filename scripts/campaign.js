@@ -44,7 +44,7 @@ function resetCampaign() {
   selectedEnemyIndex = 0;
 
   gs = {
-    player: { hp: getPlayerMaxHp(), maxHp: getPlayerMaxHp(), block: 0, nextAttackMultiplier: 1, repelNextAttack: 0 },
+    player: { hp: getPlayerMaxHp(), maxHp: getPlayerMaxHp(), block: 0, nextAttackMultiplier: 1, repelNextAttack: 0, vulnerable: 0 },
     currentEnemyIndex: selectedEnemyIndex,
     enemy: spawnEnemy(ENEMIES[selectedEnemyIndex]),
     energy: MAX_ENERGY,

@@ -10,10 +10,14 @@
       "Bash(node --check scripts/campaign.js)",
       "Bash(node --check scripts/constants.js)",
       "Bash(node --check scripts/game.js)",
-      "Bash(node --check scripts/loader.js)"
+      "Bash(node --check scripts/loader.js)",
+      "Bash(node --check scripts/combat.js)",
+      "Bash(node --check scripts/render.js)",
+      "Bash(cd \"c:\\\\Users\\\\UlaKU\\\\Projects\\\\DragnarokCardGame\" && node --check scripts/combat.js && rm -f /tmp/vulnsim.js /tmp/vuln2.js && echo OK)"
     ],
     "additionalDirectories": [
-      "c:\\Users\\UlaKU\\Projects\\DragnarokCardGame\\resources"
+      "c:\\Users\\UlaKU\\Projects\\DragnarokCardGame\\resources",
+      "\\tmp"
     ]
   }
 }

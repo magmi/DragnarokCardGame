@@ -46,6 +46,7 @@ function renderBadges() {
   setBadge('player', 'block', gs.player.block);
   setBadge('enemy', 'block', gs.enemy.block);
   setBadge('player', 'repel', gs.player.repelNextAttack);
+  setBadge('player', 'vulnerable', gs.player.vulnerable);
   setBadge('enemy', 'vulnerable', gs.enemy.vulnerable);
   setBadge('enemy', 'burn', gs.enemy.burn);
 }
@@ -67,9 +68,26 @@ function renderEnergyOrbs() {
 }
 
 function renderIntent() {
-  const intentColor = gs.enemy.intent.type === 'attack' ? '#e05020' : '#5ba3f5';
-  document.getElementById('intent-icon').innerHTML = gs.enemy.intent.icon;
-  document.getElementById('intent-text').textContent = gs.enemy.intent.text;
+  const intent = gs.enemy.intent;
+  const intentColor = intent.type === 'attack' ? '#e05020'
+    : intent.type === 'special' ? '#c77dff' : '#5ba3f5';
+
+  let html;
+  if (intent.type === 'attack') {
+    if (gs.player.vulnerable > 0) {
+      const boosted = Math.round(intent.value * 1.25);
+      html = `${intent.name} for <span style="color:#ffb38a">${boosted}</span>`;
+    } else {
+      html = `${intent.name} for ${intent.value}`;
+    }
+  } else if (intent.type === 'special') {
+    html = `${intent.name} (+${intent.vulnerable} Vulnerable)`;
+  } else {
+    html = `${intent.name} for ${intent.value}`;
+  }
+
+  document.getElementById('intent-icon').innerHTML = intent.icon;
+  document.getElementById('intent-text').innerHTML = html;
   document.getElementById('intent-text').style.color = intentColor;
   document.getElementById('intent-box').style.borderColor = intentColor;
 }

@@ -20,7 +20,7 @@ function initGame(enemyIndex = 0) {
   const preservedHp = gs?.player?.hp > 0 ? Math.min(gs.player.hp, maxHp) : maxHp;
 
   gs = {
-    player: { hp: preservedHp, maxHp, block: 0, nextAttackMultiplier: 1, repelNextAttack: 0 },
+    player: { hp: preservedHp, maxHp, block: 0, nextAttackMultiplier: 1, repelNextAttack: 0, vulnerable: 0 },
     currentEnemyIndex: enemyIndex,
     enemy: spawnEnemy(ENEMIES[enemyIndex]),
     energy: MAX_ENERGY,
@@ -89,15 +89,23 @@ function awardEnemyUnlocks(enemy) {
 
 function pickIntent(enemy) {
   const move = enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
-  const icon = move.type === 'attack'
-    ? '<span style="color:#e05020" class="material-symbols-outlined">swords</span>'
-    : '<span style="color:#5ba3f5" class="material-symbols-outlined">shield</span>';
+  let icon;
+  if (move.type === 'attack') {
+    icon = '<span style="color:#e05020" class="material-symbols-outlined">swords</span>';
+  } else if (move.type === 'special') {
+    icon = '<span style="color:#c77dff" class="material-symbols-outlined">heart_minus</span>';
+  } else {
+    icon = '<span style="color:#5ba3f5" class="material-symbols-outlined">shield</span>';
+  }
 
+  // The display text is built in renderIntent so attack damage can reflect the
+  // player's live vulnerable status.
   return {
     type: move.type,
-    value: move.value,
+    name: move.name,
+    value: move.value || 0,
+    vulnerable: move.vulnerable || 0,
     icon,
-    text: `${move.name} for ${move.value}`,
   };
 }
 

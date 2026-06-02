@@ -59,13 +59,16 @@ function playCard(idx) {
 }
 
 function applyAttack(target, paneId, damage) {
-  const absorbed = Math.min(target.block, damage);
-  target.block -= absorbed;
-  var dealt = damage - absorbed;
-
+  // Vulnerable amplifies the incoming hit BEFORE block absorbs it, so the
+  // bonus damage isn't swallowed by block.
+  let incoming = damage;
   if (target.vulnerable > 0) {
-    dealt = Math.round(dealt * 1.25);
+    incoming = Math.round(incoming * 1.25);
   }
+
+  const absorbed = Math.min(target.block, incoming);
+  target.block -= absorbed;
+  const dealt = incoming - absorbed;
 
   target.hp = Math.max(0, target.hp - dealt);
 
@@ -90,6 +93,7 @@ function applyAttack(target, paneId, damage) {
 
 function endTurn() {
   if (gs.phase !== 'player') return;
+
   gs.phase = 'enemy';
   document.getElementById('end-turn-btn').disabled = true;
 
@@ -117,6 +121,9 @@ function enemyTurn() {
 
   if (intent.type === 'attack') {
     applyAttack(gs.player, '#player-panel', intent.value);
+  } else if (intent.type === 'special') {
+    gs.player.vulnerable += intent.vulnerable;
+    showFloatNum('#player-panel', `Vulnerable ${intent.vulnerable}`, '#c77dff');
   } else {
     gs.enemy.block += intent.value;
     showFloatNum('#enemy-panel', `+${intent.value} Block`, '#5ba3f5');
@@ -131,6 +138,9 @@ function enemyTurn() {
 
 function beginPlayerTurn() {
   gs.player.block = 0;
+  // Vulnerable ticks down at the start of the player's own turn, so the value
+  // shown during the turn is exactly what the upcoming enemy attack will use.
+  if (gs.player.vulnerable > 0) gs.player.vulnerable -= 1;
 
   gs.enemy.intent = pickIntent(gs.enemy);
   gs.energy = MAX_ENERGY;
