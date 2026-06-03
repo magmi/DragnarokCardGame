@@ -76,7 +76,7 @@ function renderIntent() {
   const intentColor = intent.type === 'attack' ? '#e05020'
     : intent.type === 'special' ? '#c77dff' : '#5ba3f5';
 
-  let html = `${intent.name} for ${intent.value}`;
+  let html = `${intent.name} for <span style="font-weight: bold;">${intent.value}</span>`;
   if (intent.type === 'attack') {
     // Mirror applyAttack: vulnerable (on the player) then weak (on the enemy).
     let shown = intent.value;
@@ -84,12 +84,10 @@ function renderIntent() {
     if (gs.enemy.weak > 0) shown = Math.round(shown * WEAK_MULTIPLIER);
     if (shown !== intent.value) {
       const color = shown > intent.value ? '#ffb38a' : '#b380ff';
-      html = `${intent.name} for <span style="color:${color}">${shown}</span>`;
+      html = `${intent.name} for <span style="font-weight: bold; color:${color}">${shown}</span>`;
     }
   } else if (intent.type === 'special') {
-    if (intent.vulnerable > 0) html = `${intent.name} (+${intent.vulnerable} Vulnerable)`;
-    else if (intent.weak > 0) html = `${intent.name} (+${intent.weak} Weak)`;
-    else html = intent.name;
+    html = intent.name;
   }
 
 
