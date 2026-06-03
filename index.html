@@ -351,23 +351,27 @@
 
         <div class="hp-section">
           <div class="enemy-status">
-            <div class="badge block-badge" id="enemy-block-badge">
+            <div class="badge block-badge" id="enemy-block-badge"
+              data-tooltip="Block: absorbs incoming damage. Resets each turn.">
               <span class="material-symbols-outlined">shield</span>
               <span id="enemy-block-val">0</span> Block
             </div>
-            <div class="badge burn-badge" id="enemy-burn-badge">
+            <div class="badge burn-badge" id="enemy-burn-badge"
+              data-tooltip="Burn: damage at the start of each turn. Counts down by 1 each turn.">
               <span class="material-symbols-outlined">
                 mode_heat
               </span>
               <span id="enemy-burn-val">0</span>
             </div>
-            <div class="badge vulnerable-badge" id="enemy-vulnerable-badge">
+            <div class="badge vulnerable-badge" id="enemy-vulnerable-badge"
+              data-tooltip="Vulnerable: 25% more damage from attacks. Counts down by 1 each turn.">
               <span class="material-symbols-outlined">
                 heart_minus
               </span>
               <span id="enemy-vulnerable-val">0</span>
             </div>
-            <div class="badge weak-badge" id="enemy-weak-badge">
+            <div class="badge weak-badge" id="enemy-weak-badge"
+              data-tooltip="Weak: 25% less attack damage. Counts down by 1 each turn.">
               <span class="material-symbols-outlined">
                 stat_minus_2
               </span>
@@ -409,19 +413,23 @@
               <div class="hp-fill player" id="player-hp-bar" style="width:100%"></div>
             </div>
             <div class="player-block-and-energy">
-              <div class="badge block-badge" id="player-block-badge">
+              <div class="badge block-badge" id="player-block-badge"
+                data-tooltip="Block: absorbs incoming damage. Resets each turn.">
                 <span class="material-symbols-outlined">shield</span>
                 <span id="player-block-val">0</span> <span class="mobile-hidden"> Block </span>
               </div>
-              <div class="badge repel-badge" id="player-repel-badge">
+              <div class="badge repel-badge" id="player-repel-badge"
+                data-tooltip="Repel: reflects damage back to the attacker on their next hit.">
                 <span class="material-symbols-outlined">shield</span>
                 <span id="player-repel-val">0</span> <span class="mobile-hidden">Repel </span>
               </div>
-              <div class="badge vulnerable-badge" id="player-vulnerable-badge">
+              <div class="badge vulnerable-badge" id="player-vulnerable-badge"
+                data-tooltip="Vulnerable: takes 25% more damage from attacks. Counts down by 1 each turn.">
                 <span class="material-symbols-outlined">heart_minus</span>
                 <span id="player-vulnerable-val">0</span>
               </div>
-              <div class="badge weak-badge" id="player-weak-badge">
+              <div class="badge weak-badge" id="player-weak-badge"
+                data-tooltip="Weak: deals 25% less attack damage. Counts down by 1 each turn.">
                 <span class="material-symbols-outlined">stat_minus_2</span>
                 <span id="player-weak-val">0</span>
               </div>
