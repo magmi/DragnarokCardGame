@@ -166,6 +166,7 @@ function enemyTurn() {
 
 function beginPlayerTurn() {
   gs.player.block = 0;
+  gs.enemy.moveIndex += 1;
   gs.enemy.intent = pickIntent(gs.enemy);
   gs.energy = MAX_ENERGY;
   gs.phase = 'player';

@@ -70,16 +70,18 @@ function getDeckForBattle() {
 }
 
 function spawnEnemy(template) {
-  return {
+  const enemy = {
     ...template,
     hp: template.maxHp,
     block: 0,
-    intent: pickIntent(template),
+    moveIndex: 0,
     vulnerable: 0,
     burn: 0,
     weak: 0,
     strength: 0
   };
+  enemy.intent = pickIntent(enemy);
+  return enemy;
 }
 
 function awardEnemyUnlocks(enemy) {
@@ -90,7 +92,14 @@ function awardEnemyUnlocks(enemy) {
 }
 
 function pickIntent(enemy) {
-  const move = enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
+  let move;
+  if (Array.isArray(enemy.path) && enemy.path.length > 0) {
+    const moveId = enemy.path[(enemy.moveIndex || 0) % enemy.path.length];
+    move = enemy.attacks.find(a => a.id === moveId);
+  }
+  if (!move) {
+    move = enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
+  }
   let icon;
   if (move.type === 'attack') {
     icon = '<span style="color:#e05020" class="material-symbols-outlined">swords</span>';
@@ -100,8 +109,6 @@ function pickIntent(enemy) {
     icon = '<span style="color:#5ba3f5" class="material-symbols-outlined">shield</span>';
   }
 
-  // The display text is built in renderIntent so attack damage can reflect the
-  // player's live vulnerable status.
   return {
     type: move.type,
     name: move.name,
