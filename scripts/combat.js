@@ -106,6 +106,8 @@ function applyAttack(source, target, paneId, damage) {
 
 function endTurn() {
   if (gs.phase !== 'player') return;
+  if (gs.player.vulnerable > 0) gs.player.vulnerable -= 1;
+  if (gs.player.weak > 0) gs.player.weak -= 1;
 
   gs.phase = 'enemy';
   document.getElementById('end-turn-btn').disabled = true;
@@ -160,11 +162,6 @@ function enemyTurn() {
 
 function beginPlayerTurn() {
   gs.player.block = 0;
-  // Vulnerable and weak tick down at the start of the player's own turn, so the
-  // value shown during the turn is what the upcoming action will actually use.
-  if (gs.player.vulnerable > 0) gs.player.vulnerable -= 1;
-  if (gs.player.weak > 0) gs.player.weak -= 1;
-
   gs.enemy.intent = pickIntent(gs.enemy);
   gs.energy = MAX_ENERGY;
   gs.phase = 'player';
