@@ -138,7 +138,7 @@ function enemyTurn() {
   const { intent } = gs.enemy;
 
   if (intent.type === 'attack') {
-    applyAttack('enemy', gs.player, '#player-panel', intent.value);
+    applyAttack('enemy', gs.player, '#player-panel', intent.value + gs.enemy.strength);
   } else if (intent.type === 'special') {
     if (intent.weak > 0) {
       gs.player.weak += intent.weak;
@@ -147,6 +147,10 @@ function enemyTurn() {
     if (intent.vulnerable > 0) {
       gs.player.vulnerable += intent.vulnerable;
       showFloatNum('#player-panel', `Vulnerable ${intent.vulnerable}`, '#c77dff');
+    }
+    if (intent.strength > 0) {
+      gs.enemy.strength += intent.strength;
+      showFloatNum('#enemy-panel', `Strength +${intent.strength}`, '#ffb38a');
     }
   } else {
     gs.enemy.block += intent.value;

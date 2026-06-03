@@ -77,7 +77,8 @@ function spawnEnemy(template) {
     intent: pickIntent(template),
     vulnerable: 0,
     burn: 0,
-    weak: 0
+    weak: 0,
+    strength: 0
   };
 }
 
@@ -94,7 +95,7 @@ function pickIntent(enemy) {
   if (move.type === 'attack') {
     icon = '<span style="color:#e05020" class="material-symbols-outlined">swords</span>';
   } else if (move.type === 'special') {
-    icon = '<span style="color:#c77dff" class="material-symbols-outlined">heart_minus</span>';
+    icon = '<span style="color:#c77dff" class="material-symbols-outlined">cyclone</span>';
   } else {
     icon = '<span style="color:#5ba3f5" class="material-symbols-outlined">shield</span>';
   }
@@ -107,6 +108,7 @@ function pickIntent(enemy) {
     value: move.value || 0,
     vulnerable: move.vulnerable || 0,
     weak: move.weak || 0,
+    strength: move.strength || 0,
     icon,
   };
 }

@@ -52,6 +52,7 @@ function renderBadges() {
   setBadge('enemy', 'burn', gs.enemy.burn);
   setBadge('enemy', 'vulnerable', gs.enemy.vulnerable);
   setBadge('enemy', 'weak', gs.enemy.weak);
+  setBadge('enemy', 'strength', gs.enemy.strength);
 }
 
 function setBadge(who, badgeName, val) {
@@ -78,11 +79,13 @@ function renderIntent() {
 
   let html = `${intent.name} for <span style="font-weight: bold;">${intent.value}</span>`;
   if (intent.type === 'attack') {
-    // Mirror applyAttack: vulnerable (on the player) then weak (on the enemy).
-    let shown = intent.value;
+    // Mirror applyAttack: strength (flat, permanent) is baked in first, then
+    // vulnerable (on the player) amplifies, then weak (on the enemy) reduces.
+    let shown = intent.value + gs.enemy.strength;
     if (gs.player.vulnerable > 0) shown = Math.round(shown * VULNERABLE_MULTIPLIER);
     if (gs.enemy.weak > 0) shown = Math.round(shown * WEAK_MULTIPLIER);
     if (shown !== intent.value) {
+      // Orange when buffed above the base hit, purple when weakened below it.
       const color = shown > intent.value ? '#ffb38a' : '#b380ff';
       html = `${intent.name} for <span style="font-weight: bold; color:${color}">${shown}</span>`;
     }
