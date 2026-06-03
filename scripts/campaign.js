@@ -14,7 +14,7 @@ function showStartScreen() {
 function scrollToActiveNode() {
   const mapList = document.getElementById('map-list');
   if (!mapList) return;
-  const activeNodes = mapList.querySelectorAll('.map-node.unlocked, .encounter-node.available');
+  const activeNodes = mapList.querySelectorAll('.map-node.unlocked, .encounter-node.available, .rest-node.available');
   if (activeNodes.length > 0) {
     activeNodes[activeNodes.length - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -67,6 +67,7 @@ function resetCampaign() {
     def.unlocked = !!def.defaultUnlocked;
   });
   resetEncounters();
+  resetRestSites();
   hideUnlockOverlay();
   renderMap();
 }
@@ -102,13 +103,17 @@ function renderMap() {
         return arrow;
       };
 
-      // Encounter slot sits in the gap between enemy (index - 1) and enemy index.
-      const encounterNode = renderEncounterNode(index - 1);
-      if (encounterNode) {
-        // Arrow into the encounter lights up once the previous enemy is cleared.
-        mapList.appendChild(makeArrow(!!campaignProgress[index - 1]?.beaten));
-        mapList.appendChild(encounterNode);
-        // Arrow into the enemy lights up once that enemy unlocks (encounter resolved).
+      const gapIndex = index - 1;
+      const encounterNode = renderEncounterNode(gapIndex);
+      const restNode = renderRestNode(gapIndex);
+      if (encounterNode || restNode) {
+        mapList.appendChild(makeArrow(!!campaignProgress[gapIndex]?.beaten));
+
+        const fork = document.createElement('div');
+        fork.className = 'map-fork';
+        if (encounterNode) fork.appendChild(encounterNode);
+        if (restNode) fork.appendChild(restNode);
+        mapList.appendChild(fork);        
         mapList.appendChild(makeArrow(progress.unlocked));
       } else {
         mapList.appendChild(makeArrow(progress.unlocked));

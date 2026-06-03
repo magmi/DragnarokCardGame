@@ -176,6 +176,17 @@
   cursor: not-allowed;
 }
 
+.encounter-node.skipped {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.encounter-node.skipped .encounter-node-icon {
+  color: var(--text-dim);
+}
+
 .encounter-node.resolved {
   opacity: 1;
   border-style: solid;

@@ -10,8 +10,12 @@ function resetEncounters() {
   activeEncounter = null;
 }
 
+function isGapDecided(gapIndex) {
+  return !!encounterProgress[gapIndex]?.resolved || !!restProgress[gapIndex]?.used;
+}
+
 function isEncounterAvailable(gapIndex) {
-  return !!campaignProgress[gapIndex]?.beaten && !encounterProgress[gapIndex]?.resolved;
+  return !!campaignProgress[gapIndex]?.beaten && !isGapDecided(gapIndex);
 }
 
 function getRandomEncounter() {
@@ -180,15 +184,17 @@ function renderEncounterNode(gapIndex) {
 
   const resolved = encounterProgress[gapIndex].resolved;
   const available = isEncounterAvailable(gapIndex);
-  const state = resolved ? 'resolved' : available ? 'available' : 'locked';
+
+  const skipped = !resolved && isGapDecided(gapIndex);
+  const state = resolved ? 'resolved' : skipped ? 'skipped' : available ? 'available' : 'locked';
 
   const node = document.createElement('button');
   node.type = 'button';
   node.className = `encounter-node ${state}`;
   node.disabled = !available;
 
-  const icon = resolved ? 'check' : 'help';
-  const label = resolved ? 'Visited' : available ? 'Encounter' : 'Locked';
+  const icon = resolved ? 'check' : skipped ? 'block' : 'help';
+  const label = resolved ? 'Visited' : skipped ? 'Skipped' : available ? 'Encounter' : 'Locked';
   node.innerHTML = `
     <span class="encounter-node-icon material-symbols-outlined">${icon}</span>
     <span class="encounter-node-label">${label}</span>
