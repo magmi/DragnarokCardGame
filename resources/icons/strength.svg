@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100"
+   height="100"
+   viewBox="0 0 26.458333 26.458334"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="dragnarokCardGameIcons.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.80087682"
+     inkscape:cx="-63.680205"
+     inkscape:cy="13.11063"
+     inkscape:window-width="3440"
+     inkscape:window-height="1377"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     units="px" />
+  <defs
+     id="defs2">
+    <pattern
+       id="EMFhbasepattern"
+       patternUnits="userSpaceOnUse"
+       width="6"
+       height="6"
+       x="0"
+       y="0" />
+  </defs>
+  <g
+     inkscape:label="Warstwa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#f5ff8a;fill-opacity:1;stroke:none;stroke-width:0.161;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 8.4208543,13.317745 1.6720217,1.583931 10.678133,-8.8886588 -9.130116,10.4175808 1.712969,1.661174 10.63366,-10.3500929 c 0,0 1.630492,-6.5219777 1.346929,-6.4510869 -0.283566,0.070884 -6.517679,1.5725041 -6.517679,1.5725041 z"
+       id="path965"
+       sodipodi:nodetypes="ccccccscc" />
+    <path
+       style="fill:#f5ff8a;fill-opacity:1;stroke:none;stroke-width:0.161;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 6.1235461,11.632838 8.7472569,8.596874 -3.032716,1.253189 -2.3810601,-2.105356 -3.2332243,3.13297 0.2255728,0.676723 L 4.3690833,25.493105 0.81002734,21.883921 2.9404477,19.828693 3.6923606,19.928941 6.9255873,16.79597 4.8703572,14.515167 Z"
+       id="path1327"
+       sodipodi:nodetypes="ccccccccccccc" />
+  </g>
+</svg>

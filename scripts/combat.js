@@ -15,7 +15,8 @@ function playCard(idx) {
 
   switch (def.type) {
     case 'attack':
-      const damage = (def.value + playerAttackBonus) * gs.player.nextAttackMultiplier;
+      const attackBase = Math.max(0, def.value + playerAttackBonus + gs.player.strength);
+      const damage = attackBase * gs.player.nextAttackMultiplier;
       if (gs.player.nextAttackMultiplier > 1) {
         gs.player.nextAttackMultiplier = 1;
         showFloatNum('#player-panel', 'Attack Doubled!', '#ffd166');
@@ -151,6 +152,10 @@ function enemyTurn() {
     if (intent.strength > 0) {
       gs.enemy.strength += intent.strength;
       showFloatNum('#enemy-panel', `Strength +${intent.strength}`, '#ffb38a');
+    }
+    if (intent.weakenStrength > 0) {
+      gs.player.strength -= intent.weakenStrength;
+      showFloatNum('#player-panel', `Strength -${intent.weakenStrength}`, '#c77dff');
     }
   } else {
     gs.enemy.block += intent.value;

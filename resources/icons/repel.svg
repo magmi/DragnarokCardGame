@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100"
+   height="100"
+   viewBox="0 0 26.458333 26.458334"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="repel.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.1326109"
+     inkscape:cx="-233.97268"
+     inkscape:cy="250.30662"
+     inkscape:window-width="3440"
+     inkscape:window-height="1377"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     units="px" />
+  <defs
+     id="defs2">
+    <pattern
+       id="EMFhbasepattern"
+       patternUnits="userSpaceOnUse"
+       width="6"
+       height="6"
+       x="0"
+       y="0" />
+  </defs>
+  <g
+     inkscape:label="Warstwa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path9490-5-2"
+       style="fill:none;fill-opacity:1;stroke:#db77ff;stroke-width:1.83949;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="M 23.062764,4.638534 C 19.896083,4.528791 16.380636,3.632446 13.556556,1.811949 10.732476,3.632446 7.2170285,4.528791 4.0503455,4.638534 5.4830895,18.542439 3.2744575,17.398048 13.556556,24.938593 23.838655,17.398048 21.630022,18.542439 23.062764,4.638534 Z"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:none;stroke:#db77ff;stroke-width:1.83949;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 23.760869,15.941518 12.173675,15.664123 17.463768,10.303596"
+       id="path10659"
+       sodipodi:nodetypes="ccc" />
+    <path
+       id="path11495-6"
+       style="fill:#db77ff;fill-opacity:1;stroke:none;stroke-width:1.3185px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 18.200501,14.344628 17.463768,10.303596 13.432348,9.515951 20.9781,6.833308 Z"
+       sodipodi:nodetypes="ccccc" />
+  </g>
+</svg>

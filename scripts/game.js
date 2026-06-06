@@ -20,7 +20,7 @@ function initGame(enemyIndex = 0) {
   const preservedHp = gs?.player?.hp > 0 ? Math.min(gs.player.hp, maxHp) : maxHp;
 
   gs = {
-    player: { hp: preservedHp, maxHp, block: 0, nextAttackMultiplier: 1, repelNextAttack: 0, vulnerable: 0, weak: 0 },
+    player: { hp: preservedHp, maxHp, block: 0, nextAttackMultiplier: 1, repelNextAttack: 0, vulnerable: 0, weak: 0, strength: 0 },
     currentEnemyIndex: enemyIndex,
     enemy: spawnEnemy(ENEMIES[enemyIndex]),
     energy: MAX_ENERGY,
@@ -116,6 +116,7 @@ function pickIntent(enemy) {
     vulnerable: move.vulnerable || 0,
     weak: move.weak || 0,
     strength: move.strength || 0,
+    weakenStrength: move.weakenStrength || 0,
     icon,
   };
 }

@@ -353,7 +353,7 @@
           <div class="enemy-status">
             <div class="badge block-badge" id="enemy-block-badge"
               data-tooltip="Block: absorbs incoming damage. Resets each turn.">
-              <span class="material-symbols-outlined">shield</span>
+              <img src="resources/icons/block.svg" alt="Block" class="badge-icon">
               <span id="enemy-block-val">0</span> Block
             </div>
             <div class="badge burn-badge" id="enemy-burn-badge"
@@ -365,23 +365,17 @@
             </div>
             <div class="badge vulnerable-badge" id="enemy-vulnerable-badge"
               data-tooltip="Vulnerable: 25% more damage from attacks. Counts down by 1 each turn.">
-              <span class="material-symbols-outlined">
-                heart_minus
-              </span>
+              <img src="resources/icons/vulnerable.svg" alt="Vulnerable" class="badge-icon">
               <span id="enemy-vulnerable-val">0</span>
             </div>
             <div class="badge weak-badge" id="enemy-weak-badge"
               data-tooltip="Weak: 25% less attack damage. Counts down by 1 each turn.">
-              <span class="material-symbols-outlined">
-                stat_minus_2
-              </span>
+              <img src="resources/icons/weak.svg" alt="Weak" class="badge-icon">
               <span id="enemy-weak-val">0</span>
             </div>
             <div class="badge strength-badge" id="enemy-strength-badge"
               data-tooltip="Strength: adds its value to every attack. Lasts the whole fight.">
-              <span class="material-symbols-outlined">
-                stat_3
-              </span>
+              <img src="resources/icons/strength.svg" alt="Strength" class="badge-icon">
               <span id="enemy-strength-val">0</span>
             </div>
           </div>
@@ -422,23 +416,28 @@
             <div class="player-block-and-energy">
               <div class="badge block-badge" id="player-block-badge"
                 data-tooltip="Block: absorbs incoming damage. Resets each turn.">
-                <span class="material-symbols-outlined">shield</span>
-                <span id="player-block-val">0</span> <span class="mobile-hidden"> Block </span>
+                <img src="resources/icons/block.svg" alt="Block" class="badge-icon">
+                <span id="player-block-val">0</span>
               </div>
               <div class="badge repel-badge" id="player-repel-badge"
                 data-tooltip="Repel: reflects damage back to the attacker on their next hit.">
-                <span class="material-symbols-outlined">shield</span>
-                <span id="player-repel-val">0</span> <span class="mobile-hidden">Repel </span>
+                <img src="resources/icons/repel.svg" alt="Repel" class="badge-icon">
+                <span id="player-repel-val">0</span>
               </div>
               <div class="badge vulnerable-badge" id="player-vulnerable-badge"
                 data-tooltip="Vulnerable: takes 25% more damage from attacks. Counts down by 1 each turn.">
-                <span class="material-symbols-outlined">heart_minus</span>
+                <img src="resources/icons/vulnerable.svg" alt="Vulnerable" class="badge-icon">
                 <span id="player-vulnerable-val">0</span>
               </div>
               <div class="badge weak-badge" id="player-weak-badge"
                 data-tooltip="Weak: deals 25% less attack damage. Counts down by 1 each turn.">
-                <span class="material-symbols-outlined">stat_minus_2</span>
+                <img src="resources/icons/weak.svg" alt="Weak" class="badge-icon">
                 <span id="player-weak-val">0</span>
+              </div>
+              <div class="badge strength-badge" id="player-strength-badge"
+                data-tooltip="Strength: added to every attack's damage. Does not decrement.">
+                <img src="resources/icons/strength.svg" alt="Strength" class="badge-icon">
+                <span id="player-strength-val">0</span>
               </div>
               <div id="energy-row">
                 <span class="energy-label mobile-hidden">ENERGY</span>

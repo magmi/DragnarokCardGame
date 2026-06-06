@@ -10,7 +10,7 @@
   --glass: rgba(30, 15, 20, 0.85);
   --border: rgba(190, 179, 146, 0.3);
   --border-hot: rgba(201, 168, 76, 0.75);
-  --blue-glow: #5ba3f5;
+  --blue-glow: #8bc1ff;
   --purple-glow: #db77ff;
   --green-glow: #38bb60;
   --text-main: #e8dcc8;
@@ -423,6 +423,13 @@ body::after {
   transform: scale(1);
 }
 
+.badge-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .block-badge {
   background: rgba(42, 106, 173, 0.25);
   border: 1px solid rgba(91, 163, 245, 0.4);
@@ -443,9 +450,9 @@ body::after {
 
 .weak-badge,
 .vulnerable-badge {
-  background: rgb(173 42 42 / 25%);
-  border: 1px solid rgb(245 91 91 / 40%);
-  color: #ff7676;
+  background: rgb(42 157 173 / 34%);
+  border: 1px solid rgb(91 244 245 / 40%);
+  color: #76ffc9;
 }
 
 .strength-badge {

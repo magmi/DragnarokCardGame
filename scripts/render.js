@@ -48,6 +48,7 @@ function renderBadges() {
   setBadge('player', 'repel', gs.player.repelNextAttack);
   setBadge('player', 'vulnerable', gs.player.vulnerable);
   setBadge('player', 'weak', gs.player.weak);
+  setBadge('player', 'strength', gs.player.strength);
 
   setBadge('enemy', 'burn', gs.enemy.burn);
   setBadge('enemy', 'vulnerable', gs.enemy.vulnerable);
@@ -56,10 +57,9 @@ function renderBadges() {
 }
 
 function setBadge(who, badgeName, val) {
-  console.log(`Setting badge: ${who} ${badgeName} = ${val}`);
   const badge = document.getElementById(`${who}-${badgeName}-badge`);
   document.getElementById(`${who}-${badgeName}-val`).textContent = val;
-  badge.classList.toggle('visible', val > 0);
+  badge.classList.toggle('visible', val !== 0);
 }
 
 function renderEnergyOrbs() {
@@ -90,7 +90,7 @@ function renderIntent() {
       html = `${intent.name} for <span style="font-weight: bold; color:${color}">${shown}</span>`;
     }
   } else if (intent.type === 'special') {
-    html = intent.name;
+    html = intent.weakenStrength > 0 ? `${intent.name} (-${intent.weakenStrength} Strength)` : intent.name;
   }
 
 
@@ -117,7 +117,7 @@ function renderHand() {
     switch (def.type) {
       case 'attack': {
         const baseValue = def.value + playerAttackBonus;
-        let attackValue = baseValue * gs.player.nextAttackMultiplier;
+        let attackValue = Math.max(0, baseValue + gs.player.strength) * gs.player.nextAttackMultiplier;
 
         if (gs.enemy.vulnerable > 0) attackValue = Math.round(attackValue * VULNERABLE_MULTIPLIER);
         if (gs.player.weak > 0) attackValue = Math.round(attackValue * WEAK_MULTIPLIER);
