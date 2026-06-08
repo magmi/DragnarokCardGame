@@ -19,25 +19,25 @@
 }
 
 .player-level-badge-container {
-    display: flex;
-    flex-direction: row;
-    gap: 4px;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
 }
 
 #player-level-badge {
-    font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    color: var(--text-main);
-    border-radius: 50%;
-    background: var(--void);
-    border: 1px solid var(--text-main);
-    padding: 5px;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--text-main);
+  border-radius: 50%;
+  background: var(--void);
+  border: 1px solid var(--text-main);
+  padding: 5px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #player-exp-text {
@@ -70,7 +70,7 @@
   object-fit: contain;
 }
 
-.player-block-and-energy {
+.player-statuses-and-energy {
   margin-top: 15px;
   display: flex;
   flex: 1;
@@ -78,6 +78,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+}
+
+.player-statuses {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
 }
 
 .hp-fill.player {

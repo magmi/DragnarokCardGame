@@ -83,6 +83,15 @@ const CARD_DEFS = {
   }
 };
 
+// Cards unlocked after clearing each stage — every enemy in a stage shares the same unlocks.
+const UNLOCKS_STAGES = [
+  [CARD_POWER_UP, CARD_CHOMP],         // Stage 1
+  [CARD_REPEL, CARD_HEAL, CARD_BURN],  // Stage 2
+  [CARD_REPEL, CARD_HEAL, CARD_BURN],  // Stage 3
+  [CARD_REPEL, CARD_HEAL, CARD_BURN],  // Stage 4
+  [],                                  // Stage 5
+];
+
 const ENEMY_STAGES = [
   // Stage 1
   [
@@ -98,13 +107,30 @@ const ENEMY_STAGES = [
         { id: 3, name: 'Guard', type: 'defend', value: 8 },
       ],
       path: [1, 2, 1, 3],
-      unlocks: [CARD_POWER_UP, CARD_CHOMP],
       expValue: 40,
     },
+        {
+      id: 'rabiddog',
+      name: 'Rabid Dog',
+      maxHp: 40,
+      sprite: 'resources/enemies/enemy9.png',
+      thumb: 'resources/enemies/enemy9checkpoint.png',
+      attacks: [
+        { id: 1, name: 'Maul', type: 'attack', value: 9 },
+        { id: 2, name: 'Rabies', type: 'special', weak: 2 },
+        { id: 3, name: 'Guard', type: 'defend', value: 8 },
+      ],
+      path: [1, 2, 1, 3],
+      expValue: 40,
+    },
+
+  ],
+  // Stage 2
+  [
     {
       id: 'cursed',
       name: 'Cursed',
-      maxHp: 40,
+      maxHp: 50,
       sprite: 'resources/enemies/enemy6.png',
       thumb: 'resources/enemies/enemy6checkpoint.png',
       attacks: [
@@ -113,13 +139,12 @@ const ENEMY_STAGES = [
         { id: 3, name: 'Sapping Curse', type: 'special', weakenStrength: 1 },
       ],
       path: [3, 1, 1, 2],
-      unlocks: [CARD_POWER_UP, CARD_CHOMP],
-      expValue: 40,
+      expValue: 50,
     },
     {
       id: 'znichar',
       name: 'Znichar Beast',
-      maxHp: 40,
+      maxHp: 50,
       sprite: 'resources/enemies/enemy3.png',
       thumb: 'resources/enemies/enemy3checkpoint.png',
       attacks: [
@@ -129,18 +154,17 @@ const ENEMY_STAGES = [
         { id: 4, name: 'Spines Barrier', type: 'defend', value: 8 },
       ],
       path: [3, 1, 2, 1, 4],
-      unlocks: [CARD_POWER_UP, CARD_CHOMP],
-      expValue: 40,
+      expValue: 50,
     },
   ],
-  // Stage 2
+  // Stage 3
   [
     {
-      id: 'frey',
-      name: 'Frey the Water Dragon',
-      maxHp: 50,
-      sprite: 'resources/enemies/enemy5.png',
-      thumb: 'resources/enemies/enemy5checkpoint.png',
+      id: 'ime',
+      name: 'Energy Dragon',
+      maxHp: 60,
+      sprite: 'resources/enemies/enemy7.png',
+      thumb: 'resources/enemies/enemy7checkpoint.png',
       attacks: [
         { id: 1, name: 'Water Breath', type: 'attack', value: 15 },
         { id: 2, name: 'Bite', type: 'attack', value: 12 },
@@ -150,13 +174,12 @@ const ENEMY_STAGES = [
         { id: 6, name: 'Sapping Current', type: 'special', weakenStrength: 1 },
       ],
       path: [4, 6, 1, 5, 2, 3],
-      unlocks: [CARD_REPEL, CARD_HEAL, CARD_BURN],
       expValue: 60,
     },
     {
       id: 'beryl',
       name: 'Beryl The Bronze Dragon',
-      maxHp: 50,
+      maxHp: 60,
       sprite: 'resources/enemies/enemy2.png',
       thumb: 'resources/enemies/enemy2checkpoint.png',
       attacks: [
@@ -168,16 +191,52 @@ const ENEMY_STAGES = [
         { id: 6, name: 'Scales Barrier', type: 'defend', value: 12 },
       ],
       path: [5, 4, 1, 6, 3, 2],
-      unlocks: [CARD_REPEL, CARD_HEAL, CARD_BURN],
       expValue: 60,
     },
   ],
-  // Stage 3
+  // Stage 4
+  [
+    {
+      id: 'frey',
+      name: 'Frey the Water Dragon',
+      maxHp: 100,
+      sprite: 'resources/enemies/enemy5.png',
+      thumb: 'resources/enemies/enemy5checkpoint.png',
+      attacks: [
+        { id: 1, name: 'Water Breath', type: 'attack', value: 15 },
+        { id: 2, name: 'Bite', type: 'attack', value: 12 },
+        { id: 3, name: 'Slash', type: 'attack', value: 10 },
+        { id: 4, name: 'Crushing Tide', type: 'special', weak: 2 },
+        { id: 5, name: 'Brace', type: 'defend', value: 12 },
+        { id: 6, name: 'Sapping Current', type: 'special', weakenStrength: 1 },
+      ],
+      path: [4, 6, 1, 5, 2, 3],
+      expValue: 100,
+    },
+    {
+      id: 'anator',
+      name: 'Anator Energy Mage',
+      maxHp: 100,
+      sprite: 'resources/enemies/enemy8.png',
+      thumb: 'resources/enemies/enemy8checkpoint.png',
+      attacks: [
+        { id: 1, name: 'Dragon Bite', type: 'attack', value: 13 },
+        { id: 2, name: 'Tail Swipe', type: 'attack', value: 11 },
+        { id: 3, name: 'Bronze Claw', type: 'attack', value: 14 },
+        { id: 4, name: 'Corroding Breath', type: 'special', vulnerable: 2 },
+        { id: 5, name: 'Bronze Might', type: 'special', strength: 1 },
+        { id: 6, name: 'Scales Barrier', type: 'defend', value: 12 },
+      ],
+      path: [5, 4, 1, 6, 3, 2],
+      expValue: 100,
+    },
+  ],
+  // Stage 5 (boss)
   [
     {
       id: 'kera',
       name: 'Kera The Fire Dragoness',
-      maxHp: 100,
+      maxHp: 200,
       sprite: 'resources/enemies/enemy1.png',
       thumb: 'resources/enemies/enemy1checkpoint.png',
       attacks: [
@@ -190,9 +249,11 @@ const ENEMY_STAGES = [
         { id: 7, name: 'Soul Drain', type: 'special', weakenStrength: 1 },
       ],
       path: [5, 4, 7, 2, 6, 1, 3],
-      expValue: 100,
+      expValue: 200,
     },
   ],
+
+  
 ];
 
 // Active enemy lineup for the current run — one enemy rolled from each stage.

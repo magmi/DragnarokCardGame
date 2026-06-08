@@ -174,7 +174,7 @@ function handleEnemyDefeated() {
   campaignProgress[finishedIndex].beaten = true;
   runExpEarned += ENEMIES[finishedIndex].expValue ?? 0;
 
-  const unlockedCards = awardEnemyUnlocks(ENEMIES[finishedIndex]);
+  const unlockedCards = awardEnemyUnlocks(finishedIndex);
   const nextIndex = finishedIndex + 1;
   const hasNext = nextIndex < ENEMIES.length;
 

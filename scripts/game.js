@@ -84,8 +84,8 @@ function spawnEnemy(template) {
   return enemy;
 }
 
-function awardEnemyUnlocks(enemy) {
-  return (enemy.unlocks || []).filter(cardId => {
+function awardEnemyUnlocks(stageIndex) {
+  return (UNLOCKS_STAGES[stageIndex] || []).filter(cardId => {
     const def = CARD_DEFS[cardId];
     return def && !def.unlocked;
   });

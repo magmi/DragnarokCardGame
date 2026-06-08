@@ -31,6 +31,16 @@
         font-size: 0.6rem;
     }
 
+    .badge-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .badge {
+        padding: 3px 5px 3px 5px;
+        font-size: 0.8rem;
+    }
+
     .game-menu-label {
         font-size: 0.7rem;
     }
@@ -153,7 +163,7 @@
         min-width: 0;
     }
 
-    .player-block-and-energy {
+    .player-statuses-and-energy {
         flex-wrap: wrap;
         gap: 8px;
     }

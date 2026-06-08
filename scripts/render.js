@@ -74,23 +74,35 @@ function renderEnergyOrbs() {
 
 function renderIntent() {
   const intent = gs.enemy.intent;
-  const intentColor = intent.type === 'attack' ? '#e05020'
-    : intent.type === 'special' ? '#c77dff' : '#5ba3f5';
+  let intentColor = '#5ba3f5';
+  let intentBGColor = '#0d2949';
+
+  switch (intent.type) {
+    case 'attack':
+      intentColor = '#e05020';
+      intentBGColor = '#461708';
+      break;
+    case 'special':
+      intentColor = '#c77dff';
+      intentBGColor = '#350d53';
+      break;
+    default:
+      intentColor = '#5ba3f5';
+      intentBGColor = '#0d2949';
+      break;
+  }
 
   let html = `${intent.name} for <span style="font-weight: bold;">${intent.value}</span>`;
   if (intent.type === 'attack') {
-    // Mirror applyAttack: strength (flat, permanent) is baked in first, then
-    // vulnerable (on the player) amplifies, then weak (on the enemy) reduces.
     let shown = intent.value + gs.enemy.strength;
     if (gs.player.vulnerable > 0) shown = Math.round(shown * VULNERABLE_MULTIPLIER);
     if (gs.enemy.weak > 0) shown = Math.round(shown * WEAK_MULTIPLIER);
     if (shown !== intent.value) {
-      // Orange when buffed above the base hit, purple when weakened below it.
       const color = shown > intent.value ? '#ffb38a' : '#b380ff';
       html = `${intent.name} for <span style="font-weight: bold; color:${color}">${shown}</span>`;
     }
   } else if (intent.type === 'special') {
-    html = intent.weakenStrength > 0 ? `${intent.name} (-${intent.weakenStrength} Strength)` : intent.name;
+    html = intent.name;
   }
 
 
@@ -98,6 +110,7 @@ function renderIntent() {
   document.getElementById('intent-text').innerHTML = html;
   document.getElementById('intent-text').style.color = intentColor;
   document.getElementById('intent-box').style.borderColor = intentColor;
+  document.getElementById('intent-box').style.backgroundColor = intentBGColor;
 }
 
 function renderHand() {
