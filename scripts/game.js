@@ -30,6 +30,8 @@ function initGame(enemyIndex = 0) {
     phase: 'player',
   };
 
+  document.getElementById('end-turn-btn').disabled = false;
+
   dealHand();
   renderAll();
 }
